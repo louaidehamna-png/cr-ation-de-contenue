@@ -162,15 +162,15 @@ def build():
 
     # Clip A, 10-15 s : supports qui glissent vers le mur, puis plateaux qui se posent dessus
     for si, (p, brs, z, pz) in enumerate(rig):
-        f0 = 301 + si * 12
+        f0 = 301 + si * 8
         for br, side, Lg, x in brs:
             br.scale = (0, 0, 0); br.keyframe_insert('scale', frame=A0); br.keyframe_insert('scale', frame=f0 - 1)
             key(br, 'location', A0, -0.45, 1); key(br, 'location', f0, -0.45, 1)
-            key(br, 'scale', f0, (1, 1, 1)); key(br, 'location', f0 + 30, 0.0, 1)
-        f1 = 366 + si * 10
+            key(br, 'scale', f0, (1, 1, 1)); key(br, 'location', f0 + 24, 0.0, 1)
+        f1 = 330 + si * 8
         p.scale = (0, 0, 0); p.keyframe_insert('scale', frame=A0); p.keyframe_insert('scale', frame=f1 - 1)
         key(p, 'location', A0, pz + 0.3, 2); key(p, 'location', f1, pz + 0.3, 2)
-        key(p, 'scale', f1, (1, 1, 1)); key(p, 'location', f1 + 26, pz, 2)
+        key(p, 'scale', f1, (1, 1, 1)); key(p, 'location', f1 + 22, pz, 2)
 
     # Clip B : retournement « bas -> haut ». Chaque support glisse hors du plateau,
     # pivote vers l'extérieur, puis revient : le plateau passe dans le triangle.
@@ -360,6 +360,7 @@ def render_frames(sc, frames, res, outdir, prefix=''):
     for f in frames:
         sc.frame_set(f)
         sc.render.filepath = os.path.join(outdir, f'{prefix}{f:04d}.png')
+        if os.environ.get('SKIP_EXISTING') and os.path.exists(sc.render.filepath): continue
         bpy.ops.render.render(write_still=True)
 
 if __name__ == '__main__':

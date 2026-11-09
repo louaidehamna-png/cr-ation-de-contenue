@@ -43,7 +43,7 @@
       svg.cotes rect { fill: var(--creme); }
 
       .mention {
-        position: absolute; left: 40px; bottom: 120px;
+        position: absolute; left: 40px; top: 110px;
         font-size: 32px; font-weight: 400; color: var(--brun-fonce);
         background: rgba(245, 240, 232, 0.85); padding: 10px 18px; border-radius: 10px;
       }
@@ -83,11 +83,11 @@
       <!-- 10-15 s : arrivée des étagères -->
       <div id="t-lot" class="tag big" style="top: 220px" data-start="10" data-duration="5" data-track-index="1">Lot de 3 VASAGLE</div>
       <svg id="cotes" class="cotes clip" viewBox="0 0 1080 1920" data-start="10" data-duration="5" data-track-index="2">
-        <g id="c30"><line x1="340" y1="720" x2="770" y2="720" /><rect x="495" y="740" width="120" height="54" rx="10" /><text x="555" y="782" text-anchor="middle">30 cm</text></g>
-        <g id="c35"><line x1="282" y1="1080" x2="770" y2="1080" /><rect x="466" y="1100" width="120" height="54" rx="10" /><text x="526" y="1142" text-anchor="middle">35 cm</text></g>
-        <g id="c40"><line x1="210" y1="1430" x2="756" y2="1430" /><rect x="423" y="1450" width="120" height="54" rx="10" /><text x="483" y="1492" text-anchor="middle">40 cm</text></g>
+        <g id="c30"><line x1="340" y1="805" x2="772" y2="805" /><rect x="496" y="825" width="120" height="54" rx="10" /><text x="556" y="867" text-anchor="middle">30 cm</text></g>
+        <g id="c35"><line x1="282" y1="1170" x2="772" y2="1170" /><rect x="467" y="1190" width="120" height="54" rx="10" /><text x="527" y="1232" text-anchor="middle">35 cm</text></g>
+        <g id="c40"><line x1="212" y1="1510" x2="762" y2="1510" /><rect x="427" y="1530" width="120" height="54" rx="10" /><text x="487" y="1572" text-anchor="middle">40 cm</text></g>
       </svg>
-      <div id="t-prof" class="tag small" style="top: 1640px" data-start="10" data-duration="5" data-track-index="3">12 cm de profondeur</div>
+      <div id="t-prof" class="tag small" style="top: 1660px" data-start="10" data-duration="5" data-track-index="3">12 cm de profondeur</div>
 
       <!-- 15-20 s : plan serré -->
       <div id="t-kg" class="tag" style="top: 260px" data-start="15" data-duration="5" data-track-index="1">5 kg max par étagère</div>
@@ -130,7 +130,7 @@
       pop("#t-lot", 10.2, 14.6);
       // cotes qui se tracent
       tl.set("#cotes rect, #cotes text", { opacity: 0 }, 10);
-      [["#c30", 11.4], ["#c35", 11.9], ["#c40", 12.4]].forEach(([g, at]) => {
+      [["#c30", 12.0], ["#c35", 12.4], ["#c40", 12.8]].forEach(([g, at]) => {
         const ln = document.querySelector(g + " line");
         const L = ln.x2.baseVal.value - ln.x1.baseVal.value;
         tl.fromTo(ln, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, at);
