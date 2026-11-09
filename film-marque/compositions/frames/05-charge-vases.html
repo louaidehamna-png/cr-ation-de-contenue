@@ -1,6 +1,7 @@
-<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#333">
+<template>
+<div id="root" data-composition-id="05-charge-vases" data-width="1080" data-height="1920" data-start="0" data-duration="5.2">
 <script src="assets/gsap.min.js"></script>
-<style id="s09-em-kit" data-kit="em-kit">
+<style id="s05-em-kit" data-kit="em-kit">
 @font-face{font-family:"Inter";font-weight:400;src:url("assets/fonts/Inter-Regular.otf") format("opentype")}
 @font-face{font-family:"Inter";font-weight:500;src:url("assets/fonts/Inter-Medium.otf") format("opentype")}
 @font-face{font-family:"Inter";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
@@ -65,44 +66,7 @@
 .em-cursor{position:absolute;left:0;top:0;width:54px;height:70px;transform-origin:8px 6px;opacity:0;filter:drop-shadow(0 6px 10px rgba(44,36,32,.35))}
 .em-ripple{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:5px solid #a97c50;opacity:0}
 </style>
-<style>
-#root{position:relative;width:1080px;height:1920px;overflow:hidden}
-#s09-copy{position:absolute;left:292.5px;top:575px;width:495px;opacity:0;transform-origin:50% 50%;filter:drop-shadow(0 16px 22px rgba(60,40,20,.22))}
-#s09-cardcam{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 960px}
-#s09-card{position:absolute;left:0;top:0;width:1080px;height:1920px;background:#3a2f2a;opacity:0;clip-path:circle(0% at 540px 335px)}
-#s09-card .s09-vig{position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 45%,rgba(58,47,42,0) 55%,rgba(28,22,19,.55) 100%)}
-#s09-logo{position:absolute;left:465px;top:260px;width:150px;height:150px;transform-origin:50% 50%}
-#s09-logo-img{position:absolute;left:0;top:0;width:150px;height:150px;opacity:0;transform-origin:50% 50%}
-#s09-mark{position:absolute;left:260px;top:420px;width:560px;height:100px;transform-origin:50% 50%}
-#s09-mark-in{position:absolute;left:0;top:0;width:560px;height:100px;border-radius:22px;background:#3a2f2a;opacity:0;transform-origin:50% 50%}
-#s09-mark-img{position:absolute;left:20px;top:11.5px;width:520px}
-#s09-halo{position:absolute;left:160px;top:1000px;width:760px;height:300px;border-radius:50%;background:radial-gradient(closest-side,rgba(200,162,124,.75) 0%,rgba(200,162,124,.35) 45%,rgba(200,162,124,0) 100%);opacity:0;transform-origin:50% 50%}
-#s09-btn{position:absolute;left:280px;top:1098px;width:520px;height:104px;border-radius:48px;background:#f5f0e8;color:#3a2f2a;font:600 44px/104px "Inter",sans-serif;text-align:center;letter-spacing:-.01em;white-space:nowrap;opacity:0;transform-origin:50% 50%;box-shadow:0 18px 40px rgba(20,14,10,.35)}
-#s09-ring{position:absolute;left:280px;top:1098px;width:520px;height:104px;border-radius:52px;border:4px solid #c8a27c;box-sizing:border-box;opacity:0;transform-origin:50% 50%}
-#s09-subs{position:absolute;left:0;top:0;width:1080px;height:1920px}
-#s09-black{position:absolute;left:0;top:0;width:1080px;height:1920px;background:#000;opacity:0}
-</style>
-<div id="root" data-composition-id="09-fin" data-width="1080" data-height="1920" data-duration="8">
-  <div id="s09-stage" class="em-stage clip" data-start="0" data-duration="8" data-track-index="0">
-    <div class="em-ground" id="s09-ground"></div>
-    <div id="s09-wallhost" style="position:absolute;inset:0"></div>
-    <div id="s09-phonehost" style="position:absolute;inset:0"></div>
-    <img id="s09-copy" src="assets/img/vasagle-3-etageres.png" alt="">
-    <div id="s09-sub1host" style="position:absolute;inset:0"></div>
-    <div id="s09-cardcam">
-      <div id="s09-card"><div class="s09-vig"></div></div>
-      <div id="s09-logo"><img id="s09-logo-img" src="assets/img/logo-em.png" alt=""></div>
-      <div id="s09-mark"><div id="s09-mark-in"><img id="s09-mark-img" src="assets/img/logo-texte.png" alt=""></div></div>
-      <div id="s09-halo"></div>
-      <div id="s09-ring"></div>
-      <div id="s09-btn">etageres-murales.fr</div>
-      <div id="s09-curhost" style="position:absolute;inset:0"></div>
-    </div>
-    <div id="s09-subs"></div>
-    <div id="s09-black"></div>
-  </div>
-</div>
-<script id="s09-em-kit-js" data-kit="em-kit-js">
+<script id="s05-em-kit-js" data-kit="em-kit-js">
 /* ---------- utilitaires ---------- */
 function emEl(tag, cls, parent, id, html){const e=document.createElement(tag);if(cls)e.className=cls;if(id)e.id=id;if(html!==undefined)e.innerHTML=html;if(parent)parent.appendChild(e);return e}
 function emSvg(parent, id, w, h, inner, x, y){const d=emEl("div","em-svg",parent,id);d.style.left=(x||0)+"px";d.style.top=(y||0)+"px";d.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="overflow:visible">'+inner+'</svg>';return d}
@@ -201,116 +165,219 @@ function emCursor(parent,p){const c=emEl("div","em-cursor",parent,p+"-cursor",'<
 function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);tl.to(k.cursor,{x:x1,y:y1,duration:0.45,ease:"power3.out"},at);tl.to(k.cursor,{scale:0.85,duration:0.06,yoyo:true,repeat:1},at+0.45);
   tl.set(k.ripple,{left:x1+8,top:y1+6},at+0.47);tl.fromTo(k.ripple,{scale:0.2,opacity:1},{scale:1.4,opacity:0,duration:0.5,ease:"power2.out",immediateRender:false},at+0.47)}
 </script>
-<script>
+<style id="s05-style">
+#root{position:relative;width:1080px;height:1920px;overflow:hidden}
+#s05-ann{position:absolute;left:0;top:0;width:640px;height:1300px;z-index:6;pointer-events:none}
+#s05-ann .s05-a{position:absolute;left:0;top:0;overflow:visible}
+#s05-ann .s05-a path{fill:none;stroke:#8c3b2e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+#s05-ann .s05-a path.s05-thin{stroke-width:3}
+#s05-a-dash,#s05-a-l2,#s05-a-wave,#s05-a-vases,#s05-a-l4{opacity:0}
+#s05-flash{position:absolute;background:#ffffff;opacity:0}
+#s05-black{position:absolute;left:0;top:0;width:1080px;height:1920px;background:#2c2420;opacity:0;z-index:20}
+</style>
+<div id="s05-ground" class="em-ground clip" data-start="0" data-duration="5.2" data-track-index="0"></div>
+<div id="s05-stage" class="em-stage clip" data-start="0" data-duration="5.2" data-track-index="1"></div>
+<script id="s05-scene">
 (function(){
-  var FID="09-fin";
-  var $=function(id){return document.getElementById(id)};
-  var tl=gsap.timeline({paused:true});
+  var tl = gsap.timeline({ paused: true });
+  var st = document.getElementById("s05-stage");
 
-  /* ---------- le mur (pile complète, traits au crayon tracés, faible opacité) ---------- */
-  var W=emBuildWall($("s09-wallhost"),"s09");
-  var cam=emCam(W.world);
-  var pencils=[W.months,W.tally,W.marks,W.sketches[0],W.sketches[1],W.sketches[2]];
-  pencils.forEach(function(el){
-    el.querySelectorAll(".em-pen").forEach(function(p){p.style.strokeDashoffset=0});
-    el.style.opacity=0.55;
+  /* ================= LE MUR (fond, flou 12 px) ================= */
+  var W = emBuildWall(st, "s05");
+  W.world.setAttribute("data-layout-allow-overflow", "");
+  var cam = emCam(W.world);
+  /* état hérité des séquences 1 à 3 : pile complète, repères au crayon tracés, croquis tracés pâles */
+  [W.marks, W.tally].forEach(function(e){ e.querySelectorAll(".em-pen").forEach(function(p){ p.style.strokeDashoffset = 0; }); });
+  gsap.set(W.marks, { opacity: 0.25, scale: 1.25, transformOrigin: "450px 210px" });
+  gsap.set(W.months, { opacity: 0.5 });
+  gsap.set("#s05-pile", { rotation: -4, transformOrigin: "2900px 2200px" });
+  gsap.set(W.pile.frame, { rotation: -2 });
+  [0, 1, 2].forEach(function(i){
+    var sk = W.sketches[i];
+    sk.querySelectorAll(".em-pen").forEach(function(p){ p.style.strokeDashoffset = 0; });
+    sk.querySelector(".em-q").setAttribute("opacity", "1");
+    sk.style.opacity = 0.35;
   });
-  /* 0.00 à 0.60 : fin du recul vers F-fin cam(1500, 1650, 0.55), flou 4 → 0 */
-  emCamSet(tl,cam,1500,1450,1.20,0);
-  tl.fromTo(cam,{blur:4},{blur:0,duration:0.6,ease:"power2.out",onUpdate:cam.apply},0);
-  tl.to(cam,{x:1500,y:1650,s:0.55,duration:0.6,ease:"power2.out",onUpdate:cam.apply},0);
-  /* dérive x +12 u/s, échelle +0,012/s (prolongée sous l'iris jusqu'à 5.10) */
-  emCamDrift(tl,cam,12,0,0.012,0.6,5.1);
+  cam.blur = 12;
+  emCamSet(tl, cam, 1500, 1380, 3.00, 0);
+  emCamDrift(tl, cam, 0, -15, 0, 0, 5.20);
+  /* plongée : le mur passe de 12 à 18 px de flou */
+  tl.fromTo(cam, { blur: 12 }, { blur: 18, duration: 0.80, ease: "power2.in", onUpdate: cam.apply, immediateRender: false }, 4.40);
 
-  /* ---------- le téléphone (fiche EM cochée + FAQ), en plein recul ---------- */
-  var P=emBuildPhone($("s09-phonehost"),"s09");
-  emPageEM(P.screen,"s09");
-  P.screen.querySelectorAll(".em-check .em-pen").forEach(function(e){e.style.strokeDashoffset=0});
-  P.screen.querySelectorAll(".row.ok").forEach(function(r){r.style.color="#2c2420"});
-  emFaq(P.screen,"s09");
-  tl.set(P.phone,{x:400,y:110,scale:0.40,rotation:-4,filter:"blur(0px)"},0);
-  tl.to(P.phone,{scale:0.30,rotation:-6,duration:0.30,ease:"power2.out"},0);
-  /* 0.55 sortie par le bas, vite */
-  tl.to(P.phone,{y:1010,filter:"blur(4px)",duration:0.25,ease:"power2.in"},0.55);
-  tl.set(P.phone,{opacity:0},0.80);
+  /* ================= LE TÉLÉPHONE (couche écran) ================= */
+  var P = emBuildPhone(st, "s05");
+  var pg = emPageFloue(P.screen, "s05");
+  gsap.set(pg, { y: -60 });                         /* défilement hérité de la séquence 4 */
+  document.getElementById("s05-pgf-r1").style.color = "#2c2420"; /* « Matière : bois » en encre pleine (séq. 4) */
+  var vases = document.getElementById("s05-pgf-vases");
 
-  /* ---------- 0.30 la photo vole du téléphone vers W.shelves ---------- */
-  /* place écran des étagères à 0.60 : cam(1500,1650,0.55) → coin (292.5, 575), largeur 495, centre (540, 849.2) */
-  var copy=$("s09-copy");
-  var SHELF_CY=575+(900*1234/1114)*0.55/2;
-  tl.fromTo(copy,{x:720-540,y:760-SHELF_CY,scale:0.22,rotation:-6,opacity:0},
-    {x:0,y:-6*0.55,scale:1,rotation:0,duration:0.30,ease:"power2.inOut",immediateRender:false},0.30);
-  tl.to(copy,{opacity:1,duration:0.06,ease:"none"},0.30);
-  /* 0.60 relais : les vraies étagères dans le mur, exactement sous la copie */
-  tl.set(W.shelves,{opacity:1,y:-6},0.60);
-  tl.set(copy,{opacity:0},0.60);
-  /* 0.62 contact : petit tassement */
-  tl.to(W.shelves,{y:0,duration:0.15,ease:"power3.out"},0.62);
-  /* 0.65 les traits au crayon s'effacent */
-  tl.to(pencils,{opacity:0,duration:0.3,ease:"power2.out",stagger:0.05},0.65);
+  /* calque d'annotations : enfant du téléphone (suit la caméra-téléphone), hors de l'écran (peut déborder) */
+  var ann = emEl("div", "", P.phone, "s05-ann");
+  ann.setAttribute("data-layout-allow-overflow", "");
+  var flash = emEl("div", "", ann, "s05-flash");
+  function svgLayer(id){ var d = emSvg(ann, id, 640, 1300, ""); d.classList.add("s05-a"); return d; }
+  var A1 = svgLayer("s05-a-r1");     /* cercle + rature + trait de « bois » (séq. 4) */
+  var A2 = svgLayer("s05-a-dash");   /* cercle autour du tiret de « Charge » */
+  var A2l = svgLayer("s05-a-l2");    /* trait vers « ? » */
+  var A3 = svgLayer("s05-a-wave");   /* trait ondulé sous « voir photo » */
+  var A4 = svgLayer("s05-a-vases");  /* un même trait autour des deux vases */
+  var A4l = svgLayer("s05-a-l4");    /* trait vers « inclus ? » */
+  var N1 = emNote(ann, "s05-n1", "aggloméré", 0, 0);
+  var N2 = emNote(ann, "s05-n2", "?", 0, 0);
+  var N4 = emNote(ann, "s05-n4", "inclus ?", 0, 0);
+  N1.style.opacity = 1;
 
-  /* ---------- 0.80 logo É, 1.00 « Étagères Murales » ---------- */
-  tl.fromTo($("s09-logo-img"),{opacity:0,scale:1.2,filter:"blur(8px)"},
-    {opacity:1,scale:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",immediateRender:false},0.80);
-  tl.fromTo($("s09-mark-in"),{opacity:0,scale:1.2,filter:"blur(8px)"},
-    {opacity:1,scale:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",immediateRender:false},1.00);
+  /* ---- géométrie mesurée sur le DOM (coordonnées locales du téléphone 640 × 1300) ---- */
+  var G = { ok: false,
+    /* valeurs de secours (Inter chargée), écrasées par la mesure */
+    r1: { x: 320, y: 799 }, r2: { x: 320, y: 868 }, ph: { x: 320, y: 427 }, va: { x: 296, y: 397 },
+    bois: { l: 205, t: 782, w: 62, h: 36 }, dash: { l: 196, t: 851, w: 18, h: 36 }, voir: { l: 245, t: 920, w: 145, h: 36 },
+    photo: { l: 25, t: 212, w: 590, h: 430 }, vb: { l: 185, t: 332, w: 222, h: 130 } };
+  function textRect(row){ var tn = row.lastChild; var rg = document.createRange();
+    var s = tn.textContent, a = 0; while (a < s.length && /\s/.test(s[a])) a++; rg.setStart(tn, a); rg.setEnd(tn, s.length); return rg.getBoundingClientRect(); }
+  function measure(){
+    var pr = P.phone.getBoundingClientRect(); if (!(pr.width > 0)) return;
+    var k = pr.width / 640;
+    function loc(r){ return { l: (r.left - pr.left) / k, t: (r.top - pr.top) / k, w: r.width / k, h: r.height / k }; }
+    function ctr(b){ return { x: b.l + b.w / 2, y: b.t + b.h / 2 }; }
+    var b1 = loc(document.getElementById("s05-pgf-r1").getBoundingClientRect());
+    var b2 = loc(document.getElementById("s05-pgf-r2").getBoundingClientRect());
+    G.r1 = { x: 320, y: ctr(b1).y }; G.r2 = { x: 320, y: ctr(b2).y };
+    G.photo = loc(document.getElementById("s05-pgf-photo").getBoundingClientRect());
+    G.ph = { x: 320, y: ctr(G.photo).y };
+    G.vb = loc(vases.getBoundingClientRect()); G.va = ctr(G.vb);
+    G.bois = loc(document.getElementById("s05-pgf-bois").getBoundingClientRect());
+    G.dash = loc(textRect(document.getElementById("s05-pgf-r2")));
+    G.voir = loc(textRect(document.getElementById("s05-pgf-r3")));
+    G.ok = (document.fonts && document.fonts.status === "loaded");
+    place();
+  }
+  /* boucle à main levée (déterministe), départ en haut à gauche, dépasse un peu son départ */
+  function loop(cx, cy, rx, ry){ var d = "", n = 40, a0 = -2.2, a1 = a0 + Math.PI * 2 + 0.45;
+    for (var i = 0; i <= n; i++){ var a = a0 + (a1 - a0) * i / n, f = 1 + 0.035 * Math.sin(3 * a + 1) + 0.03 * i / n;
+      d += (i ? " L" : "M") + (cx + Math.cos(a) * rx * f).toFixed(1) + " " + (cy + Math.sin(a) * ry * f).toFixed(1); }
+    return d; }
+  function wave(x0, x1, y){ var d = "M" + x0.toFixed(1) + " " + y.toFixed(1), step = 12, up = true;
+    for (var x = x0; x < x1; x += step){ var xe = Math.min(x + step, x1); d += " Q" + (x + step / 2).toFixed(1) + " " + (y + (up ? -7 : 7)).toFixed(1) + " " + xe.toFixed(1) + " " + y.toFixed(1); up = !up; }
+    return d; }
+  function paths(layer, classes){ var svg = layer.querySelector("svg"), out = [];
+    classes.forEach(function(cl){ var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("class", "em-pen" + (cl ? " " + cl : "")); p.setAttribute("pathLength", "1");
+      p.setAttribute("stroke-dasharray", "1"); p.setAttribute("stroke-dashoffset", "1"); svg.appendChild(p); out.push(p); });
+    return out; }
+  var P1 = paths(A1, ["", "", "s05-thin"]), P2 = paths(A2, [""]), P2l = paths(A2l, ["s05-thin"]),
+      P3 = paths(A3, [""]), P4 = paths(A4, [""]), P4l = paths(A4l, ["s05-thin"]);
+  P1.forEach(function(p){ p.style.strokeDashoffset = 0; });   /* déjà tracés à t = 0 (séquence 4) */
+  function place(){
+    /* 1. « bois » entouré + barré, relié à « aggloméré » (état final de la séquence 4, tracé plein) */
+    var b = G.bois, bcx = b.l + b.w / 2, bcy = b.t + b.h / 2, brx = b.w / 2 + 20, bry = b.h / 2 + 10;
+    var n1x = b.l + b.w + 70, n1y = bcy - N1.offsetHeight / 2;
+    emPos(N1, n1x, n1y);
+    P1[0].setAttribute("d", loop(bcx, bcy, brx, bry));
+    P1[1].setAttribute("d", "M" + (b.l - 6) + " " + (bcy + 4) + " L" + (b.l + b.w + 6) + " " + (bcy - 3));
+    P1[2].setAttribute("d", "M" + (bcx + brx) + " " + bcy + " L" + n1x + " " + bcy);
+    /* 2. tiret de « Charge » entouré, relié à « ? » */
+    var d = G.dash, dcx = d.l + d.w / 2, dcy = d.t + d.h / 2, drx = Math.max(d.w / 2 + 22, 34), dry = d.h / 2 + 10;
+    var n2x = dcx + drx + 70, n2y = dcy - N2.offsetHeight / 2;
+    emPos(N2, n2x, n2y);
+    P2[0].setAttribute("d", loop(dcx, dcy, drx, dry));
+    P2l[0].setAttribute("d", "M" + (dcx + drx) + " " + dcy + " L" + n2x + " " + dcy);
+    /* 3. trait ondulé sous « voir photo » */
+    var v = G.voir; P3[0].setAttribute("d", wave(v.l - 2, v.l + v.w + 2, v.t + v.h + 4));
+    /* 4. les deux vases dans un même trait, reliés à « inclus ? » (sous l'étagère, à gauche de x 960) */
+    var q = G.vb, vcx = q.l + q.w / 2, vcy = q.t + q.h / 2 - 4, vrx = q.w / 2 + 26, vry = q.h / 2 + 22;
+    var n4x = vcx + 60, n4y = q.t + q.h + 118;
+    emPos(N4, n4x, n4y);
+    var ex = vcx + vrx * Math.cos(0.9), ey = vcy + vry * Math.sin(0.9);
+    P4[0].setAttribute("d", loop(vcx, vcy, vrx, vry));
+    P4l[0].setAttribute("d", "M" + ex.toFixed(1) + " " + ey.toFixed(1) + " L" + (n4x + 40) + " " + n4y);
+    /* flash blanc posé sur la photo */
+    emPos(flash, G.photo.l, G.photo.t, G.photo.w, G.photo.h);
+  }
 
-  /* ---------- sous-titre 1 ---------- */
-  var S1=emSub($("s09-sub1host"),"s09-sub1",["Pour","sublimer","vos","murs","et","finir","vos","pièces."],3,-1,false);
-  emSubTL(tl,S1,[1.70,1.86,2.40,2.56,3.00,3.14,3.50,3.66],3,-1,4.30);
+  /* ---- caméra-téléphone : un point focal (mélange pondéré d'ancres mesurées) posé en (X, Y) à l'échelle s ---- */
+  var c = { w0: 0, w1: 0, w2: 0, w3: 0, X: 540, Y: 700, s: 1.15, blur: 0 };
+  c.apply = function(){
+    if (!G.ok) measure();
+    var A = [G.r1, G.r2, G.ph, G.va], ws = [c.w0, c.w1, c.w2, c.w3], fx = 0, fy = 0, sw = 0;
+    for (var i = 0; i < 4; i++){ fx += ws[i] * A[i].x; fy += ws[i] * A[i].y; sw += ws[i]; }
+    if (sw > 0){ fx /= sw; fy /= sw; } else { fx = 320; fy = 650; }
+    gsap.set(P.phone, { x: c.X - 320 - (fx - 320) * c.s, y: c.Y - 650 - (fy - 650) * c.s, scale: c.s,
+      filter: c.blur > 0.05 ? "blur(" + c.blur.toFixed(2) + "px)" : "none" });
+  };
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ G.ok = false; measure(); c.apply(); });
 
-  /* 3.66 « pièces. » : les coussins se tassent */
-  var cush=[$("s09-cush0"),$("s09-cush1"),$("s09-cush2")];
-  tl.set(cush,{transformOrigin:"50% 100%"},0);
-  tl.to(cush,{y:6,scaleY:0.965,duration:0.14,ease:"power2.out",stagger:0.04},3.66);
-  tl.to(cush,{y:0,scaleY:1,duration:0.3,ease:"power2.out",stagger:0.04},3.84);
+  /* fin du cran de la séquence 4 (power3.inOut 0,6 s entamé à 2.60) : il reste son dernier tiers */
+  function p3io(u){ return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+  var U0 = 2 / 3, E0 = p3io(U0);
+  function tailEase(t){ return (p3io(U0 + (1 - U0) * t) - E0) / (1 - E0); }
+  var S0 = { Y: 709.2, s: 1.186 }, S1 = { Y: 700, s: 1.15 };       /* départ (r1, après dérive) → arrivée (r2) */
+  tl.fromTo(c, { w0: 1 - E0, w1: E0, w2: 0, w3: 0, X: 540, Y: S0.Y + (S1.Y - S0.Y) * E0, s: S0.s + (S1.s - S0.s) * E0, blur: 0 },
+    { w0: 0, w1: 1, Y: S1.Y, s: S1.s, duration: 0.20, ease: tailEase, onUpdate: c.apply }, 0);
+  /* dérive 0.20 à 1.40 : échelle +0,02/s */
+  tl.fromTo(c, { s: 1.15 }, { s: 1.174, duration: 1.20, ease: "none", onUpdate: c.apply, immediateRender: false }, 0.20);
+  /* 1.40 à 2.10 : cran vers la photo (le téléphone redescend), échelle → 1,30 */
+  tl.fromTo(c, { w1: 1, w2: 0, X: 540, Y: 700, s: 1.174 }, { w1: 0, w2: 1, X: 540, Y: 640, s: 1.30, duration: 0.70, ease: "power3.inOut", onUpdate: c.apply, immediateRender: false }, 1.40);
+  /* dérive 2.10 à 4.40 : échelle +0,03/s, x -4 px/s */
+  tl.fromTo(c, { X: 540, s: 1.30 }, { X: 530.8, s: 1.369, duration: 2.30, ease: "none", onUpdate: c.apply, immediateRender: false }, 2.10);
+  /* 4.40 à 5.20 : plongée power2.in vers 3,40 centrée sur les vases, flou 0 → 6 → 0 */
+  tl.fromTo(c, { w2: 1, w3: 0, X: 530.8, Y: 640, s: 1.369 }, { w2: 0, w3: 1, X: 540, Y: 960, s: 3.40, duration: 0.80, ease: "power2.in", onUpdate: c.apply, immediateRender: false }, 4.40);
+  tl.fromTo(c, { blur: 0 }, { blur: 6, duration: 0.40, ease: "power2.in", onUpdate: c.apply, immediateRender: false }, 4.40);
+  tl.fromTo(c, { blur: 6 }, { blur: 0, duration: 0.40, ease: "power2.out", onUpdate: c.apply, immediateRender: false }, 4.80);
 
-  /* ---------- 4.40 l'iris brun depuis le centre du logo (540, 335) ---------- */
-  var card=$("s09-card");
-  tl.set(card,{opacity:1},4.40);
-  tl.fromTo(card,{clipPath:"circle(0% at 540px 335px)"},
-    {clipPath:"circle(150% at 540px 335px)",duration:0.6,ease:"power2.inOut",immediateRender:false},4.40);
-  tl.set(W.world,{opacity:0},5.10);
-  /* dérive de la carte entière 1 → 1,03 */
-  tl.fromTo($("s09-cardcam"),{scale:1},{scale:1.03,duration:3.6,ease:"none",immediateRender:false},4.40);
+  /* ================= SCÈNE 1 : la charge ? introuvable ================= */
+  /* 0.30 cercle brique autour du tiret (0,25 s) */
+  tl.set(A2, { opacity: 1 }, 0.30);
+  emPen(tl, A2, 0.30, 0.25);
+  /* 0.55 étiquette « ? » reliée (×1,2 flou 8 → net) */
+  tl.set(A2l, { opacity: 1 }, 0.52);
+  emPen(tl, A2l, 0.52, 0.12);
+  tl.fromTo(N2, { opacity: 0, scale: 1.2, filter: "blur(8px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.18, ease: "expo.out", immediateRender: false }, 0.55);
+  /* 0.90 « Introuvable. » : l'étiquette tremble deux fois */
+  tl.to(N2, { x: 4, duration: 0.05, ease: "power1.out" }, 0.90);
+  tl.to(N2, { x: -4, duration: 0.05, ease: "power1.inOut" }, 0.95);
+  tl.to(N2, { x: 4, duration: 0.05, ease: "power1.inOut" }, 1.00);
+  tl.to(N2, { x: 0, duration: 0.05, ease: "power1.out" }, 1.05);
+  /* 1.20 trait ondulé brique sous « voir photo » (0,25 s) */
+  tl.set(A3, { opacity: 1 }, 1.20);
+  emPen(tl, A3, 1.20, 0.25);
 
-  /* 4.70 logo et texte glissent vers leur place sur la carte (logo 220 px y 600, texte 640 px y 860) */
-  tl.to($("s09-logo"),{y:600-335,scale:220/150,duration:0.6,ease:"power3.inOut"},4.70);
-  tl.to($("s09-mark"),{y:860-470,scale:640/520,duration:0.6,ease:"power3.inOut"},4.70);
+  /* ================= SCÈNE 2 : les vases de la photo ================= */
+  /* 2.50 « photo, » : flash blanc très bref */
+  tl.fromTo(flash, { opacity: 0 }, { opacity: 0.35, duration: 0.08, ease: "power2.out", immediateRender: false }, 2.50);
+  tl.to(flash, { opacity: 0, duration: 0.12, ease: "power2.in" }, 2.58);
+  /* 3.00 les deux vases entourés d'un même trait (0,3 s) */
+  tl.set(A4, { opacity: 1 }, 3.00);
+  emPen(tl, A4, 3.00, 0.30);
+  /* 3.30 « vases » : les vases montent de 6 px */
+  tl.fromTo(vases, { y: 0 }, { y: -6, duration: 0.25, ease: "power3.out", immediateRender: false }, 3.30);
+  /* 3.60 étiquette « inclus ? » reliée */
+  tl.set(A4l, { opacity: 1 }, 3.57);
+  emPen(tl, A4l, 3.57, 0.12);
+  tl.fromTo(N4, { opacity: 0, scale: 1.2, filter: "blur(8px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.18, ease: "expo.out", immediateRender: false }, 3.60);
+  /* 4.00 « fournis. » : l'étiquette donne un coup */
+  tl.to(N4, { scale: 1.06, duration: 0.10, ease: "power2.out" }, 4.00);
+  tl.to(N4, { scale: 1, duration: 0.10, ease: "power2.in" }, 4.10);
+  /* 4.30 les annotations s'effacent vite */
+  tl.to([A1, N1, A2, A2l, N2, A3, A4, A4l, N4], { opacity: 0, duration: 0.15, ease: "power2.in" }, 4.30);
+  /* 4.75 l'écran s'éteint : calque .off 0 → 1 */
+  tl.fromTo(P.off, { opacity: 0 }, { opacity: 1, duration: 0.30, ease: "power2.inOut", immediateRender: false }, 4.75);
 
-  /* ---------- 5.10 le bouton ---------- */
-  var btn=$("s09-btn"),halo=$("s09-halo");
-  tl.fromTo(btn,{opacity:0,scale:1.15,filter:"blur(8px)"},
-    {opacity:1,scale:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",immediateRender:false},5.10);
-  tl.fromTo(halo,{opacity:0},{opacity:0.4,duration:0.3,ease:"power2.out",immediateRender:false},5.10);
-  /* 5.40 le halo respire une fois */
-  tl.to(halo,{opacity:0.7,scale:1.06,duration:0.4,ease:"sine.inOut"},5.40);
-  tl.to(halo,{opacity:0.4,scale:1,duration:0.4,ease:"sine.inOut"},5.80);
+  /* ================= SOUS-TITRES (bande y 1360 à 1520) ================= */
+  var SA = emSub(st, "s05-sub1", ["La", "charge ?", "Introuvable."], 2, -1);
+  var SB = emSub(st, "s05-sub2", ["Et", "sur", "la", "photo,", "les", "vases", "ont", "l’air", "fournis."], 8, -1);
+  emSubTL(tl, SA, [0.10, 0.24, 0.90], 2, -1, 1.60);
+  emSubTL(tl, SB, [2.10, 2.22, 2.38, 2.50, 3.10, 3.24, 3.66, 3.80, 4.00], 8, -1, 4.70);
 
-  /* ---------- 5.60 le curseur, 6.05 clic ---------- */
-  var K=emCursor($("s09-curhost"),"s09");
-  emClick(tl,K,980,1700,550,1154,5.60);
-  tl.to(btn,{scale:0.96,duration:0.06,ease:"power2.in"},6.05);
-  tl.to(btn,{scale:1,duration:0.08,ease:"power2.out"},6.11);
-  tl.to(btn,{backgroundColor:"#a97c50",color:"#f5f0e8",duration:0.15,ease:"power2.out"},6.05);
-  /* 6.30 onde du clic autour du bouton */
-  tl.fromTo($("s09-ring"),{opacity:0.9,scale:1},{opacity:0,scale:1.28,duration:0.6,ease:"power2.out",immediateRender:false},6.30);
+  /* sécurité : plein cadre brun sous rien d'autre, 5.00 à 5.10 */
+  var black = emEl("div", "", st, "s05-black");
+  tl.fromTo(black, { opacity: 0 }, { opacity: 1, duration: 0.10, ease: "none", immediateRender: false }, 5.00);
 
-  /* ---------- tenue vivante ---------- */
-  tl.fromTo($("s09-logo"),{y:600-335},{y:600-335-5.6,duration:1.4,ease:"none",immediateRender:false},6.60);
-  tl.to(halo,{opacity:0.7,scale:1.06,duration:0.4,ease:"sine.inOut"},6.80);
-  tl.to(halo,{opacity:0.4,scale:1,duration:0.4,ease:"sine.inOut"},7.20);
-
-  /* ---------- sous-titre 2 (clair sur brun) ---------- */
-  var S2=emSub($("s09-subs"),"s09-sub2",["Lien","dans","la","bio."],3,-1,true);
-  emSubTL(tl,S2,[4.70,4.94,5.12,5.24],3,-1,7.60);
-
-  /* 7.80 à 8.00 sortie au noir */
-  tl.fromTo($("s09-black"),{opacity:0},{opacity:1,duration:0.2,ease:"none",immediateRender:false},7.80);
-  tl.set({},{},8.0);
-
-  window.__timelines=window.__timelines||{};
-  window.__timelines[FID]=tl;
+  tl.set({}, {}, 5.20);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["05-charge-vases"] = tl;
 })();
 </script>
-</body></html>
+</div>
+</template>

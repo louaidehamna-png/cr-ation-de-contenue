@@ -75,6 +75,8 @@
     #s07-pge .em-check { opacity: 0; transform-origin: 50% 50%; }
     #s07-flash { position: absolute; left: 0; top: 0; width: 590px; height: 150px; background: #ffffff; opacity: 0; z-index: 2; }
     /* présent à t = 0 : le crème plein cadre de la barre d'adresse */
+    /* phrase 1 : 69 signes, tenue sur 2 lignes dans la bande y 1360 à 1520 (corps 52 au lieu de 60) */
+    #s07-sub1 { font-size: 52px; line-height: 66px; top: 1376px; }
     #s07-cover { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #f4efe7; opacity: 1; }
   </style>
 
@@ -193,10 +195,7 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
       /* ===== le mur (fond) : pile complète, repères au crayon tracés ; cam(1500, 1380, 3.00), flou 12, dérive y -10 u/s ===== */
       var W = emBuildWall(stage, "s07");
       W.world.setAttribute("data-layout-allow-overflow", "");
-      [W.marks, W.tally].forEach(function (el) {
-        el.querySelectorAll(".em-pen").forEach(function (p) { p.style.strokeDashoffset = 0; });
-      });
-      W.months.style.opacity = 1;
+      W.marks.querySelectorAll(".em-pen").forEach(function (p) { p.style.strokeDashoffset = 0; });
       var cam = emCam(W.world);
       cam.blur = 12;
       emCamSet(tl, cam, 1500, 1380, 3.00, 0);
