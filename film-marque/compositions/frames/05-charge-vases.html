@@ -244,9 +244,9 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* ---- géométrie mesurée sur le DOM (coordonnées locales du téléphone 640 × 1300) ---- */
   var G = { ok: false,
     /* valeurs de secours (Inter chargée), écrasées par la mesure */
-    r1: { x: 320, y: 799 }, r2: { x: 320, y: 868 }, ph: { x: 320, y: 427 }, va: { x: 296, y: 397 },
-    bois: { l: 205, t: 782, w: 62, h: 36 }, dash: { l: 196, t: 851, w: 18, h: 36 }, voir: { l: 245, t: 920, w: 145, h: 36 },
-    photo: { l: 25, t: 212, w: 590, h: 430 }, vb: { l: 185, t: 332, w: 222, h: 130 } };
+    r1: { x: 320, y: 803.5 }, r2: { x: 320, y: 872.5 }, ph: { x: 320, y: 407 }, va: { x: 295, y: 377 },
+    dash: { l: 181, t: 856, w: 14, h: 34 }, voir: { l: 241, t: 926, w: 135, h: 34 },
+    photo: { l: 25, t: 192, w: 590, h: 430 }, vb: { l: 183, t: 312, w: 224, h: 130 } };
   function textRect(row){ var tn = row.lastChild; var rg = document.createRange();
     var s = tn.textContent, a = 0; while (a < s.length && /\s/.test(s[a])) a++; rg.setStart(tn, a); rg.setEnd(tn, s.length); return rg.getBoundingClientRect(); }
   function measure(){
@@ -260,7 +260,6 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
     G.photo = loc(document.getElementById("s05-pgf-photo").getBoundingClientRect());
     G.ph = { x: 320, y: ctr(G.photo).y };
     G.vb = loc(vases.getBoundingClientRect()); G.va = ctr(G.vb);
-    G.bois = loc(document.getElementById("s05-pgf-bois").getBoundingClientRect());
     G.dash = loc(textRect(document.getElementById("s05-pgf-r2")));
     G.voir = loc(textRect(document.getElementById("s05-pgf-r3")));
     G.ok = (document.fonts && document.fonts.status === "loaded");

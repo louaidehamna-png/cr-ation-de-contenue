@@ -238,7 +238,7 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* place écran des étagères à 0.60 : cam(1500,1650,0.55) → coin (292.5, 575), largeur 495, centre (540, 849.2) */
   var copy=$("s09-copy");
   var SHELF_CY=575+(900*1234/1114)*0.55/2;
-  tl.fromTo(copy,{x:720-540,y:760-SHELF_CY,scale:0.22,rotation:-6,opacity:0},
+  tl.fromTo(copy,{x:720-540,y:760-SHELF_CY,scale:0.22,rotation:-6},
     {x:0,y:-6*0.55,scale:1,rotation:0,duration:0.30,ease:"power2.inOut",immediateRender:false},0.30);
   tl.to(copy,{opacity:1,duration:0.06,ease:"none"},0.30);
   /* 0.60 relais : les vraies étagères dans le mur, exactement sous la copie */
