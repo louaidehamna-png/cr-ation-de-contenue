@@ -1,16 +1,7 @@
 <template>
 <div id="root" data-composition-id="05-charge-vases" data-width="1080" data-height="1920" data-start="0" data-duration="5.2">
 <script src="assets/gsap.min.js"></script>
-  Chaque séquence recopie À L'IDENTIQUE le bloc <style id="s08-em-kit" data-kit="em-kit"> et le bloc <script id="em-kit-js"> ci-dessous
-  (seul « assets/ » devient « assets/ »), puis construit sa scène avec ces fonctions. Ne rien redessiner à la main.
-
-  Coordonnées du mur en u (1 u = 1 px à l'échelle 1). Caméra : emCam(x, y, s) met le point (x, y) du mur au centre de
-  l'image (540, 960) à l'échelle s. Tous les ids sont préfixés par p (ex. « s03 ») : emBuildWall(parent, "s03", …).
-  Ouvrir ce fichier dans un navigateur montre un aperçu de chaque élément (bas du fichier, partie DÉMO, à ne pas copier).
--->
-<html lang="fr"><head><meta charset="utf-8"><title>Kit du mur</title>
-<script src="assets/gsap.min.js"></script>
-<style id="s08-em-kit" data-kit="em-kit">
+<style id="s05-em-kit" data-kit="em-kit">
 @font-face{font-family:"Inter";font-weight:400;src:url("assets/fonts/Inter-Regular.otf") format("opentype")}
 @font-face{font-family:"Inter";font-weight:500;src:url("assets/fonts/Inter-Medium.otf") format("opentype")}
 @font-face{font-family:"Inter";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
@@ -75,16 +66,7 @@
 .em-cursor{position:absolute;left:0;top:0;width:54px;height:70px;transform-origin:8px 6px;opacity:0;filter:drop-shadow(0 6px 10px rgba(44,36,32,.35))}
 .em-ripple{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:5px solid #a97c50;opacity:0}
 </style>
-  Chaque séquence recopie À L'IDENTIQUE le bloc <style id="em-kit"> et le bloc <script id="s08-em-kit-js" data-kit="em-kit-js"> ci-dessous
-  (seul « assets/ » devient « assets/ »), puis construit sa scène avec ces fonctions. Ne rien redessiner à la main.
-
-  Coordonnées du mur en u (1 u = 1 px à l'échelle 1). Caméra : emCam(x, y, s) met le point (x, y) du mur au centre de
-  l'image (540, 960) à l'échelle s. Tous les ids sont préfixés par p (ex. « s03 ») : emBuildWall(parent, "s03", …).
-  Ouvrir ce fichier dans un navigateur montre un aperçu de chaque élément (bas du fichier, partie DÉMO, à ne pas copier).
--->
-<html lang="fr"><head><meta charset="utf-8"><title>Kit du mur</title>
-<script src="assets/gsap.min.js"></script>
-<script id="s08-em-kit-js" data-kit="em-kit-js">
+<script id="s05-em-kit-js" data-kit="em-kit-js">
 /* ---------- utilitaires ---------- */
 function emEl(tag, cls, parent, id, html){const e=document.createElement(tag);if(cls)e.className=cls;if(id)e.id=id;if(html!==undefined)e.innerHTML=html;if(parent)parent.appendChild(e);return e}
 function emSvg(parent, id, w, h, inner, x, y){const d=emEl("div","em-svg",parent,id);d.style.left=(x||0)+"px";d.style.top=(y||0)+"px";d.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="overflow:visible">'+inner+'</svg>';return d}
@@ -190,6 +172,14 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
 #s05-ann .s05-a path{fill:none;stroke:#8c3b2e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
 #s05-ann .s05-a path.s05-thin{stroke-width:3}
 #s05-a-dash,#s05-a-l2,#s05-a-wave,#s05-a-vases,#s05-a-l4{opacity:0}
+#s05-pgf-bois{position:relative;display:inline-block}
+.s05-ring{position:absolute;left:-16px;top:-12px;width:calc(100% + 32px);height:calc(100% + 24px);overflow:visible;pointer-events:none}
+.s05-ring path{fill:none;stroke:#8c3b2e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.s05-anchor{position:absolute;left:100%;top:50%;width:0;height:0}
+#s05-link{position:absolute;left:16px;top:-1.5px;width:58px;height:3px;border-radius:2px;background:#8c3b2e;transform-origin:0 50%}
+#s05-note{display:grid;justify-items:center;transform-origin:0% 50%}
+#s05-note span{grid-area:1/1}
+#s05-note-a{opacity:0}
 #s05-flash{position:absolute;background:#ffffff;opacity:0}
 #s05-black{position:absolute;left:0;top:0;width:1080px;height:1920px;background:#2c2420;opacity:0;z-index:20}
 </style>
@@ -206,10 +196,8 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   var cam = emCam(W.world);
   /* état hérité des séquences 1 à 3 : pile complète, repères au crayon tracés, croquis tracés pâles */
   [W.marks, W.tally].forEach(function(e){ e.querySelectorAll(".em-pen").forEach(function(p){ p.style.strokeDashoffset = 0; }); });
-  gsap.set(W.marks, { opacity: 0.25, scale: 1.25, transformOrigin: "450px 210px" });
+  gsap.set(W.marks, { opacity: 0.25, scale: 1.25, transformOrigin: "50% 50%" });
   gsap.set(W.months, { opacity: 0.5 });
-  gsap.set("#s05-pile", { rotation: -4, transformOrigin: "2900px 2200px" });
-  gsap.set(W.pile.frame, { rotation: -2 });
   [0, 1, 2].forEach(function(i){
     var sk = W.sketches[i];
     sk.querySelectorAll(".em-pen").forEach(function(p){ p.style.strokeDashoffset = 0; });
@@ -217,7 +205,7 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
     sk.style.opacity = 0.35;
   });
   cam.blur = 12;
-  emCamSet(tl, cam, 1500, 1380, 3.00, 0);
+  emCamSet(tl, cam, 1500, 1335, 3.00, 0);   /* 1380 - 45 u : la dérive de la séquence 4 (-15 u/s × 3 s) déjà parcourue */
   emCamDrift(tl, cam, 0, -15, 0, 0, 5.20);
   /* plongée : le mur passe de 12 à 18 px de flou */
   tl.fromTo(cam, { blur: 12 }, { blur: 18, duration: 0.80, ease: "power2.in", onUpdate: cam.apply, immediateRender: false }, 4.40);
@@ -225,25 +213,33 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* ================= LE TÉLÉPHONE (couche écran) ================= */
   var P = emBuildPhone(st, "s05");
   var pg = emPageFloue(P.screen, "s05");
-  gsap.set(pg, { y: -60 });                         /* défilement hérité de la séquence 4 */
+  gsap.set(pg, { y: -80 });                         /* défilement hérité de la séquence 4 */
   document.getElementById("s05-pgf-r1").style.color = "#2c2420"; /* « Matière : bois » en encre pleine (séq. 4) */
   var vases = document.getElementById("s05-pgf-vases");
+  /* annotations de « bois » héritées de la séquence 4, reconstruites à l'identique (état final : tracées, « aggloméré ») */
+  var bois = document.getElementById("s05-pgf-bois");
+  bois.insertAdjacentHTML("beforeend",
+    '<svg class="s05-ring" id="s05-ring" viewBox="0 0 90 60" preserveAspectRatio="none">' +
+    '<path id="s05-ring-c" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" d="M14 12 C34 2 72 2 84 18 C94 32 82 54 50 57 C20 60 3 48 5 32 C6 22 14 14 30 9"/>' +
+    '<path id="s05-ring-x" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" d="M10 34 L80 27"/></svg>');
+  var anchor = emEl("div", "s05-anchor", bois, "s05-anchor");
+  var link = emEl("div", "", anchor, "s05-link");
+  var N1 = emNote(anchor, "s05-note", '<span id="s05-note-a">bois ?</span><span id="s05-note-b">aggloméré</span>', 74, -34);
+  N1.style.opacity = 1;
+  var A1 = document.getElementById("s05-ring");
 
   /* calque d'annotations : enfant du téléphone (suit la caméra-téléphone), hors de l'écran (peut déborder) */
   var ann = emEl("div", "", P.phone, "s05-ann");
   ann.setAttribute("data-layout-allow-overflow", "");
   var flash = emEl("div", "", ann, "s05-flash");
   function svgLayer(id){ var d = emSvg(ann, id, 640, 1300, ""); d.classList.add("s05-a"); return d; }
-  var A1 = svgLayer("s05-a-r1");     /* cercle + rature + trait de « bois » (séq. 4) */
   var A2 = svgLayer("s05-a-dash");   /* cercle autour du tiret de « Charge » */
   var A2l = svgLayer("s05-a-l2");    /* trait vers « ? » */
   var A3 = svgLayer("s05-a-wave");   /* trait ondulé sous « voir photo » */
   var A4 = svgLayer("s05-a-vases");  /* un même trait autour des deux vases */
   var A4l = svgLayer("s05-a-l4");    /* trait vers « inclus ? » */
-  var N1 = emNote(ann, "s05-n1", "aggloméré", 0, 0);
   var N2 = emNote(ann, "s05-n2", "?", 0, 0);
   var N4 = emNote(ann, "s05-n4", "inclus ?", 0, 0);
-  N1.style.opacity = 1;
 
   /* ---- géométrie mesurée sur le DOM (coordonnées locales du téléphone 640 × 1300) ---- */
   var G = { ok: false,
@@ -283,19 +279,11 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
       p.setAttribute("class", "em-pen" + (cl ? " " + cl : "")); p.setAttribute("pathLength", "1");
       p.setAttribute("stroke-dasharray", "1"); p.setAttribute("stroke-dashoffset", "1"); svg.appendChild(p); out.push(p); });
     return out; }
-  var P1 = paths(A1, ["", "", "s05-thin"]), P2 = paths(A2, [""]), P2l = paths(A2l, ["s05-thin"]),
+  var P2 = paths(A2, [""]), P2l = paths(A2l, ["s05-thin"]),
       P3 = paths(A3, [""]), P4 = paths(A4, [""]), P4l = paths(A4l, ["s05-thin"]);
-  P1.forEach(function(p){ p.style.strokeDashoffset = 0; });   /* déjà tracés à t = 0 (séquence 4) */
   function place(){
-    /* 1. « bois » entouré + barré, relié à « aggloméré » (état final de la séquence 4, tracé plein) */
-    var b = G.bois, bcx = b.l + b.w / 2, bcy = b.t + b.h / 2, brx = b.w / 2 + 20, bry = b.h / 2 + 10;
-    var n1x = b.l + b.w + 70, n1y = bcy - N1.offsetHeight / 2;
-    emPos(N1, n1x, n1y);
-    P1[0].setAttribute("d", loop(bcx, bcy, brx, bry));
-    P1[1].setAttribute("d", "M" + (b.l - 6) + " " + (bcy + 4) + " L" + (b.l + b.w + 6) + " " + (bcy - 3));
-    P1[2].setAttribute("d", "M" + (bcx + brx) + " " + bcy + " L" + n1x + " " + bcy);
     /* 2. tiret de « Charge » entouré, relié à « ? » */
-    var d = G.dash, dcx = d.l + d.w / 2, dcy = d.t + d.h / 2, drx = Math.max(d.w / 2 + 22, 34), dry = d.h / 2 + 10;
+    var d = G.dash, dcx = d.l + d.w / 2, dcy = d.t + d.h / 2, drx = Math.max(d.w / 2 + 14, 24), dry = d.h / 2 + 9;
     var n2x = dcx + drx + 70, n2y = dcy - N2.offsetHeight / 2;
     emPos(N2, n2x, n2y);
     P2[0].setAttribute("d", loop(dcx, dcy, drx, dry));
@@ -303,8 +291,8 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
     /* 3. trait ondulé sous « voir photo » */
     var v = G.voir; P3[0].setAttribute("d", wave(v.l - 2, v.l + v.w + 2, v.t + v.h + 4));
     /* 4. les deux vases dans un même trait, reliés à « inclus ? » (sous l'étagère, à gauche de x 960) */
-    var q = G.vb, vcx = q.l + q.w / 2, vcy = q.t + q.h / 2 - 4, vrx = q.w / 2 + 26, vry = q.h / 2 + 22;
-    var n4x = vcx + 60, n4y = q.t + q.h + 118;
+    var q = G.vb, vcx = q.l + q.w / 2, vcy = q.t + q.h / 2 - 4, vrx = q.w / 2 + 40, vry = q.h / 2 + 30;
+    var n4x = vcx + 70, n4y = q.t + q.h + 100;
     emPos(N4, n4x, n4y);
     var ex = vcx + vrx * Math.cos(0.9), ey = vcy + vry * Math.sin(0.9);
     P4[0].setAttribute("d", loop(vcx, vcy, vrx, vry));
@@ -314,29 +302,33 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   }
 
   /* ---- caméra-téléphone : un point focal (mélange pondéré d'ancres mesurées) posé en (X, Y) à l'échelle s ---- */
-  var c = { w0: 0, w1: 0, w2: 0, w3: 0, X: 540, Y: 700, s: 1.15, blur: 0 };
+  var c = { w0: 0, w1: 0, w2: 0, w3: 0, X: 560, Y: 700, s: 1.15, blur: 0, r: 0 };
   c.apply = function(){
     if (!G.ok) measure();
     var A = [G.r1, G.r2, G.ph, G.va], ws = [c.w0, c.w1, c.w2, c.w3], fx = 0, fy = 0, sw = 0;
     for (var i = 0; i < 4; i++){ fx += ws[i] * A[i].x; fy += ws[i] * A[i].y; sw += ws[i]; }
     if (sw > 0){ fx /= sw; fy /= sw; } else { fx = 320; fy = 650; }
-    gsap.set(P.phone, { x: c.X - 320 - (fx - 320) * c.s, y: c.Y - 650 - (fy - 650) * c.s, scale: c.s,
+    var px = c.X - 320 - (fx - 320) * c.s, py = c.Y - 650 - (fy - 650) * c.s, ps = c.s;
+    if (c.r > 0){ /* départ du cran de la séquence 4 : x 240, r1 à y 720 à l'échelle 1,15 puis dérive (y -6 px/s, échelle +0,02/s, 1,8 s) */
+      var Yd = 720 - (G.r1.y - 650) * 1.15 - 650 - 6 * 1.8, Sd = 1.15 + 0.02 * 1.8;
+      px += (240 - px) * c.r; py += (Yd - py) * c.r; ps += (Sd - ps) * c.r; }
+    gsap.set(P.phone, { x: px, y: py, scale: ps,
       filter: c.blur > 0.05 ? "blur(" + c.blur.toFixed(2) + "px)" : "none" });
   };
   measure();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ G.ok = false; measure(); c.apply(); });
 
   /* fin du cran de la séquence 4 (power3.inOut 0,6 s entamé à 2.60) : il reste son dernier tiers */
-  function p3io(u){ return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
+  var p3io = gsap.parseEase("power3.inOut");
   var U0 = 2 / 3, E0 = p3io(U0);
   function tailEase(t){ return (p3io(U0 + (1 - U0) * t) - E0) / (1 - E0); }
-  var S0 = { Y: 709.2, s: 1.186 }, S1 = { Y: 700, s: 1.15 };       /* départ (r1, après dérive) → arrivée (r2) */
-  tl.fromTo(c, { w0: 1 - E0, w1: E0, w2: 0, w3: 0, X: 540, Y: S0.Y + (S1.Y - S0.Y) * E0, s: S0.s + (S1.s - S0.s) * E0, blur: 0 },
-    { w0: 0, w1: 1, Y: S1.Y, s: S1.s, duration: 0.20, ease: tailEase, onUpdate: c.apply }, 0);
+  /* arrivée du cran : x 240 (X 560), ligne r2 à y 700, échelle 1,15 ; r = part restante du départ (1 - power3.inOut) */
+  tl.fromTo(c, { w0: 0, w1: 1, w2: 0, w3: 0, X: 560, Y: 700, s: 1.15, blur: 0, r: 1 - E0 },
+    { r: 0, duration: 0.20, ease: tailEase, onUpdate: c.apply }, 0);
   /* dérive 0.20 à 1.40 : échelle +0,02/s */
   tl.fromTo(c, { s: 1.15 }, { s: 1.174, duration: 1.20, ease: "none", onUpdate: c.apply, immediateRender: false }, 0.20);
   /* 1.40 à 2.10 : cran vers la photo (le téléphone redescend), échelle → 1,30 */
-  tl.fromTo(c, { w1: 1, w2: 0, X: 540, Y: 700, s: 1.174 }, { w1: 0, w2: 1, X: 540, Y: 520, s: 1.30, duration: 0.70, ease: "power3.inOut", onUpdate: c.apply, immediateRender: false }, 1.40);
+  tl.fromTo(c, { w1: 1, w2: 0, X: 560, Y: 700, s: 1.174 }, { w1: 0, w2: 1, X: 540, Y: 520, s: 1.30, duration: 0.70, ease: "power3.inOut", onUpdate: c.apply, immediateRender: false }, 1.40);
   /* dérive 2.10 à 4.40 : échelle +0,03/s, x -4 px/s */
   tl.fromTo(c, { X: 540, s: 1.30 }, { X: 530.8, s: 1.369, duration: 2.30, ease: "none", onUpdate: c.apply, immediateRender: false }, 2.10);
   /* 4.40 à 5.20 : plongée power2.in vers 3,40 centrée sur les vases, flou 0 → 6 → 0 */
@@ -378,6 +370,7 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   tl.to(N4, { scale: 1.06, duration: 0.10, ease: "power2.out" }, 4.00);
   tl.to(N4, { scale: 1, duration: 0.10, ease: "power2.in" }, 4.10);
   /* 4.30 les annotations s'effacent vite */
+  tl.to(link, { opacity: 0, duration: 0.15, ease: "power2.in" }, 4.30);
   tl.to([A1, N1, A2, A2l, N2, A3, A4, A4l, N4], { opacity: 0, duration: 0.15, ease: "power2.in" }, 4.30);
   /* 4.75 l'écran s'éteint : calque .off 0 → 1 */
   tl.fromTo(P.off, { opacity: 0 }, { opacity: 1, duration: 0.30, ease: "power2.inOut", immediateRender: false }, 4.75);
