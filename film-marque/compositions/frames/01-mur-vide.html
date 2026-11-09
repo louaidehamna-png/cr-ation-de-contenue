@@ -204,17 +204,30 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   emCamTo(tl, cam, 2900, 2050, 1.10, 4.90, 0.85, "power3.inOut", 6);
 
   /* ---------- P1 : le compte au crayon et « 6 mois » ---------- */
-  /* tally : 5 traits (60 u chacun), la barre (174,6 u), le sixième (60 u) ; total 534,6 u, pathLength 1 */
-  var tallyPath = W.tally.querySelector(".em-pen");
-  var TOT = 534.6;
-  function tallyTo(drawn, at, dur){ tl.to(tallyPath, { strokeDashoffset: 1 - drawn / TOT, duration: dur, ease: "power2.out", autoRound: false }, at); }
-  tallyTo(59, 0.05, 0.12);
-  tallyTo(119, 0.20, 0.12);
-  tallyTo(179, 0.35, 0.12);
-  tallyTo(239, 0.50, 0.12);
-  tallyTo(299, 0.62, 0.12);
-  tallyTo(474, 0.76, 0.16);
-  tallyTo(TOT, 1.10, 0.12);
+  /* le tiret de SVG repart à chaque sous-tracé : on scinde le tracé du kit (même style) pour tracer trait par trait */
+  function s01Split(holder, groups){
+    var src = holder.querySelector(".em-pen");
+    var parts = src.getAttribute("d").split(/(?=M)/).map(function(q){ return q.trim(); });
+    var out = groups.map(function(g){
+      var c = src.cloneNode(false);
+      c.setAttribute("d", g.map(function(i){ return parts[i]; }).join(" "));
+      src.parentNode.insertBefore(c, src);
+      return c;
+    });
+    src.parentNode.removeChild(src);
+    return out;
+  }
+  function pen(el, at, dur){ tl.to(el, { strokeDashoffset: 0, duration: dur, ease: "power2.out", autoRound: false }, at); }
+
+  /* le compte : 5 traits, la barre, le sixième */
+  var T = s01Split(W.tally, [[0], [1], [2], [3], [4], [5], [6]]);
+  pen(T[0], 0.05, 0.12);
+  pen(T[1], 0.20, 0.12);
+  pen(T[2], 0.35, 0.12);
+  pen(T[3], 0.50, 0.12);
+  pen(T[4], 0.62, 0.12);
+  pen(T[5], 0.76, 0.16);
+  pen(T[6], 1.10, 0.12);
   tl.to(W.tally, { opacity: 0.8, duration: 0.4, ease: "power1.out" }, 1.90);
 
   /* « 6 mois » : trop grand x1,2, flou 8 -> net en 0,2 s */
@@ -222,12 +235,13 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
     { opacity: 0, scale: 1.2, rotation: -3, filter: "blur(8px)" },
     { opacity: 1, scale: 1, rotation: -3, filter: "blur(0px)", duration: 0.2, ease: "expo.out", immediateRender: false }, 0.30);
 
-  /* repères : 4 coins (8 x 30 u = 240 u) puis la croix (280 u) ; total 520 u */
-  var marksPath = W.marks.querySelector(".em-pen");
-  var MT = 520;
-  tl.to(marksPath, { strokeDashoffset: 1 - 179 / MT, duration: 0.9, ease: "none", autoRound: false }, 1.40);
-  tl.to(marksPath, { strokeDashoffset: 1 - 239 / MT, duration: 0.18, ease: "power2.out", autoRound: false }, 2.52);
-  tl.to(marksPath, { strokeDashoffset: 0, duration: 0.25, ease: "power2.out", autoRound: false }, 3.10);
+  /* repères : 4 coins puis la croix centrale */
+  var M = s01Split(W.marks, [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]);
+  pen(M[0], 1.40, 0.28);
+  pen(M[1], 1.70, 0.28);
+  pen(M[2], 2.00, 0.28);
+  pen(M[3], 2.52, 0.18);
+  pen(M[4], 3.10, 0.25);
   /* 4.86 « vide. » : les repères pâlissent d'un coup */
   tl.to(W.marks, { opacity: 0.55, duration: 0.15, ease: "power2.out" }, 4.86);
 

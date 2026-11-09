@@ -1,7 +1,16 @@
 <template>
 <div id="root" data-composition-id="05-charge-vases" data-width="1080" data-height="1920" data-start="0" data-duration="5.2">
 <script src="assets/gsap.min.js"></script>
-<style id="s05-em-kit" data-kit="em-kit">
+  Chaque séquence recopie À L'IDENTIQUE le bloc <style id="s08-em-kit" data-kit="em-kit"> et le bloc <script id="em-kit-js"> ci-dessous
+  (seul « assets/ » devient « assets/ »), puis construit sa scène avec ces fonctions. Ne rien redessiner à la main.
+
+  Coordonnées du mur en u (1 u = 1 px à l'échelle 1). Caméra : emCam(x, y, s) met le point (x, y) du mur au centre de
+  l'image (540, 960) à l'échelle s. Tous les ids sont préfixés par p (ex. « s03 ») : emBuildWall(parent, "s03", …).
+  Ouvrir ce fichier dans un navigateur montre un aperçu de chaque élément (bas du fichier, partie DÉMO, à ne pas copier).
+-->
+<html lang="fr"><head><meta charset="utf-8"><title>Kit du mur</title>
+<script src="assets/gsap.min.js"></script>
+<style id="s08-em-kit" data-kit="em-kit">
 @font-face{font-family:"Inter";font-weight:400;src:url("assets/fonts/Inter-Regular.otf") format("opentype")}
 @font-face{font-family:"Inter";font-weight:500;src:url("assets/fonts/Inter-Medium.otf") format("opentype")}
 @font-face{font-family:"Inter";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
@@ -66,7 +75,16 @@
 .em-cursor{position:absolute;left:0;top:0;width:54px;height:70px;transform-origin:8px 6px;opacity:0;filter:drop-shadow(0 6px 10px rgba(44,36,32,.35))}
 .em-ripple{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:5px solid #a97c50;opacity:0}
 </style>
-<script id="s05-em-kit-js" data-kit="em-kit-js">
+  Chaque séquence recopie À L'IDENTIQUE le bloc <style id="em-kit"> et le bloc <script id="s08-em-kit-js" data-kit="em-kit-js"> ci-dessous
+  (seul « assets/ » devient « assets/ »), puis construit sa scène avec ces fonctions. Ne rien redessiner à la main.
+
+  Coordonnées du mur en u (1 u = 1 px à l'échelle 1). Caméra : emCam(x, y, s) met le point (x, y) du mur au centre de
+  l'image (540, 960) à l'échelle s. Tous les ids sont préfixés par p (ex. « s03 ») : emBuildWall(parent, "s03", …).
+  Ouvrir ce fichier dans un navigateur montre un aperçu de chaque élément (bas du fichier, partie DÉMO, à ne pas copier).
+-->
+<html lang="fr"><head><meta charset="utf-8"><title>Kit du mur</title>
+<script src="assets/gsap.min.js"></script>
+<script id="s08-em-kit-js" data-kit="em-kit-js">
 /* ---------- utilitaires ---------- */
 function emEl(tag, cls, parent, id, html){const e=document.createElement(tag);if(cls)e.className=cls;if(id)e.id=id;if(html!==undefined)e.innerHTML=html;if(parent)parent.appendChild(e);return e}
 function emSvg(parent, id, w, h, inner, x, y){const d=emEl("div","em-svg",parent,id);d.style.left=(x||0)+"px";d.style.top=(y||0)+"px";d.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="overflow:visible">'+inner+'</svg>';return d}
@@ -318,11 +336,11 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* dérive 0.20 à 1.40 : échelle +0,02/s */
   tl.fromTo(c, { s: 1.15 }, { s: 1.174, duration: 1.20, ease: "none", onUpdate: c.apply, immediateRender: false }, 0.20);
   /* 1.40 à 2.10 : cran vers la photo (le téléphone redescend), échelle → 1,30 */
-  tl.fromTo(c, { w1: 1, w2: 0, X: 540, Y: 700, s: 1.174 }, { w1: 0, w2: 1, X: 540, Y: 640, s: 1.30, duration: 0.70, ease: "power3.inOut", onUpdate: c.apply, immediateRender: false }, 1.40);
+  tl.fromTo(c, { w1: 1, w2: 0, X: 540, Y: 700, s: 1.174 }, { w1: 0, w2: 1, X: 540, Y: 520, s: 1.30, duration: 0.70, ease: "power3.inOut", onUpdate: c.apply, immediateRender: false }, 1.40);
   /* dérive 2.10 à 4.40 : échelle +0,03/s, x -4 px/s */
   tl.fromTo(c, { X: 540, s: 1.30 }, { X: 530.8, s: 1.369, duration: 2.30, ease: "none", onUpdate: c.apply, immediateRender: false }, 2.10);
   /* 4.40 à 5.20 : plongée power2.in vers 3,40 centrée sur les vases, flou 0 → 6 → 0 */
-  tl.fromTo(c, { w2: 1, w3: 0, X: 530.8, Y: 640, s: 1.369 }, { w2: 0, w3: 1, X: 540, Y: 960, s: 3.40, duration: 0.80, ease: "power2.in", onUpdate: c.apply, immediateRender: false }, 4.40);
+  tl.fromTo(c, { w2: 1, w3: 0, X: 530.8, Y: 520, s: 1.369 }, { w2: 0, w3: 1, X: 540, Y: 960, s: 3.40, duration: 0.80, ease: "power2.in", onUpdate: c.apply, immediateRender: false }, 4.40);
   tl.fromTo(c, { blur: 0 }, { blur: 6, duration: 0.40, ease: "power2.in", onUpdate: c.apply, immediateRender: false }, 4.40);
   tl.fromTo(c, { blur: 6 }, { blur: 0, duration: 0.40, ease: "power2.out", onUpdate: c.apply, immediateRender: false }, 4.80);
 
