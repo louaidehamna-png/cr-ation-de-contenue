@@ -232,7 +232,7 @@ def build():
     # rendu
     sc.render.engine = 'BLENDER_EEVEE'
     ee = sc.eevee
-    for attr, val in (('use_shadows', True), ('taa_render_samples', 32), ('use_raytracing', False)):
+    for attr, val in (('use_shadows', True), ('taa_render_samples', int(os.environ.get('SAMPLES', 32))), ('use_raytracing', False)):
         if hasattr(ee, attr): setattr(ee, attr, val)
     sc.view_settings.view_transform = 'AgX'
     sc.render.image_settings.file_format = 'PNG'

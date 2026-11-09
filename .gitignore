@@ -1,3 +1,6 @@
 node_modules/
 vasagle-video/out/
 __pycache__/
+vasagle-video/montage/assets/*.mp4
+vasagle-video/montage/.hyperframes/
+vasagle-video/montage/renders/

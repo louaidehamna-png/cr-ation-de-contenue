@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/Inter-Regular.otf") format("opentype"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/Inter-Medium.otf") format("opentype"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/Inter-SemiBold.otf") format("opentype"); }
+      :root {
+        --creme: #f5f0e8;
+        --brun: #3a2f2a;
+        --brun-fonce: #2c2420;
+        --blanc: #ffffff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--brun-fonce); }
+      #root { position: relative; width: 1080px; height: 1920px; font-family: "Inter", sans-serif; }
+      .clip { position: absolute; inset: 0; }
+      video.clip { width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* Accroches : cartouche crème, texte brun foncé */
+      .tag {
+        position: absolute; left: 50%; transform: translateX(-50%);
+        background: var(--creme); color: var(--brun-fonce);
+        font-weight: 500; font-size: 56px; line-height: 1.15; letter-spacing: -0.01em;
+        padding: 22px 36px; border-radius: 18px; white-space: nowrap; text-align: center;
+      }
+      .tag.big { font-size: 76px; font-weight: 600; padding: 28px 44px; }
+      .tag.small { font-size: 48px; }
+
+      /* Coupe du mur : texte blanc sur fond sombre */
+      .col { position: absolute; width: 470px; text-align: center; color: var(--blanc); }
+      .col .k { font-size: 52px; font-weight: 600; line-height: 1.15; }
+      .col .v { font-size: 48px; font-weight: 400; line-height: 1.2; margin-top: 8px; }
+      .col.left { left: 40px; } .col.right { right: 40px; }
+
+      /* Cotes */
+      svg.cotes { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: visible; }
+      svg.cotes line { stroke: var(--brun-fonce); stroke-width: 4; stroke-linecap: round; }
+      svg.cotes text { font-family: "Inter", sans-serif; font-weight: 500; font-size: 40px; fill: var(--brun-fonce); }
+      svg.cotes rect { fill: var(--creme); }
+
+      .mention {
+        position: absolute; left: 40px; bottom: 120px;
+        font-size: 32px; font-weight: 400; color: var(--brun-fonce);
+        background: rgba(245, 240, 232, 0.85); padding: 10px 18px; border-radius: 10px;
+      }
+
+      /* Carte de fin */
+      #fin { background: var(--brun); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; }
+      #logo {
+        width: 300px; height: 300px; border-radius: 50%; border: 6px solid var(--creme);
+        color: var(--creme); font-size: 120px; font-weight: 600; letter-spacing: -0.02em;
+        display: flex; align-items: center; justify-content: center;
+      }
+      #slogan { margin-top: 90px; width: 860px; text-align: center; color: var(--creme); font-size: 54px; font-weight: 500; line-height: 1.25; }
+      #url { margin-top: 70px; color: var(--creme); font-size: 48px; font-weight: 400; letter-spacing: 0.01em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+
+      <!-- 3D (Blender), muet -->
+      <video id="clipA" class="clip" src="assets/clipA.mp4" muted playsinline data-start="0" data-duration="15" data-track-index="0"></video>
+      <video id="clipB" class="clip" src="assets/clipB.mp4" muted playsinline data-start="15" data-duration="9" data-track-index="0"></video>
+
+      <!-- 0-3,5 s -->
+      <div id="t-hook" class="tag big" style="top: 300px" data-start="0" data-duration="3.5" data-track-index="1">Mur plein ou creux ?</div>
+
+      <!-- 3,5-10 s : coupe -->
+      <div id="g-k" class="col left" style="top: 230px" data-start="3.5" data-duration="6.5" data-track-index="1">
+        <div class="k">Son sourd</div><div class="v">= mur plein</div>
+      </div>
+      <div id="d-k" class="col right" style="top: 230px" data-start="3.5" data-duration="6.5" data-track-index="2">
+        <div class="k">Son creux</div><div class="v">= cloison</div>
+      </div>
+      <div id="g-c" class="col left" style="top: 1420px" data-start="3.5" data-duration="6.5" data-track-index="3">
+        <div class="v">Chevilles<br />à expansion</div>
+      </div>
+      <div id="d-c" class="col right" style="top: 1420px" data-start="3.5" data-duration="6.5" data-track-index="4">
+        <div class="v">Chevilles pour<br />plaque de plâtre</div>
+      </div>
+
+      <!-- 10-15 s : arrivée des étagères -->
+      <div id="t-lot" class="tag big" style="top: 220px" data-start="10" data-duration="5" data-track-index="1">Lot de 3 VASAGLE</div>
+      <svg id="cotes" class="cotes clip" viewBox="0 0 1080 1920" data-start="10" data-duration="5" data-track-index="2">
+        <g id="c30"><line x1="340" y1="720" x2="770" y2="720" /><rect x="495" y="740" width="120" height="54" rx="10" /><text x="555" y="782" text-anchor="middle">30 cm</text></g>
+        <g id="c35"><line x1="282" y1="1080" x2="770" y2="1080" /><rect x="466" y="1100" width="120" height="54" rx="10" /><text x="526" y="1142" text-anchor="middle">35 cm</text></g>
+        <g id="c40"><line x1="210" y1="1430" x2="756" y2="1430" /><rect x="423" y="1450" width="120" height="54" rx="10" /><text x="483" y="1492" text-anchor="middle">40 cm</text></g>
+      </svg>
+      <div id="t-prof" class="tag small" style="top: 1640px" data-start="10" data-duration="5" data-track-index="3">12 cm de profondeur</div>
+
+      <!-- 15-20 s : plan serré -->
+      <div id="t-kg" class="tag" style="top: 260px" data-start="15" data-duration="5" data-track-index="1">5 kg max par étagère</div>
+      <div id="t-mont" class="tag small" style="top: 400px" data-start="15" data-duration="5" data-track-index="2">2 montages possibles</div>
+      <div id="t-obj" class="tag small" style="top: 1560px" data-start="15" data-duration="5" data-track-index="3">Objets non inclus</div>
+
+      <!-- mention 3D pendant toute la partie étagères -->
+      <div id="t-3d" class="mention" data-start="10" data-duration="14" data-track-index="5">Rendu 3D, illustration</div>
+
+      <!-- 20-24 s : prix -->
+      <div id="t-prix" class="tag big" style="top: 260px; font-size: 110px" data-start="20" data-duration="4" data-track-index="1">49,90 €</div>
+      <div id="t-livr" class="tag" style="top: 1520px" data-start="20" data-duration="4" data-track-index="2">Livraison offerte en France</div>
+
+      <!-- 24-30 s : fin -->
+      <div id="fin" class="clip" data-start="24" data-duration="6" data-track-index="0">
+        <div id="logo">ÉM</div>
+        <div id="slogan">Des étagères murales pour sublimer vos murs et finir vos pièces.</div>
+        <div id="url">etageres-murales.fr</div>
+      </div>
+
+      <!-- Voix off : décommenter quand assets/voix.mp3 est prêt
+      <audio id="voix" src="assets/voix.mp3" data-start="0" data-duration="26" data-track-index="6"></audio>
+      -->
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const pop = (sel, at, out) => {
+        tl.fromTo(sel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, at);
+        if (out !== undefined) tl.to(sel, { opacity: 0, duration: 0.3, ease: "power2.in" }, out);
+      };
+
+      pop("#t-hook", 0.3, 3.1);
+
+      // coupe : minutage calé sur les impacts du clip A (4,6 s et 7,1 s) et les chevilles (6,5 s et 8,8 s)
+      tl.set(["#g-k", "#d-k", "#g-c", "#d-c"], { opacity: 0 }, 3.5);
+      pop("#g-k", 4.6); pop("#g-c", 6.5); pop("#d-k", 7.1); pop("#d-c", 8.4);
+      tl.to(["#g-k", "#d-k", "#g-c", "#d-c"], { opacity: 0, duration: 0.3 }, 9.85);
+
+      pop("#t-lot", 10.2, 14.6);
+      // cotes qui se tracent
+      tl.set("#cotes rect, #cotes text", { opacity: 0 }, 10);
+      [["#c30", 11.4], ["#c35", 11.9], ["#c40", 12.4]].forEach(([g, at]) => {
+        const ln = document.querySelector(g + " line");
+        const L = ln.x2.baseVal.value - ln.x1.baseVal.value;
+        tl.fromTo(ln, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, at);
+        tl.to([g + " rect", g + " text"], { opacity: 1, duration: 0.3 }, at + 0.4);
+      });
+      tl.to("#cotes", { opacity: 0, duration: 0.3 }, 14.6);
+      pop("#t-prof", 13.0, 14.6);
+
+      pop("#t-kg", 15.3, 19.7);
+      pop("#t-mont", 15.8, 19.7);
+      pop("#t-obj", 17.9, 19.7);
+      tl.fromTo("#t-3d", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 10.2);
+
+      pop("#t-prix", 20.2);
+      pop("#t-livr", 20.6);
+
+      tl.fromTo("#fin", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 24);
+      tl.fromTo("#logo", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 24.3);
+      pop("#slogan", 25.0); pop("#url", 25.6);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
