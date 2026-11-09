@@ -7,3 +7,11 @@ vasagle-video/montage/renders/
 vasagle-video/tuto-mur/.hyperframes/
 vasagle-video/tuto-mur/renders/
 produits-visuels.zip
+.env
+*/renders/
+*/snapshots/
+examples/*/renders/
+examples/*/snapshots/
+.hyperframes/
+_references/
+.DS_Store
