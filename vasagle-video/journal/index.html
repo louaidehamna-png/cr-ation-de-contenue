@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Journal vidéo VASAGLE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Charte Étagères Murales : crème, brun, sans accent vif. Mise en page : une colonne chronologique, images à côté du texte. */
+    --creme: #f5f0e8;
+    --papier: #fbf8f3;
+    --brun: #3a2f2a;
+    --brun-fonce: #2c2420;
+    --sable: #c8a27c;
+    --trait: #e2d8ca;
+    --ok: #4f6b45;
+    --encours: #9a6a2f;
+    --display: "Playfair Display", Georgia, serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--creme); color: var(--brun-fonce); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 48px 20px 80px; display: grid; gap: 40px; }
+  header { display: grid; gap: 14px; }
+  .marque { display: flex; align-items: center; gap: 12px; font-family: var(--display); font-size: 20px; color: var(--brun); }
+  .marque b { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 9px; background: var(--sable); color: var(--brun-fonce); font-family: var(--body); font-weight: 600; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; text-wrap: balance; }
+  .lead { max-width: 65ch; color: var(--brun); }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 28px; text-wrap: balance; }
+  h3 { font-size: 19px; font-weight: 600; text-wrap: balance; }
+
+  .etat { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+  .tuile { background: var(--papier); border: 1px solid var(--trait); border-radius: 12px; padding: 16px 18px; display: grid; gap: 6px; }
+  .tuile .lbl { font-size: 14px; color: var(--brun); }
+  .tuile .val { font-weight: 600; }
+  .pill { justify-self: start; font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 99px; color: #fff; }
+  .pill.ok { background: var(--ok); }
+  .pill.cours { background: var(--encours); }
+
+  ol.etapes { list-style: none; display: grid; gap: 28px; counter-reset: e; }
+  ol.etapes > li { counter-increment: e; display: grid; grid-template-columns: 52px 1fr; gap: 16px; }
+  ol.etapes > li::before { content: counter(e, decimal-leading-zero); font-family: var(--display); font-size: 24px; color: var(--sable); line-height: 1.3; }
+  .corps { display: grid; gap: 12px; border-bottom: 1px solid var(--trait); padding-bottom: 28px; }
+  .corps p, .corps li { max-width: 68ch; }
+  .corps ul { padding-left: 20px; display: grid; gap: 4px; }
+  figure { display: grid; gap: 8px; }
+  figure img, figure video { max-width: 100%; border-radius: 10px; border: 1px solid var(--trait); background: var(--papier); display: block; }
+  figcaption { font-size: 14px; color: var(--brun); max-width: 70ch; }
+  .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; align-items: start; }
+  .alerte { background: #f3e6d3; border-left: 4px solid var(--encours); padding: 12px 16px; border-radius: 6px; max-width: 70ch; }
+  table { border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; width: 100%; }
+  .table { overflow-x: auto; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--trait); vertical-align: top; }
+  th { font-weight: 600; color: var(--brun); }
+  code { font-size: 14px; background: var(--papier); border: 1px solid var(--trait); padding: 1px 6px; border-radius: 5px; }
+  .video-portrait { max-width: 320px; }
+  @media (max-width: 480px) { ol.etapes > li { grid-template-columns: 1fr; gap: 4px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="marque"><b>É</b> Étagères Murales</div>
+  <h1>Vidéo « Mur plein ou mur creux ? » : journal de fabrication</h1>
+  <p class="lead">Ce qui a été fait le 9 novembre 2026 pour la vidéo de 30 s en 9:16 : 15 s éducatives sur les chevilles, puis le lot de 3 étagères VASAGLE. La 3D est faite avec Blender, le montage avec HyperFrames, la voix avec ElevenLabs.</p>
+</header>
+
+<section class="etat" aria-label="État du projet">
+  <div class="tuile"><span class="lbl">Scène 3D Blender</span><span class="val">Modélisée et validée</span><span class="pill ok">Fait</span></div>
+  <div class="tuile"><span class="lbl">Montage HyperFrames</span><span class="val">Textes, cotes, prix, fin</span><span class="pill ok">Fait</span></div>
+  <div class="tuile"><span class="lbl">Voix off (Théo)</span><span class="val">24 s, recalée sur les scènes</span><span class="pill ok">Fait</span></div>
+  <div class="tuile"><span class="lbl">Rendu 3D final</span><span class="val">720 images en 540x960</span><span class="pill cours">En cours</span></div>
+</section>
+
+<section style="display:grid; gap:24px">
+<h2>Étapes</h2>
+<ol class="etapes">
+
+<li><div class="corps">
+  <h3>Installation des outils</h3>
+  <ul>
+    <li>HyperFrames 0.9.26 installé dans le dépôt (montage HTML vers MP4).</li>
+    <li>Blender 5.2.3 installé en module Python (<code>bpy</code>), utilisé sans interface. Pas de GPU dans cet environnement : le rendu Eevee tourne sur le processeur.</li>
+  </ul>
+</div></li>
+
+<li><div class="corps">
+  <h3>Premier test de cadrage</h3>
+  <p>Script <code>scene.py</code> : mur beige, onde, coupe du mur (plein à gauche, cloison à droite), chevilles, supports, plateaux, livre et vase. Dix images de contrôle en 480x854.</p>
+  <figure><img src="img/01-test-v1.jpg" alt="Planche de 10 images du premier test : mur, coupe du mur, supports noirs sans plateaux" loading="lazy" />
+  <figcaption>Problèmes vus : supports en équerre simple, deux plateaux sur trois absents, onde trop pâle, coupe trop lointaine.</figcaption></figure>
+</div></li>
+
+<li><div class="corps">
+  <h3>Supports refaits d'après tes photos</h3>
+  <p>Tes photos montrent un triangle fermé en bande d'acier, coins arrondis, plaque murale avec trous en serrure, bras horizontal sous le plateau. Le support est remodélisé ainsi. Pour le retournement, il glisse hors du plateau, pivote et revient : le plateau passe dans le triangle.</p>
+  <figure><img src="img/02-test-v2.jpg" alt="Deuxième test : supports triangulaires corrects, plateaux toujours mal placés" loading="lazy" />
+  <figcaption>Les plateaux restaient au centre de la scène. Cause : la commande qui fige l'échelle figeait aussi la position. Corrigé.</figcaption></figure>
+</div></li>
+
+<li><div class="corps">
+  <h3>Cadrage validé</h3>
+  <p>Ordre de l'infographie : 30 cm en haut, 35 au milieu, 40 en bas, en décalé. Hauteur 11 cm, profondeur 12 cm. Coupe du mur plus plongeante, chevilles agrandies pour la lisibilité.</p>
+  <figure><img src="img/03-test-v3.jpg" alt="Troisième test : coupe du mur lisible, trois étagères posées, retournement des supports, livre et vase" loading="lazy" />
+  <figcaption>Ligne 1 : coupe du mur et montage. Ligne 2 : retournement bas puis haut, objets, plan d'ensemble.</figcaption></figure>
+</div></li>
+
+<li><div class="corps">
+  <h3>Charge maximale vérifiée sur Shopify</h3>
+  <p>Fiche « Étagères murales flottantes lot de 3 VASAGLE » : 49,90 €, couleur Marron vintage, hauteur 11 cm. Le texte de l'infographie des dimensions indique <b>5 kg par étagère</b>. C'est ce chiffre qui est dans la vidéo.</p>
+  <p class="alerte">L'infographie que tu m'as envoyée affiche 10 kg. Si c'est l'image en ligne sur la fiche, elle contredit son propre texte : à corriger sur Shopify.</p>
+</div></li>
+
+<li><div class="corps">
+  <h3>Texture du bois tirée de ta photo</h3>
+  <p>Le chant du plateau est redressé, recadré et assemblé en miroir pour se répéter sans raccord visible. La tuile représente environ 24 x 4,5 cm de bois réel.</p>
+  <div class="duo">
+    <figure><img src="img/04b-chant-photo.jpg" alt="Gros plan du chant du plateau sur la photo de détail" loading="lazy" /><figcaption>Source : photo de détail du support.</figcaption></figure>
+    <figure><img src="img/04c-tuile.jpg" alt="Tuile de texture bois en miroir" loading="lazy" /><figcaption>Tuile utilisée par Blender.</figcaption></figure>
+  </div>
+  <figure><img src="img/04-bois.jpg" alt="Rendu des étagères avec la texture bois réelle" loading="lazy" /><figcaption>Résultat dans la scène 3D.</figcaption></figure>
+</div></li>
+
+<li><div class="corps">
+  <h3>Logo</h3>
+  <p>Proposition C de ton PDF, version fond sombre : monogramme « É » et texte « Étagères Murales », détourés pour la carte de fin brune.</p>
+  <figure><img src="img/05-logo.jpg" alt="Monogramme É sable et texte Étagères Murales sur fond brun" loading="lazy" /></figure>
+</div></li>
+
+<li><div class="corps">
+  <h3>Voix off</h3>
+  <p>Voix « Théo » sur ElevenLabs, une prise de 24 s (412 crédits). Elle est découpée phrase par phrase et chaque phrase est placée sur sa scène.</p>
+  <div class="table"><table>
+    <thead><tr><th>Dans la vidéo</th><th>Phrase</th></tr></thead>
+    <tbody>
+      <tr><td>0,25 s</td><td>Avant de percer : votre mur est plein ou creux ?</td></tr>
+      <tr><td>3,55 s</td><td>Frappez dessus.</td></tr>
+      <tr><td>4,45 s</td><td>Son sourd : mur plein, chevilles à expansion.</td></tr>
+      <tr><td>7,15 s</td><td>Son creux : cloison, chevilles pour plaque de plâtre.</td></tr>
+      <tr><td>10,1 s</td><td>Ensuite, trois étagères VASAGLE : 30, 35 et 40 centimètres, 12 de profondeur.</td></tr>
+      <tr><td>15,4 s</td><td>Jusqu'à 5 kilos par étagère. Accessoires de montage et notice en français inclus.</td></tr>
+      <tr><td>20,15 s</td><td>49 euros 90, livraison offerte en France.</td></tr>
+      <tr><td>24,6 s</td><td>Lien dans la bio.</td></tr>
+    </tbody>
+  </table></div>
+</div></li>
+
+<li><div class="corps">
+  <h3>Montage HyperFrames</h3>
+  <p>Composition 1080x1920 à 30 i/s : clips 3D muets, accroches en cartouche crème, cotes qui se tracent, mention « Rendu 3D, illustration » de 10 à 24 s, « Objets non inclus », prix, carte de fin. Vérification automatique passée (lisibilité, débordements, mise en page).</p>
+  <figure><img src="img/06-montage.jpg" alt="Planche de 7 images du montage : accroche, textes de la coupe, cotes, poids, prix, carte de fin" loading="lazy" />
+  <figcaption>Images à 1,5 / 5 / 9 / 13 / 17 / 22 / 27 s. La 3D y est provisoire.</figcaption></figure>
+  <div class="duo">
+    <figure><img src="img/07-cotes.jpg" alt="Cotes 30, 35 et 40 cm tracées sous chaque étagère" loading="lazy" /><figcaption>Cotes déplacées sous les supports, mention 3D remontée en haut à gauche.</figcaption></figure>
+    <figure><video class="video-portrait" src="apercu-montage.mp4" controls playsinline preload="metadata"></video><figcaption>Aperçu du montage avec la voix. La coupe du mur (3,5 à 10 s) n'y est pas encore.</figcaption></figure>
+  </div>
+</div></li>
+
+<li><div class="corps">
+  <h3>Rendu final en cours</h3>
+  <p>Les deux clips 3D se rendent en 540x960 avec la vraie texture, puis sont agrandis en 1080x1920 au montage. En 1080x1920 natif, le rendu prendrait environ 8 h sur ce processeur ; chez toi, la RTX 3060 peut le faire en natif.</p>
+  <p>Reste à faire : assembler et t'envoyer <code>final.mp4</code>.</p>
+</div></li>
+
+</ol>
+</section>
+
+<section style="display:grid; gap:12px">
+  <h2>Fichiers dans le dépôt</h2>
+  <p>Branche <code>claude/trusting-tesla-7t8d8z</code> du dépôt <code>cr-ation-de-contenue</code> :</p>
+  <ul style="padding-left:20px; display:grid; gap:4px">
+    <li><code>vasagle-video/scene.py</code> : la scène Blender et son animation.</li>
+    <li><code>vasagle-video/assets/detail-support.png</code> : la tuile de bois.</li>
+    <li><code>vasagle-video/montage/index.html</code> : le montage HyperFrames.</li>
+    <li><code>vasagle-video/montage/assets/</code> : logo, voix, polices.</li>
+  </ul>
+</section>
+
+</div>
+</body>
+</html>
