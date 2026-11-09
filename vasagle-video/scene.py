@@ -186,7 +186,7 @@ def build():
     # Livre + vase (non inclus) sur l'étagère du haut, apparaissent ~3,6 s dans le clip B
     zt = pz + T / 2
     book = box('Livre', (0.03, 0.11, 0.17), (-0.02, -0.062, zt + 0.085), M['livre']); bevel(book, 0.003)
-    pages = box('Pages', (0.026, 0.104, 0.162), (-0.02, -0.0655, zt + 0.085), M['pages'])
+    pages = box('Pages', (0.026, 0.104, 0.162), (-0.02, -0.0585, zt + 0.085), M['pages'])
     vase = make_vase('Vase', M['vase']); vase.location = (0.08, -0.06, zt)
     for i, o in enumerate((book, pages, vase)):
         f = B0 + 84 + (0 if o is not vase else 8)
@@ -214,14 +214,14 @@ def build():
 
     # --- caméras + découpage ---
     camA = camera('Cam_Mur', (0.6, -1.95, 1.5), (0.03, 0, 1.27), 50, focus=2.05, fstop=8)
-    camCut = camera('Cam_Coupe', (20.0, -0.72, 1.36), (20.0, 0.07, 0.6), 35, focus=1.05, fstop=8)
+    camCut = camera('Cam_Coupe', (20.0, -0.72, 1.36), (20.0, 0.07, 0.6), 30, focus=1.05, fstop=8)
     camB = camera('Cam_B', (0.42, -0.72, 1.70), (0.10, -0.04, 1.56), 32, focus=0.75, fstop=4)
     # Clip B : plan serré (0-5 s) puis recul vers le plan d'ensemble (5-9 s)
     key(camB, 'location', B0 + 140, camB.location.copy())
     rot_close = camB.rotation_euler.copy(); camB.keyframe_insert('rotation_euler', frame=B0 + 140)
     camB.location = (0.6, -2.05, 1.5); look_at(camB, (0.03, 0, 1.27))
     camB.keyframe_insert('location', frame=B0 + 175); camB.keyframe_insert('rotation_euler', frame=B0 + 175)
-    key(camB, 'location', B1, Vector((0.55, -1.85, 1.48)))
+    key(camB, 'location', B1, Vector((0.5, -1.65, 1.45)))
     camB.data.dof.focus_distance = 0.75; camB.data.dof.keyframe_insert('focus_distance', frame=B0 + 140)
     camB.data.dof.focus_distance = 2.1; camB.data.dof.keyframe_insert('focus_distance', frame=B0 + 175)
 
