@@ -50,7 +50,7 @@ def wood_mat():
         t = nt.nodes.new('ShaderNodeTexImage'); t.image = bpy.data.images.load(img)
         t.projection = 'BOX'; t.projection_blend = 0.2
         tc = nt.nodes.new('ShaderNodeTexCoord'); mp = nt.nodes.new('ShaderNodeMapping')
-        mp.inputs['Scale'].default_value = (2.5, 2.5, 2.5)
+        mp.inputs['Scale'].default_value = (4.17, 22, 22)  # tuile = 24 cm x 4,5 cm
         nt.links.new(tc.outputs['Object'], mp.inputs['Vector']); nt.links.new(mp.outputs['Vector'], t.inputs['Vector'])
         nt.links.new(t.outputs['Color'], nt.nodes['Principled BSDF'].inputs['Base Color'])
     else:  # veinage procédural marron vintage (placeholder)

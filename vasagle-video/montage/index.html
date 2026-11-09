@@ -50,12 +50,9 @@
 
       /* Carte de fin */
       #fin { background: var(--brun); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; }
-      #logo {
-        width: 300px; height: 300px; border-radius: 50%; border: 6px solid var(--creme);
-        color: var(--creme); font-size: 120px; font-weight: 600; letter-spacing: -0.02em;
-        display: flex; align-items: center; justify-content: center;
-      }
-      #slogan { margin-top: 90px; width: 860px; text-align: center; color: var(--creme); font-size: 54px; font-weight: 500; line-height: 1.25; }
+      #logo { width: 300px; height: 300px; }
+      #logo-texte { margin-top: 60px; width: 760px; }
+      #slogan { margin-top: 110px; width: 860px; text-align: center; color: var(--creme); font-size: 54px; font-weight: 500; line-height: 1.25; }
       #url { margin-top: 70px; color: var(--creme); font-size: 48px; font-weight: 400; letter-spacing: 0.01em; }
     </style>
   </head>
@@ -106,14 +103,14 @@
 
       <!-- 24-30 s : fin -->
       <div id="fin" class="clip" data-start="24" data-duration="6" data-track-index="0">
-        <div id="logo">ÉM</div>
+        <img id="logo" src="assets/logo-em.png" alt="" />
+        <img id="logo-texte" src="assets/logo-texte.png" alt="Étagères Murales" />
         <div id="slogan">Des étagères murales pour sublimer vos murs et finir vos pièces.</div>
         <div id="url">etageres-murales.fr</div>
       </div>
 
-      <!-- Voix off : décommenter quand assets/voix.mp3 est prêt
-      <audio id="voix" src="assets/voix.mp3" data-start="0" data-duration="26" data-track-index="6"></audio>
-      -->
+      <!-- Voix off (Théo, ElevenLabs), phrases recalées sur les scènes -->
+      <audio id="voix" src="assets/voix.mp3" data-start="0" data-duration="30" data-track-index="6"></audio>
     </div>
     <script>
       window.__timelines = window.__timelines || {};
@@ -127,7 +124,7 @@
 
       // coupe : minutage calé sur les impacts du clip A (4,6 s et 7,1 s) et les chevilles (6,5 s et 8,8 s)
       tl.set(["#g-k", "#d-k", "#g-c", "#d-c"], { opacity: 0 }, 3.5);
-      pop("#g-k", 4.6); pop("#g-c", 6.5); pop("#d-k", 7.1); pop("#d-c", 8.4);
+      pop("#g-k", 4.5); pop("#g-c", 5.6); pop("#d-k", 7.1); pop("#d-c", 8.5);
       tl.to(["#g-k", "#d-k", "#g-c", "#d-c"], { opacity: 0, duration: 0.3 }, 9.85);
 
       pop("#t-lot", 10.2, 14.6);
@@ -152,6 +149,7 @@
 
       tl.fromTo("#fin", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 24);
       tl.fromTo("#logo", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 24.3);
+      pop("#logo-texte", 24.6);
       pop("#slogan", 25.0); pop("#url", 25.6);
 
       window.__timelines["main"] = tl;
