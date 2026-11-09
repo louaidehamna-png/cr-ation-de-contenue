@@ -178,13 +178,20 @@ if iris_at is not None:
         tl.to("#fxiris-ring", {{ opacity: 0, duration: 0.15 }}, {t(0.70)});
 '''
 anchor = re.search(r"(?m)^[ \t]*tl\.to\(\{\}, \{ duration: [0-9.]+ \}, 0\);", s)
-if not anchor:
+if leak_at is None and iris_at is None:
+    pass  # rien à ajouter au timeline principal (flash et iris joués dans les séquences)
+elif not anchor:
     raise SystemExit("assemble: full-span anchor tl.to({}, { duration: N }, 0); not found in index.html")
-s = s[:anchor.start()] + tl + s[anchor.start():]
+else:
+    s = s[:anchor.start()] + tl + s[anchor.start():]
 open(p, "w", encoding="utf-8").write(s)
 print("orchestrator layer patched:", ", ".join(k for k, v in (("audio", env.get("AUDIO")), ("flash", leak_at is not None),
       ("iris", iris_at is not None), ("paper bed", "paperbed" in s)) if v) or "nothing")
 EOF
+
+# GSAP en local (le CDN n'est pas joignable partout) : assets/gsap.min.js
+sed -i -E 's#https://cdn\.jsdelivr\.net/npm/gsap@[0-9.]+/dist/gsap\.min\.js#assets/gsap.min.js#g' index.html
+sed -i -E 's#(<script src="assets/gsap\.min\.js")[^>]*>#\1>#' index.html
 
 if [ "$RUN_LINT" = "1" ]; then
   npx hyperframes lint 2>&1 | grep -E "✗|error\(s\)|warning\(s\)" || echo "lint: no error reported"

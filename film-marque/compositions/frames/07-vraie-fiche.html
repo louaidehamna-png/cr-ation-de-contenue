@@ -134,7 +134,7 @@ function emBuildWall(parent,p,o){o=o||{};
   return {world:world,sofa:sofa,dresser:dr,pile:it,sketches:sk,marks:marks,months:months,tally:tally,shelves:shelves};
 }
 /* dessiner un trait au crayon (tous les .em-pen d'un élément) */
-function emPen(tl,el,at,dur){tl.to(el.querySelectorAll(".em-pen"),{strokeDashoffset:0,duration:dur||0.4,ease:"power2.out"},at)}
+function emPen(tl,el,at,dur){tl.to(el.querySelectorAll(".em-pen"),{strokeDashoffset:0,duration:dur||0.4,ease:"power2.out",autoRound:false},at)}
 
 /* ---------- le téléphone et ses pages ---------- */
 function emBuildPhone(parent,p){const ph=emEl("div","em-phone",parent,p+"-phone");const sc=emEl("div","screen",ph,p+"-screen");emEl("div","island",ph);const off=emEl("div","off",sc,p+"-off");return {phone:ph,screen:sc,off:off}}
@@ -184,6 +184,7 @@ function emCursor(parent,p){const c=emEl("div","em-cursor",parent,p+"-cursor",'<
 /* arrivée d'un seul mouvement de (x0, y0) à (x1, y1), puis clic direct à at+0.45 */
 function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);tl.to(k.cursor,{x:x1,y:y1,duration:0.45,ease:"power3.out"},at);tl.to(k.cursor,{scale:0.85,duration:0.06,yoyo:true,repeat:1},at+0.45);
   tl.set(k.ripple,{left:x1+8,top:y1+6},at+0.47);tl.fromTo(k.ripple,{scale:0.2,opacity:1},{scale:1.4,opacity:0,duration:0.5,ease:"power2.out",immediateRender:false},at+0.47)}
+/* em-expose */ Object.assign(window, {emBuildPhone, emBuildWall, emCam, emCamDrift, emCamSet, emCamTo, emCheckSvg, emClick, emCursor, emEl, emFaq, emNote, emPageEM, emPageFloue, emPen, emPos, emSub, emSubTL, emSvg}); /* /em-expose */
 </script>
   <script>
     (function () {

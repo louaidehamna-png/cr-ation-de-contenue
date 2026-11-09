@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #2c2420;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="45"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div
+        id="el-01-mur-vide"
+        class="scene"
+        data-composition-id="01-mur-vide"
+        data-composition-src="compositions/frames/01-mur-vide.html"
+        data-start="0"
+        data-duration="5.4"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-02-pile"
+        class="scene"
+        data-composition-id="02-pile"
+        data-composition-src="compositions/frames/02-pile.html"
+        data-start="5.4"
+        data-duration="2.6"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-03-croquis"
+        class="scene"
+        data-composition-id="03-croquis"
+        data-composition-src="compositions/frames/03-croquis.html"
+        data-start="8"
+        data-duration="4.2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-04-bois"
+        class="scene"
+        data-composition-id="04-bois"
+        data-composition-src="compositions/frames/04-bois.html"
+        data-start="12.2"
+        data-duration="3"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-05-charge-vases"
+        class="scene"
+        data-composition-id="05-charge-vases"
+        data-composition-src="compositions/frames/05-charge-vases.html"
+        data-start="15.2"
+        data-duration="5.2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-06-pivot"
+        class="scene"
+        data-composition-id="06-pivot"
+        data-composition-src="compositions/frames/06-pivot.html"
+        data-start="20.4"
+        data-duration="4"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-07-vraie-fiche"
+        class="scene"
+        data-composition-id="07-vraie-fiche"
+        data-composition-src="compositions/frames/07-vraie-fiche.html"
+        data-start="24.4"
+        data-duration="6.1"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-08-inclus-faq"
+        class="scene"
+        data-composition-id="08-inclus-faq"
+        data-composition-src="compositions/frames/08-inclus-faq.html"
+        data-start="30.5"
+        data-duration="6.5"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-09-fin"
+        class="scene"
+        data-composition-id="09-fin"
+        data-composition-src="compositions/frames/09-fin.html"
+        data-start="37"
+        data-duration="8"
+        data-track-index="1"
+      ></div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

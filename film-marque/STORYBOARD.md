@@ -99,7 +99,7 @@ posées) · whoosh 41.60 (iris) · click 43.40 · notification (signature) 37.70
 - scene: Très gros plan sur le mur : des traits au crayon comptent les mois et « 6 mois » s'écrit ; la caméra recule sur le grand mur nu marqué de repères au crayon, descend jusqu'au canapé, puis part en cran vers la droite, vers la commode
 - duration: 5.40s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/01-mur-vide.html
 - voiceover: "Six mois que vous avez emménagé. Et le mur au-dessus du canapé… est toujours vide."
 - type: hook
@@ -137,7 +137,7 @@ Scene 2 (2.30 à 4.90 s) : P2, le mur nu au-dessus du canapé
 - scene: Sans voix : la caméra arrive sur la commode où les objets qui n'ont pas de place s'empilent un à un, la pile penche, puis la caméra repart en whip vers la gauche, vers le mur
 - duration: 2.60s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/02-pile.html
 - voiceover: ""
 - type: pain_point
@@ -165,7 +165,7 @@ Scene 1 (0.00 à 2.00 s) : P3, la pile monte
 - scene: Le whip finit sur le grand mur nu (toute cette place) ; trois croquis d'étagère au crayon se tracent, un point d'interrogation sur chacun ; la caméra plonge dans le croquis du milieu, qui devient le téléphone
 - duration: 4.20s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/03-croquis.html
 - voiceover: "Le problème, ce n'est pas la place. C'est qu'on n'ose pas choisir."
 - type: pain_point
@@ -203,7 +203,7 @@ Scene 2 (2.00 à 4.20 s) : P5, trois croquis qui hésitent, puis la plongée
 - scene: Dans le téléphone, la fiche d'une boutique anonyme ; la caméra cadre la ligne « Matière : bois » ; un cercle brique entoure « bois », une étiquette « bois ? » s'y relie, puis le mot est barré et l'étiquette devient « aggloméré »
 - duration: 3.00s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/04-bois.html
 - voiceover: "Une fiche dit « bois »… c'est de l'aggloméré."
 - type: pain_point
@@ -231,7 +231,7 @@ Scene 1 (0.00 à 3.00 s) : P6, la matière annoncée
 - scene: La ligne « Charge : – » est entourée, l'étiquette dit « ? » ; le téléphone remonte à la photo, les deux vases sont entourés avec l'étiquette « inclus ? » ; la caméra plonge dans l'écran, qui s'éteint au brun
 - duration: 5.20s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/05-charge-vases.html
 - voiceover: "La charge ? Introuvable. Et sur la photo, les vases ont l'air fournis."
 - type: pain_point
@@ -269,7 +269,7 @@ Scene 2 (1.60 à 5.20 s) : P8, les vases de la photo, puis l'écran s'éteint
 - scene: Sur le brun, la phrase « Choisir une étagère devrait être simple. » tombe mot par mot au centre ; dans le silence, il ne reste que « simple. », dont le point devient un point de lumière sable qui grandit jusqu'à remplir l'image de crème
 - duration: 4.00s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/06-pivot.html
 - voiceover: "Choisir une étagère devrait être simple."
 - type: pivot
@@ -307,7 +307,7 @@ Scene 2 (2.40 à 4.00 s) : P10, le point de lumière (silence)
 - scene: La caméra recule hors de l'écran allumé : le téléphone apparaît devant le mur, sur la vraie fiche d'Étagères Murales ; la caméra descend de ligne en ligne, la matière puis les dimensions se cochent en sable
 - duration: 6.10s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/07-vraie-fiche.html
 - voiceover: "Chez Étagères Murales, chaque fiche dit ce que vous recevez vraiment. La matière. Les dimensions."
 - type: demo
@@ -345,7 +345,7 @@ Scene 2 (3.80 à 6.10 s) : P12, la matière, les dimensions
 - scene: Le contenu du colis se coche, puis la ligne « Les objets des photos ne sont pas inclus » ; la page glisse vers la FAQ d'une autre fiche : la question de la charge, et la réponse honnête qui s'écrit ; le téléphone recule et rapetisse vers le mur
 - duration: 6.50s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/08-inclus-faq.html
 - voiceover: "Ce qui est inclus… et ce qui ne l'est pas. Et quand on ne sait pas, on vous le dit."
 - type: payoff
@@ -383,7 +383,7 @@ Scene 2 (2.70 à 6.50 s) : P14, la réponse honnête, puis le recul
 - scene: Le téléphone dépose la photo des étagères sur le mur nu du début : les vraies étagères s'y posent, les traits au crayon s'effacent ; « Étagères Murales » et le logo arrivent ; l'iris s'ouvre depuis le logo sur la carte de fin brune ; le curseur clique « etageres-murales.fr »
 - duration: 8.00s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/09-fin.html
 - voiceover: "Étagères Murales. Pour sublimer vos murs et finir vos pièces. Lien dans la bio."
 - type: cta

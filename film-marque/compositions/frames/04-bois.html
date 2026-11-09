@@ -129,7 +129,7 @@ function emBuildWall(parent,p,o){o=o||{};
   return {world:world,sofa:sofa,dresser:dr,pile:it,sketches:sk,marks:marks,months:months,tally:tally,shelves:shelves};
 }
 /* dessiner un trait au crayon (tous les .em-pen d'un élément) */
-function emPen(tl,el,at,dur){tl.to(el.querySelectorAll(".em-pen"),{strokeDashoffset:0,duration:dur||0.4,ease:"power2.out"},at)}
+function emPen(tl,el,at,dur){tl.to(el.querySelectorAll(".em-pen"),{strokeDashoffset:0,duration:dur||0.4,ease:"power2.out",autoRound:false},at)}
 
 /* ---------- le téléphone et ses pages ---------- */
 function emBuildPhone(parent,p){const ph=emEl("div","em-phone",parent,p+"-phone");const sc=emEl("div","screen",ph,p+"-screen");emEl("div","island",ph);const off=emEl("div","off",sc,p+"-off");return {phone:ph,screen:sc,off:off}}

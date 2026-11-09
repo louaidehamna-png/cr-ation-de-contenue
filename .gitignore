@@ -16,3 +16,5 @@ examples/*/snapshots/
 _references/
 .DS_Store
 film-marque/.s*.html
+film-marque/renders/
+film-marque/snapshots/
