@@ -207,7 +207,7 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* tally : 5 traits (60 u chacun), la barre (174,6 u), le sixième (60 u) ; total 534,6 u, pathLength 1 */
   var tallyPath = W.tally.querySelector(".em-pen");
   var TOT = 534.6;
-  function tallyTo(drawn, at, dur){ tl.to(tallyPath, { strokeDashoffset: 1 - drawn / TOT, duration: dur, ease: "power2.out" }, at); }
+  function tallyTo(drawn, at, dur){ tl.to(tallyPath, { strokeDashoffset: 1 - drawn / TOT, duration: dur, ease: "power2.out", autoRound: false }, at); }
   tallyTo(59, 0.05, 0.12);
   tallyTo(119, 0.20, 0.12);
   tallyTo(179, 0.35, 0.12);
@@ -225,9 +225,9 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* repères : 4 coins (8 x 30 u = 240 u) puis la croix (280 u) ; total 520 u */
   var marksPath = W.marks.querySelector(".em-pen");
   var MT = 520;
-  tl.to(marksPath, { strokeDashoffset: 1 - 179 / MT, duration: 0.9, ease: "none" }, 1.40);
-  tl.to(marksPath, { strokeDashoffset: 1 - 239 / MT, duration: 0.18, ease: "power2.out" }, 2.52);
-  tl.to(marksPath, { strokeDashoffset: 0, duration: 0.25, ease: "power2.out" }, 3.10);
+  tl.to(marksPath, { strokeDashoffset: 1 - 179 / MT, duration: 0.9, ease: "none", autoRound: false }, 1.40);
+  tl.to(marksPath, { strokeDashoffset: 1 - 239 / MT, duration: 0.18, ease: "power2.out", autoRound: false }, 2.52);
+  tl.to(marksPath, { strokeDashoffset: 0, duration: 0.25, ease: "power2.out", autoRound: false }, 3.10);
   /* 4.86 « vide. » : les repères pâlissent d'un coup */
   tl.to(W.marks, { opacity: 0.55, duration: 0.15, ease: "power2.out" }, 4.86);
 

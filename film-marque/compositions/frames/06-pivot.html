@@ -1,0 +1,189 @@
+<template>
+<div id="root" data-composition-id="06-pivot" data-width="1080" data-height="1920" data-start="0" data-duration="4">
+<script src="assets/gsap.min.js"></script>
+<style id="s06-em-kit">
+@font-face{font-family:"Inter";font-weight:400;src:url("assets/fonts/Inter-Regular.otf") format("opentype")}
+@font-face{font-family:"Inter";font-weight:500;src:url("assets/fonts/Inter-Medium.otf") format("opentype")}
+@font-face{font-family:"Inter";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
+.em-stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;font-family:"Inter",sans-serif;color:#2c2420}
+.em-ground{position:absolute;inset:0;background:#e9dfcf}
+.em-ground.dark{background:#2c2420}
+/* le mur */
+.em-world{position:absolute;left:0;top:0;width:4000px;height:5000px;transform-origin:0 0;will-change:transform}
+.em-wall{position:absolute;inset:0;background:radial-gradient(120% 80% at 45% 35%,#ece3d4 0%,#e6dccb 45%,#d9ccb7 100%)}
+.em-wall-noise{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply}
+.em-floor{position:absolute;left:0;top:2620px;width:4000px;height:2380px;background:linear-gradient(#b99e7f,#a88c6d)}
+.em-plinth{position:absolute;left:0;top:2600px;width:4000px;height:24px;background:#f3ece1;box-shadow:0 2px 0 #cdbfa9}
+/* canapé en lin */
+.em-sofa{position:absolute;left:820px;top:2050px;width:1360px;height:560px}
+.em-sofa .back{position:absolute;left:0;top:0;width:1360px;height:300px;border-radius:70px 70px 24px 24px;background:linear-gradient(#d3c7b4,#c4b7a2)}
+.em-sofa .seat{position:absolute;left:-40px;top:250px;width:1440px;height:230px;border-radius:40px;background:linear-gradient(#cabda8,#b9ac97);box-shadow:0 30px 60px rgba(60,40,20,.18)}
+.em-sofa .arm{position:absolute;top:150px;width:150px;height:330px;border-radius:60px;background:linear-gradient(#cfc3af,#bcae99)}
+.em-sofa .cush{position:absolute;top:120px;width:300px;height:200px;border-radius:40px;background:linear-gradient(#e9e1d3,#d8cdbb);box-shadow:0 10px 24px rgba(60,40,20,.12)}
+.em-sofa .leg{position:absolute;top:470px;width:26px;height:80px;background:#6b513a;border-radius:6px}
+/* commode */
+.em-dresser{position:absolute;left:2500px;top:2200px;width:800px;height:420px}
+.em-dresser .top{position:absolute;left:-20px;top:0;width:840px;height:34px;border-radius:6px;background:linear-gradient(#d8b98f,#c29f72);box-shadow:0 12px 30px rgba(60,40,20,.18)}
+.em-dresser .body{position:absolute;left:0;top:34px;width:800px;height:330px;background:linear-gradient(#cdab80,#b8946a)}
+.em-dresser .drawer{position:absolute;left:30px;width:740px;height:92px;border:3px solid rgba(90,60,30,.25);border-radius:6px}
+.em-dresser .knob{position:absolute;left:385px;width:30px;height:8px;border-radius:4px;background:#6b513a}
+.em-dresser .leg{position:absolute;top:364px;width:22px;height:56px;background:#8a6a48}
+.em-pile>*{position:absolute;transform-origin:50% 100%}
+/* écriture et croquis au crayon */
+.em-pencil{position:absolute;font:500 44px/1 "Inter";color:#7d7268;transform:rotate(-3deg);white-space:nowrap}
+.em-svg{position:absolute;left:0;top:0;overflow:visible}
+/* téléphone */
+.em-phone{position:absolute;left:0;top:0;width:640px;height:1300px;border-radius:64px;background:#3a2f2a;box-shadow:0 40px 90px rgba(44,36,32,.35),0 4px 10px rgba(44,36,32,.25);transform-origin:50% 50%}
+.em-phone .screen{position:absolute;left:25px;top:25px;width:590px;height:1250px;border-radius:52px;overflow:hidden;background:#fffdf9}
+.em-phone .island{position:absolute;left:250px;top:44px;width:140px;height:40px;border-radius:20px;background:#1a1512;z-index:5}
+.em-phone .off{position:absolute;inset:0;background:#2c2420;opacity:0;z-index:4}
+.em-page{position:absolute;left:0;top:0;width:590px;font:500 30px/1.3 "Inter";color:#2c2420}
+.em-page .bar{height:150px;padding:96px 30px 0;font:500 24px/1 "Inter";color:rgba(44,36,32,.55);background:#f4efe7;border-bottom:1px solid #e4dccf;white-space:nowrap;overflow:hidden}
+.em-page .bar b{font-weight:500;background:#fff;border-radius:14px;padding:12px 18px;display:inline-block}
+.em-page .photo{position:relative;height:430px;background:#efe7da;overflow:hidden}
+.em-page .body{padding:26px 34px}
+.em-page .title{font:600 38px/1.18 "Inter";letter-spacing:-.01em}
+.em-page .price{font:600 36px/1 "Inter";margin:18px 0 22px}
+.em-page .row{position:relative;padding:16px 0 16px 0;border-top:1px solid #ebe3d6;color:rgba(44,36,32,.55);font:500 28px/1.3 "Inter"}
+.em-page .row.ok{padding-left:62px}
+.em-page .row b{font-weight:600;color:#2c2420}
+.em-check{position:absolute;left:0;top:14px;width:40px;height:40px}
+.em-faq{position:absolute;left:0;top:0;width:590px;padding:34px;background:#fffdf9;font:500 28px/1.35 "Inter"}
+.em-faq .q{font:600 34px/1.2 "Inter";margin:16px 0 20px}
+.em-faq .a{padding:22px 24px;border-radius:20px;background:#f4efe7;color:#2c2420}
+.em-faq .tag{font:500 22px/1 "Inter";letter-spacing:.12em;text-transform:uppercase;color:rgba(44,36,32,.55)}
+/* annotations de la fiche floue */
+.em-note{position:absolute;padding:14px 22px;border-radius:16px;background:#fffdf9;border:3px solid #8c3b2e;font:600 34px/1 "Inter";color:#8c3b2e;white-space:nowrap;box-shadow:0 16px 40px rgba(44,36,32,.18)}
+/* sous-titre mot à mot */
+.em-sub{position:absolute;left:80px;width:920px;top:1370px;text-align:center;font:600 60px/72px "Inter";letter-spacing:-.015em;color:#2c2420;text-shadow:0 0 24px rgba(245,240,232,.9)}
+.em-sub.dark{color:#f5f0e8;text-shadow:none}
+.em-w{display:inline-block;position:relative;opacity:0}
+.em-w .tx{position:relative;z-index:1}
+.em-box{position:absolute;left:-.14em;right:-.14em;top:.04em;bottom:.02em;background:#a97c50;border-radius:4px;transform:scaleX(0);transform-origin:0 50%}
+.em-stroke{position:absolute;left:0;right:0;bottom:-.08em;height:5px;border-radius:3px;background:#a97c50;transform:scaleX(0);transform-origin:0 50%}
+.em-type{position:absolute;left:90px;width:900px;top:820px;text-align:center;font:600 84px/1.1 "Inter";letter-spacing:-.025em;color:#f5f0e8}
+/* curseur */
+.em-cursor{position:absolute;left:0;top:0;width:54px;height:70px;transform-origin:8px 6px;opacity:0;filter:drop-shadow(0 6px 10px rgba(44,36,32,.35))}
+.em-ripple{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:5px solid #a97c50;opacity:0}
+</style>
+<style id="s06-style">
+#root{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden}
+#s06-vignette{position:absolute;inset:0;opacity:0;background:radial-gradient(120% 90% at 50% 47%,rgba(36,29,26,0) 42%,#241d1a 100%)}
+#s06-push,#s06-drift{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#s06-drift{transform-origin:540px 960px}
+#s06-push{transform-origin:540px 954px}
+#s06-type{transform-origin:50% 50%}
+.s06-line{white-space:nowrap}
+.s06-w{display:inline-block;position:relative;opacity:0;transform-origin:50% 60%}
+.s06-simple{display:inline-block}
+.s06-dot{display:inline-block;position:relative}
+.s06-dotg{position:relative;z-index:3}
+.s06-halo-wrap{position:absolute;left:50%;top:71px;width:0;height:0;z-index:1}
+.s06-halo{position:absolute;left:-150px;top:-150px;width:300px;height:300px;border-radius:50%;opacity:0;
+  background:radial-gradient(circle,rgba(200,162,124,.95) 0%,rgba(200,162,124,.5) 22%,rgba(200,162,124,.16) 46%,rgba(200,162,124,0) 70%)}
+.s06-disc{position:absolute;left:50%;top:71px;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:#c8a27c;opacity:0;z-index:2;
+  box-shadow:0 0 10px 2px rgba(200,162,124,.55)}
+.s06-disc-cream{position:absolute;inset:0;border-radius:50%;background:#f4efe7;opacity:0}
+#s06-cream{position:absolute;inset:0;background:#f4efe7;opacity:0;clip-path:circle(0% at 540px 954px)}
+</style>
+
+<div class="em-stage clip" id="s06-stage" data-start="0" data-duration="4" data-track-index="0">
+  <div class="em-ground dark" id="s06-ground"></div>
+  <div id="s06-vignette"></div>
+  <div id="s06-push">
+    <div id="s06-drift">
+      <div class="em-type" id="s06-type">
+        <div class="s06-line" id="s06-line1"><span class="s06-w" id="s06-w0">Choisir</span> <span class="s06-w" id="s06-w1">une</span> <span class="s06-w" id="s06-w2">étagère</span></div>
+        <div class="s06-line" id="s06-line2"><span class="s06-w" id="s06-w3">devrait</span> <span class="s06-w" id="s06-w4">être</span> <span class="s06-w" id="s06-w5"><span class="s06-simple" id="s06-simple">simple</span><span class="s06-dot" id="s06-dot"><span class="s06-halo-wrap" id="s06-halo-wrap"><span class="s06-halo" id="s06-halo"></span></span><span class="s06-disc" id="s06-disc"><span class="s06-disc-cream" id="s06-disc-cream"></span></span><span class="s06-dotg" id="s06-dotg">.</span></span></span></div>
+      </div>
+    </div>
+  </div>
+  <div id="s06-cream"></div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var stage = $("s06-stage"), push = $("s06-push"), drift = $("s06-drift"), type = $("s06-type");
+  var dot = $("s06-dot"), disc = $("s06-disc"), haloWrap = $("s06-halo-wrap"), cream = $("s06-cream");
+  var tl = gsap.timeline({ paused: true });
+
+  /* ---------- Scene 1 : les six mots tombent de la caméra ---------- */
+  var cues = [0.30, 0.70, 0.84, 1.30, 1.60, 1.80];
+  cues.forEach(function(t, i){
+    var w = $("s06-w" + i);
+    tl.fromTo(w, { opacity: 0, scale: 1.2, filter: "blur(8px)" },
+      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out", immediateRender: false }, t);
+    tl.set(w, { filter: "none" }, t + 0.21);
+  });
+  /* vignette très douce : naît après les deux premières images (handoff_in = brun plein) */
+  tl.fromTo("#s06-vignette", { opacity: 0 }, { opacity: 1, duration: 1.1, ease: "power2.out", immediateRender: false }, 0.10);
+
+  /* ---------- Scene 2 : le silence, il ne reste que le point ---------- */
+  tl.to(["#s06-w0", "#s06-w1", "#s06-w2", "#s06-w3", "#s06-w4"],
+    { opacity: 0, y: -10, duration: 0.15, ease: "power2.in", stagger: 0.03 }, 2.40);
+  tl.to("#s06-simple", { opacity: 0, y: -10, duration: 0.15, ease: "power2.in" }, 2.70);
+  /* 2.90 le point devient un disque sable 24 px avec halo */
+  tl.to("#s06-dotg", { opacity: 0, duration: 0.12, ease: "power2.out" }, 2.90);
+  tl.fromTo(disc, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out", immediateRender: false }, 2.90);
+  tl.fromTo("#s06-halo", { opacity: 0, scale: 0.5 }, { opacity: 0.4, scale: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.90);
+  /* 3.20 le disque grandit à 60 px, halo plus large */
+  tl.to(disc, { scale: 2.5, duration: 0.25, ease: "power3.out" }, 3.20);
+  tl.to("#s06-halo", { scale: 1.8, opacity: 0.45, duration: 0.3, ease: "power3.out" }, 3.20);
+  /* 3.40 le disque devient crème, le cercle crème s'ouvre depuis le point */
+  tl.fromTo("#s06-disc-cream", { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out", immediateRender: false }, 3.40);
+
+  /* ---------- caméra (une seule horloge, déterministe) ---------- */
+  function stagePos(el){ var x = 0, y = 0; while (el && el !== stage){ x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return { x: x, y: y }; }
+  function p2in(q){ return q * q; }
+  function p2out(q){ return 1 - (1 - q) * (1 - q); }
+  function p3out(q){ return 1 - Math.pow(1 - q, 3); }
+  function clamp(q){ return q < 0 ? 0 : (q > 1 ? 1 : q); }
+  var OX = { x: 540, y: 954 };
+  function update(t){
+    /* dérive : échelle 1 → 1,04 (0 → 2.40) puis 1,04 → 1,05 ; y -6 px/s sur tout le plan */
+    var sD = t <= 2.4 ? 1 + 0.04 * (t / 2.4) : 1.04 + 0.01 * ((t - 2.4) / 1.6);
+    var dy = -6 * t;
+    /* 2.10 le bloc se resserre d'un cran (1 → 0,98, 0,3 s) */
+    var sT = 1 - 0.02 * p2out(clamp((t - 2.1) / 0.3));
+    /* 3.40 → 4.00 poussée vers le point (1 → 1,15) */
+    var sX = 1 + 0.15 * p2in(clamp((t - 3.4) / 0.6));
+    drift.style.transform = "translate(0px," + dy.toFixed(3) + "px) scale(" + sD.toFixed(5) + ")";
+    type.style.transform = "scale(" + sT.toFixed(5) + ")";
+    push.style.transform = "scale(" + sX.toFixed(5) + ")";
+
+    /* position écran du point (sans glissé) */
+    var d = stagePos(disc); var p0 = { x: d.x + 12, y: d.y + 12 };
+    var OT = { x: type.offsetLeft + type.offsetWidth / 2, y: type.offsetTop + type.offsetHeight / 2 };
+    var p1 = { x: OT.x + sT * (p0.x - OT.x), y: OT.y + sT * (p0.y - OT.y) };
+    var p2 = { x: 540 + sD * (p1.x - 540), y: 960 + dy + sD * (p1.y - 960) };
+    var p3 = { x: OX.x + sX * (p2.x - OX.x), y: OX.y + sX * (p2.y - OX.y) };
+    /* 2.75 → 3.25 le point glisse au centre du brun (cible qui dérive elle aussi de -6 px/s) */
+    var S = { x: 540, y: 960 - 6 * Math.max(0, t - 2.4) };
+    var g = p3out(clamp((t - 2.75) / 0.5));
+    var k = sX * sD * sT;
+    dot.style.transform = "translate(" + (g * (S.x - p3.x) / k).toFixed(3) + "px," + (g * (S.y - p3.y) / k).toFixed(3) + "px)";
+    var P = { x: p3.x + g * (S.x - p3.x), y: p3.y + g * (S.y - p3.y) };
+
+    /* le halo respire une fois (2.95 → 3.40) */
+    var b = clamp((t - 2.95) / 0.45);
+    haloWrap.style.transform = "scale(" + (1 + 0.08 * Math.sin(b * Math.PI * 2)).toFixed(5) + ")";
+
+    /* le cercle crème : clip-path circle 0 → 150 %, power2.in, 3.40 → 4.00 */
+    if (t < 3.4) { cream.style.opacity = "0"; cream.style.clipPath = "circle(0% at " + P.x.toFixed(2) + "px " + P.y.toFixed(2) + "px)"; }
+    else {
+      var r = 150 * p2in(clamp((t - 3.4) / 0.6));
+      cream.style.opacity = "1";
+      cream.style.clipPath = "circle(" + r.toFixed(3) + "% at " + P.x.toFixed(2) + "px " + P.y.toFixed(2) + "px)";
+    }
+  }
+  var clock = { t: 0 };
+  tl.fromTo(clock, { t: 0 }, { t: 4, duration: 4, ease: "none", onUpdate: function(){ update(clock.t); } }, 0);
+  update(0);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["06-pivot"] = tl;
+})();
+</script>
+</div>
+</template>
