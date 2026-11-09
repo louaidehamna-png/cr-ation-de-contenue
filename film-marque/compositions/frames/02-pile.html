@@ -68,7 +68,7 @@
 <style>
 #root{position:relative;width:1080px;height:1920px;overflow:hidden;-webkit-font-smoothing:antialiased;font-family:"Inter",sans-serif}
 #s02-vase,#s02-frame,#s02-book2{opacity:0}
-#s02-fg{position:absolute;left:-200px;top:1740px;width:1500px;height:260px;border-radius:14px;background:linear-gradient(#d8b98f,#c29f72 40%,#b8946a);box-shadow:0 -10px 30px rgba(60,40,20,.18);filter:blur(3px);transform:translate(0px,360px)}
+#s02-fg{position:absolute;left:-200px;top:1740px;width:1500px;height:260px;border-radius:14px;background:linear-gradient(#d8b98f,#c29f72 40%,#b8946a);box-shadow:0 -10px 30px rgba(60,40,20,.18);filter:blur(3px);transform:translate(0px,600px)}
 </style>
 
 <div id="root" data-composition-id="02-pile" data-width="1080" data-height="1920" data-start="0" data-duration="2.6">
@@ -216,16 +216,16 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
     camApply();
     var X = cam.x + cam.dx, S = cam.s + cam.ds;
     var fx = (2900 - X) * S * 1.4;
-    var fy = (1.10 - S) * 900;
+    var fy = (1.10 - S) * 1500;
     fg.style.transform = "translate(" + fx.toFixed(2) + "px," + fy.toFixed(2) + "px)";
     fg.style.filter = "blur(" + (3 + cam.blur * 1.5).toFixed(2) + "px)";
   };
 
-  /* 0.00 : état handoff_in, cam(2300, 1950, 0.70) flou 6 */
-  cam.blur = 6;
-  emCamSet(tl, cam, 2300, 1950, 0.70, 0);
-  /* 0.00 à 0.35 : fin du cran vers F-commode, départ rapide (power2.out), flou 6 → 0 */
-  tl.fromTo(cam, { x: 2300, y: 1950, s: 0.70, blur: 6 },
+  /* 0.00 : état réel de fin de la séquence 1, cam(2509, 1952, 0.932) flou 3,4 */
+  cam.blur = 3.4;
+  emCamSet(tl, cam, 2509, 1952, 0.932, 0);
+  /* 0.00 à 0.35 : fin du cran vers F-commode, départ rapide (power2.out), flou 3,4 → 0 */
+  tl.fromTo(cam, { x: 2509, y: 1952, s: 0.932, blur: 3.4 },
     { x: 2900, y: 2050, s: 1.10, blur: 0, duration: 0.35, ease: "power2.out", onUpdate: cam.apply }, 0);
   /* 0.35 à 2.00 : dérive x -15 u/s, échelle +0,03/s (lente poussée sur la pile) */
   emCamDrift(tl, cam, -15, 0, 0.03, 0.35, 2.00);

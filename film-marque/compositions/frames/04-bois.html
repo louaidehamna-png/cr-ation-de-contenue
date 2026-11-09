@@ -179,6 +179,7 @@ function emCursor(parent,p){const c=emEl("div","em-cursor",parent,p+"-cursor",'<
 /* arrivée d'un seul mouvement de (x0, y0) à (x1, y1), puis clic direct à at+0.45 */
 function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);tl.to(k.cursor,{x:x1,y:y1,duration:0.45,ease:"power3.out"},at);tl.to(k.cursor,{scale:0.85,duration:0.06,yoyo:true,repeat:1},at+0.45);
   tl.set(k.ripple,{left:x1+8,top:y1+6},at+0.47);tl.fromTo(k.ripple,{scale:0.2,opacity:1},{scale:1.4,opacity:0,duration:0.5,ease:"power2.out",immediateRender:false},at+0.47)}
+/* em-expose */ Object.assign(window, {emEl:emEl,emSvg:emSvg,emPos:emPos,emCam:emCam,emCamSet:emCamSet,emCamTo:emCamTo,emCamDrift:emCamDrift,emBuildWall:emBuildWall,emPen:emPen,emBuildPhone:emBuildPhone,emPageFloue:emPageFloue,emCheckSvg:emCheckSvg,emPageEM:emPageEM,emFaq:emFaq,emNote:emNote,emSub:emSub,emSubTL:emSubTL,emCursor:emCursor,emClick:emClick});
 </script>
 <script id="s04-build">
 (function(){

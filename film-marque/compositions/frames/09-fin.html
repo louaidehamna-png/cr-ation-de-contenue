@@ -232,8 +232,9 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   tl.set(P.phone,{x:400,y:110,scale:0.40,rotation:-4,filter:"blur(0px)"},0);
   tl.to(P.phone,{scale:0.30,rotation:-6,duration:0.30,ease:"power2.out"},0);
   /* 0.55 sortie par le bas, vite */
-  tl.to(P.phone,{y:1010,filter:"blur(4px)",duration:0.25,ease:"power2.in"},0.55);
-  tl.set(P.phone,{opacity:0},0.80);
+  /* sortie franche par le bas : 0.38 à 0.56, hors image avant 0.60 (sous les étagères dès 0.50) */
+  tl.to(P.phone,{y:1510,filter:"blur(5px)",duration:0.18,ease:"power2.in"},0.38);
+  tl.set(P.phone,{opacity:0},0.57);
 
   /* ---------- 0.30 la photo vole du téléphone vers W.shelves ---------- */
   /* place écran des étagères à 0.60 : cam(1500,1650,0.55) → coin (292.5, 575), largeur 495, centre (540, 849.2) */
@@ -248,7 +249,7 @@ function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);
   /* 0.62 contact : petit tassement */
   tl.to(W.shelves,{y:0,duration:0.15,ease:"power3.out"},0.62);
   /* 0.65 les traits au crayon s'effacent */
-  tl.to(pencils,{opacity:0,duration:0.3,ease:"power2.out",stagger:0.05},0.65);
+  tl.to(pencils,{opacity:0,duration:0.3,ease:"power2.out"},0.65);
 
   /* ---------- 0.80 logo É, 1.00 « Étagères Murales » ---------- */
   tl.fromTo($("s09-logo-img"),{opacity:0,scale:1.2,filter:"blur(8px)"},
