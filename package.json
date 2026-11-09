@@ -1,23 +1,13 @@
 {
   "name": "cr-ation-de-contenue",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "private": true,
+  "description": "Launch motion design with Claude Code (HyperFrames 0.8.82 pinned, official HeyGen skills audited at commit 93ab289)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/louaidehamna-png/cr-ation-de-contenue.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/louaidehamna-png/cr-ation-de-contenue/issues"
-  },
-  "homepage": "https://github.com/louaidehamna-png/cr-ation-de-contenue#readme",
-  "dependencies": {
-    "hyperframes": "^0.9.26"
+  "devDependencies": {
+    "hyperframes": "0.8.82",
+    "@hyperframes/core": "0.8.82"
   }
 }
