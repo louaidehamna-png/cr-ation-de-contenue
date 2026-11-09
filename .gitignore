@@ -4,3 +4,5 @@ __pycache__/
 vasagle-video/montage/assets/*.mp4
 vasagle-video/montage/.hyperframes/
 vasagle-video/montage/renders/
+vasagle-video/tuto-mur/.hyperframes/
+vasagle-video/tuto-mur/renders/

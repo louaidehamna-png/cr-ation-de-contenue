@@ -236,6 +236,7 @@ def build():
         if hasattr(ee, attr): setattr(ee, attr, val)
     sc.view_settings.view_transform = 'AgX'
     sc.render.image_settings.file_format = 'PNG'
+    if os.environ.get('LOOK', 'moderne') == 'moderne': look_moderne(sc)
     return sc
 
 def fillet_loop(pts, r, n=8):
@@ -256,6 +257,61 @@ def fillet_loop(pts, r, n=8):
             th = a0 + da * k / n
             out.append((c.x + r * math.cos(th), c.y + r * math.sin(th)))
     return out
+
+def add_bump(m, scale, strength, distance=0.002):
+    nt = m.node_tree; n = nt.nodes
+    tc = n.new('ShaderNodeTexCoord'); nz = n.new('ShaderNodeTexNoise')
+    nz.inputs['Scale'].default_value = scale; nz.inputs['Detail'].default_value = 12
+    bp = n.new('ShaderNodeBump'); bp.inputs['Strength'].default_value = strength
+    bp.inputs['Distance'].default_value = distance
+    nt.links.new(tc.outputs['Object'], nz.inputs['Vector']); nt.links.new(nz.outputs['Fac'], bp.inputs['Height'])
+    nt.links.new(bp.outputs['Normal'], n['Principled BSDF'].inputs['Normal'])
+
+def look_moderne(sc):
+    """Éclairage « photo produit » : soleil à travers une fenêtre hors champ, ambiance douce, Cycles débruité."""
+    mats = bpy.data.materials
+    add_bump(mats['Mur'], 180, 0.25)                      # enduit légèrement irrégulier
+    b = mats['Acier noir mat'].node_tree.nodes['Principled BSDF']   # peinture époxy noire, pas du métal nu
+    b.inputs['Metallic'].default_value = 0.0; b.inputs['Roughness'].default_value = 0.42
+    add_bump(mats['Acier noir mat'], 900, 0.15, 0.0005)
+    mats['Bois'].node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = 0.55
+    add_bump(mats['Bois'], 60, 0.2, 0.0008)
+    mats['Vase ceramique'].node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = 0.5
+
+    # soleil chaud, rasant, venant de la gauche
+    sun = bpy.data.lights.new('Soleil', 'SUN'); sun.energy = 3.2; sun.angle = math.radians(1.2)
+    sun.color = (1.0, 0.86, 0.70)
+    o = bpy.data.objects.new('Soleil', sun); sc.collection.objects.link(o)
+    d = Vector((0.7, 0.45, -0.55)).normalized()
+    o.rotation_euler = d.to_track_quat('-Z', 'Y').to_euler()
+    # fenêtre hors champ (mur latéral x=-1.5) : ouverture 1,0 x 1,4 m avec meneaux, centrée sur la trajectoire
+    wy, wz, W, H, bar = -1.12, 2.48, 1.0, 1.4, 0.05
+    occ = mat('Occulteur', '#222222', 1.0)
+    def blk(y0, y1, z0, z1):
+        box('Fenetre', (0.04, y1 - y0, z1 - z0), (-1.5, (y0 + y1) / 2, (z0 + z1) / 2), occ)
+    blk(-6, wy - W / 2, -1, 6); blk(wy + W / 2, 4, -1, 6)
+    blk(wy - W / 2, wy + W / 2, -1, wz - H / 2); blk(wy - W / 2, wy + W / 2, wz + H / 2, 6)
+    blk(wy - bar / 2, wy + bar / 2, wz - H / 2, wz + H / 2); blk(wy - W / 2, wy + W / 2, wz - bar / 2, wz + bar / 2)
+    # toit au-dessus du décor de coupe : il garde sa propre lumière de studio
+    box('Toit_coupe', (30, 30, 0.05), (20, 0, 3.2), occ)
+
+    # adoucir les anciennes lumières : elles deviennent du débouché
+    bpy.data.lights['Cle'].energy = 45; bpy.data.lights['Fill'].energy = 35
+    bg = sc.world.node_tree.nodes['Background']
+    bg.inputs['Color'].default_value = hexrgb('#9fa6ad'); bg.inputs['Strength'].default_value = 0.35
+
+    sc.render.engine = 'CYCLES'
+    cy = sc.cycles
+    cy.device = 'CPU'; cy.samples = int(os.environ.get('SAMPLES', 48)); cy.use_adaptive_sampling = True
+    cy.use_denoising = True
+    try: cy.denoiser = 'OPENIMAGEDENOISE'
+    except Exception: pass
+    sc.render.use_persistent_data = True
+    cy.max_bounces = 6; cy.caustics_reflective = False; cy.caustics_refractive = False
+    for look in ('AgX - Medium High Contrast', 'Medium High Contrast'):
+        try: sc.view_settings.look = look; break
+        except TypeError: pass
+
 
 def make_bracket(name, depth, height, m):
     """Triangle fermé en bande d'acier (photos fiche) : plaque murale, bras horizontal sous le plateau,
