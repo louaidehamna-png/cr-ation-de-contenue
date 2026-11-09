@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait-4k">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=2160, height=3840" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/Inter-Regular.otf") format("opentype"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/Inter-Medium.otf") format("opentype"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/Inter-SemiBold.otf") format("opentype"); }
+      :root {
+        --creme: #f5f0e8;
+        --mur: #e9dfcf;
+        --brun: #3a2f2a;
+        --brun-fonce: #2c2420;
+        --gris: #8a8178;
+        --beton: #b8ada0;
+        --platre: #fbf9f5;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 2160px; height: 3840px; overflow: hidden; background: var(--brun-fonce); }
+      #root { position: relative; width: 1080px; height: 1920px; zoom: 2; font-family: "Inter", sans-serif; color: var(--brun-fonce); }
+      .clip { position: absolute; inset: 0; }
+      /* 4K : le moteur dimensionne les clips à 2160x3840 ; on garde la mise en page 1080x1920, agrandie par zoom */
+      #root > .clip:not(#progres) { width: 1080px !important; height: 1920px !important; right: auto !important; bottom: auto !important; }
+      .scene { background: var(--creme); overflow: hidden; }
+      .scene.sombre { background: var(--brun-fonce); color: var(--creme); }
+      .scene svg { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+
+      /* titres révélés mot à mot derrière un masque */
+      .titre { position: absolute; left: 80px; right: 80px; top: 230px; text-align: center; font-weight: 600; font-size: 92px; line-height: 1.06; letter-spacing: -0.025em; }
+      .m { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; }
+      .m > span { display: inline-block; }
+      .sous { position: absolute; left: 80px; right: 80px; text-align: center; font-weight: 400; font-size: 50px; line-height: 1.2; }
+      .sous b { font-weight: 600; }
+      .note { color: var(--gris); }
+
+      .chap { position: absolute; left: 80px; top: 120px; font-size: 34px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gris); }
+      .carte {
+        position: absolute; left: 50%; transform: translateX(-50%); bottom: 200px;
+        background: var(--brun-fonce); color: var(--creme); font-weight: 500; font-size: 52px;
+        padding: 26px 42px; border-radius: 20px; white-space: nowrap;
+        box-shadow: 0 18px 40px rgba(44, 36, 32, 0.25);
+      }
+      .carte.claire { background: var(--creme); color: var(--brun-fonce); }
+      .carte.haut { bottom: 330px; }
+      .onomato { position: absolute; font-weight: 600; font-size: 120px; letter-spacing: -0.03em; color: var(--brun-fonce); }
+
+      /* barre de progression et grain, au-dessus de tout */
+      #progres { position: absolute; left: 80px; width: 920px; top: 70px; height: 6px; border-radius: 3px; background: rgba(138, 129, 120, 0.25); overflow: hidden; z-index: 20; }
+      #progres i { position: absolute; inset: 0; background: var(--gris); transform-origin: 0 50%; }
+      #grain { position: absolute; inset: 0; z-index: 30; pointer-events: none; opacity: 0.07; mix-blend-mode: multiply; }
+
+      #fin { background: var(--brun); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; }
+      #logo { width: 280px; height: 280px; }
+      #logo-texte { margin-top: 60px; width: 720px; }
+      #fin-s { margin-top: 80px; color: var(--creme); font-size: 48px; font-weight: 400; text-align: center; line-height: 1.3; opacity: 0.85; }
+      #url { margin-top: 40px; color: var(--creme); font-size: 46px; font-weight: 500; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="2160" data-height="3840">
+
+      <!-- 1. Accroche (fond sombre) : 0 - 4 s -->
+      <div id="s1" class="clip scene sombre" data-start="0" data-duration="4" data-track-index="0">
+        <svg viewBox="0 0 1080 1920">
+          <g id="s1-cam">
+            <ellipse cx="540" cy="1560" rx="380" ry="34" fill="#000" opacity="0.35" />
+            <!-- moitié gauche : devient pleine -->
+            <g id="s1-g">
+              <rect x="170" y="640" width="370" height="880" rx="24" fill="var(--mur)" />
+              <rect id="s1-g-in" x="170" y="640" width="370" height="880" rx="24" fill="var(--beton)" opacity="0" />
+              <g id="s1-g-grains" fill="#8f857a" opacity="0"></g>
+            </g>
+            <!-- moitié droite : devient creuse -->
+            <g id="s1-d">
+              <rect id="s1-d-fond" x="540" y="640" width="370" height="880" rx="24" fill="var(--mur)" />
+              <g id="s1-d-in" opacity="0">
+                <rect x="540" y="640" width="370" height="880" rx="24" fill="#d9cdbb" />
+                <rect x="540" y="640" width="40" height="880" fill="var(--platre)" />
+                <rect x="870" y="640" width="40" height="880" fill="var(--platre)" />
+                <rect x="707" y="640" width="36" height="880" fill="none" stroke="#9c958b" stroke-width="5" stroke-dasharray="18 14" />
+              </g>
+            </g>
+          </g>
+        </svg>
+        <div class="titre" style="color: var(--creme)"><span class="m"><span>Mur</span></span> <span class="m"><span>plein</span></span><br /><span class="m"><span>ou</span></span> <span class="m"><span>creux&nbsp;?</span></span></div>
+        <div id="s1-s" class="sous" style="top: 1640px; color: var(--creme)">Le test à faire avant de percer</div>
+      </div>
+
+      <!-- 2. Le test : 3,5 - 7,5 s -->
+      <div id="s2" class="clip scene" data-start="3.5" data-duration="4" data-track-index="1">
+        <svg viewBox="0 0 1080 1920">
+          <g id="s2-cam">
+            <rect x="140" y="560" width="800" height="1000" rx="28" fill="var(--mur)" />
+            <g id="s2-pts" fill="#d9ccb7"></g>
+            <g id="s2-ondes" fill="none" stroke="var(--brun)" stroke-width="8">
+              <circle class="o" cx="540" cy="1060" r="20" />
+              <circle class="o" cx="540" cy="1060" r="20" />
+              <circle class="o" cx="540" cy="1060" r="20" />
+              <circle class="o" cx="540" cy="1060" r="20" />
+            </g>
+            <circle id="s2-point" cx="540" cy="1060" r="18" fill="var(--brun)" />
+          </g>
+        </svg>
+        <div class="chap">01 · Le test</div>
+        <div class="titre"><span class="m"><span>Frappez</span></span> <span class="m"><span>sur</span></span> <span class="m"><span>le</span></span> <span class="m"><span>mur</span></span></div>
+        <div id="s2-toc" class="onomato" style="left: 620px; top: 820px">toc</div>
+        <div id="s2-c" class="carte">Puis écoutez le son</div>
+      </div>
+
+      <!-- 3. Son sourd = mur plein : 7 - 14 s -->
+      <div id="s3" class="clip scene" data-start="7" data-duration="7" data-track-index="2">
+        <svg viewBox="0 0 1080 1920">
+          <defs>
+            <clipPath id="s3-dans"><rect x="390" y="700" width="320" height="820" /></clipPath>
+            <filter id="ombre" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#2c2420" flood-opacity="0.18" /></filter>
+          </defs>
+          <g id="s3-cam">
+            <!-- onde sonore : courte et étouffée -->
+            <path id="s3-wave" d="" fill="none" stroke="var(--brun-fonce)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <g filter="url(#ombre)">
+              <rect x="390" y="700" width="320" height="820" rx="6" fill="var(--beton)" />
+            </g>
+            <g id="s3-grains" clip-path="url(#s3-dans)" fill="#8f857a"></g>
+            <rect x="380" y="700" width="12" height="820" fill="var(--mur)" />
+            <g id="s3-onde" clip-path="url(#s3-dans)" fill="none" stroke="var(--brun-fonce)" stroke-width="8"><circle cx="390" cy="960" r="10" /></g>
+            <!-- cheville à expansion + vis -->
+            <g id="s3-cheville">
+              <g id="s3-corps">
+                <rect x="0" y="-22" width="190" height="44" rx="8" fill="#efece6" stroke="var(--brun-fonce)" stroke-width="5" />
+                <path d="M40 -22 l12 -12 l12 12 M90 -22 l12 -12 l12 12 M140 -22 l12 -12 l12 12 M40 22 l12 12 l12 -12 M90 22 l12 12 l12 -12 M140 22 l12 12 l12 -12" fill="none" stroke="var(--brun-fonce)" stroke-width="5" />
+                <rect x="-14" y="-30" width="16" height="60" rx="4" fill="#efece6" stroke="var(--brun-fonce)" stroke-width="5" />
+              </g>
+              <g id="s3-vis">
+                <rect x="-170" y="-7" width="320" height="14" fill="#a3a3a3" stroke="var(--brun-fonce)" stroke-width="4" />
+                <rect x="-196" y="-28" width="28" height="56" rx="6" fill="#a3a3a3" stroke="var(--brun-fonce)" stroke-width="4" />
+              </g>
+            </g>
+          </g>
+        </svg>
+        <div class="chap">02 · Son sourd</div>
+        <div class="titre"><span class="m"><span>Son</span></span> <span class="m"><span>sourd</span></span></div>
+        <div id="s3-s" class="sous" style="top: 360px"><b>Mur plein</b> <span class="note">· béton, brique</span></div>
+        <div id="s3-c" class="carte">Chevilles à expansion</div>
+      </div>
+
+      <!-- 4. Son creux = cloison : 13,5 - 21 s -->
+      <div id="s4" class="clip scene" data-start="13.5" data-duration="7.5" data-track-index="3">
+        <svg viewBox="0 0 1080 1920">
+          <defs>
+            <clipPath id="s4-vide"><rect x="430" y="700" width="220" height="820" /></clipPath>
+          </defs>
+          <g id="s4-cam">
+            <path id="s4-wave" d="" fill="none" stroke="var(--brun-fonce)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <g filter="url(#ombre)">
+              <rect x="430" y="700" width="220" height="820" fill="#d9cdbb" />
+              <rect x="390" y="700" width="40" height="820" fill="var(--platre)" stroke="var(--brun-fonce)" stroke-width="4" />
+              <rect x="650" y="700" width="40" height="820" fill="var(--platre)" stroke="var(--brun-fonce)" stroke-width="4" />
+            </g>
+            <rect x="522" y="700" width="36" height="820" fill="none" stroke="#9c958b" stroke-width="5" stroke-dasharray="18 14" />
+            <g id="s4-ondes" clip-path="url(#s4-vide)" fill="none" stroke="var(--brun-fonce)" stroke-width="7">
+              <circle class="o" cx="430" cy="960" r="10" />
+              <circle class="o" cx="430" cy="960" r="10" />
+              <circle class="o" cx="430" cy="960" r="10" />
+              <circle class="o" cx="430" cy="960" r="10" />
+            </g>
+            <!-- cheville pour plaque de plâtre, à ailettes -->
+            <g id="s4-cheville">
+              <rect x="-150" y="-7" width="300" height="14" fill="#a3a3a3" stroke="var(--brun-fonce)" stroke-width="4" />
+              <rect x="-176" y="-28" width="28" height="56" rx="6" fill="#a3a3a3" stroke="var(--brun-fonce)" stroke-width="4" />
+              <rect x="-6" y="-20" width="50" height="40" rx="6" fill="#efece6" stroke="var(--brun-fonce)" stroke-width="5" />
+              <rect id="s4-aile-h" x="44" y="-10" width="90" height="20" rx="6" fill="#efece6" stroke="var(--brun-fonce)" stroke-width="5" />
+              <rect id="s4-aile-b" x="44" y="-10" width="90" height="20" rx="6" fill="#efece6" stroke="var(--brun-fonce)" stroke-width="5" />
+            </g>
+          </g>
+        </svg>
+        <div class="chap">03 · Son creux</div>
+        <div class="titre"><span class="m"><span>Son</span></span> <span class="m"><span>creux</span></span></div>
+        <div id="s4-s" class="sous" style="top: 360px"><b>Cloison</b> <span class="note">· plaque de plâtre</span></div>
+        <div id="s4-c" class="carte">Chevilles pour plaque de plâtre</div>
+      </div>
+
+      <!-- 5. Trou d'essai : 20,5 - 26,5 s -->
+      <div id="s5" class="clip scene" data-start="20.5" data-duration="6" data-track-index="4">
+        <svg viewBox="0 0 1080 1920">
+          <g id="s5-cam">
+            <g filter="url(#ombre)">
+              <rect x="470" y="700" width="220" height="680" fill="#d9cdbb" />
+              <rect x="430" y="700" width="40" height="680" fill="var(--platre)" stroke="var(--brun-fonce)" stroke-width="4" />
+              <rect x="690" y="700" width="40" height="680" fill="var(--platre)" stroke="var(--brun-fonce)" stroke-width="4" />
+            </g>
+            <g id="s5-meche">
+              <rect x="-330" y="-42" width="150" height="84" rx="16" fill="var(--brun)" />
+              <rect x="-180" y="-10" width="200" height="20" fill="#bdbdbd" stroke="var(--brun-fonce)" stroke-width="4" />
+              <path d="M-160 -10 l14 20 M-130 -10 l14 20 M-100 -10 l14 20 M-70 -10 l14 20 M-40 -10 l14 20 M-10 -10 l14 20" stroke="var(--brun-fonce)" stroke-width="3" />
+              <path d="M20 -10 l20 10 l-20 10 z" fill="#bdbdbd" stroke="var(--brun-fonce)" stroke-width="4" />
+            </g>
+            <g id="s5-poussiere" fill="var(--platre)" stroke="#cfc6b6" stroke-width="2">
+              <circle cx="418" cy="975" r="8" /><circle cx="408" cy="1005" r="6" /><circle cx="422" cy="1035" r="7" /><circle cx="404" cy="1062" r="5" /><circle cx="416" cy="1090" r="4" />
+            </g>
+          </g>
+        </svg>
+        <div class="chap">04 · Un doute&nbsp;?</div>
+        <div class="titre"><span class="m"><span>Le</span></span> <span class="m"><span>trou</span></span> <span class="m"><span>d'essai</span></span></div>
+        <div id="s5-c1" class="carte claire haut" style="border: 3px solid var(--brun-fonce)">Ça traverse d'un coup : creux</div>
+        <div id="s5-c2" class="carte">Ça résiste jusqu'au bout : plein</div>
+      </div>
+
+      <!-- 6. Fin : 26 - 30 s -->
+      <div id="fin" class="clip" data-start="26" data-duration="4" data-track-index="5">
+        <img id="logo" src="assets/logo-em-hd.png" alt="" />
+        <img id="logo-texte" src="assets/logo-texte-hd.png" alt="Étagères Murales" />
+        <div id="fin-s">Une astuce avant chaque pose</div>
+        <div id="url">etageres-murales.fr</div>
+      </div>
+
+      <div id="progres" class="clip" data-start="0" data-duration="26" data-track-index="6"><i></i></div>
+      <svg id="grain" class="clip" viewBox="0 0 1080 1920" data-start="0" data-duration="30" data-track-index="9">
+        <filter id="bruit"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" /><feColorMatrix type="saturate" values="0" /></filter>
+        <rect width="1080" height="1920" filter="url(#bruit)" />
+      </svg>
+
+      <!-- Sons : 2 tocs (sourd, creux), pas de musique -->
+      <audio id="toc1" src="assets/toc-sourd.wav" data-start="8.3" data-duration="0.35" data-volume="0.9" data-track-index="7"></audio>
+      <audio id="toc2" src="assets/toc-creux.wav" data-start="15.0" data-duration="0.9" data-volume="0.8" data-track-index="8"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const pop = (sel, at) => tl.fromTo(sel, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, at);
+      const mots = (scene, at) => tl.fromTo(scene + " .titre .m > span", { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: 0.08, ease: "power4.out" }, at);
+      // volet d'entrée : la scène arrive par la droite, la précédente recule légèrement
+      const volet = (scene, prev, at) => {
+        tl.fromTo(scene, { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power3.inOut" }, at);
+        if (prev) tl.to(prev + " svg, " + prev + " .titre", { x: -120, duration: 0.55, ease: "power3.inOut" }, at);
+      };
+      // poussée lente de caméra pendant chaque scène
+      const camera = (sel, from, to) => tl.fromTo(sel, { scale: 1, transformOrigin: "540px 1060px" }, { scale: 1.05, duration: to - from, ease: "none" }, from);
+
+      // grains et points déterministes (pas de hasard au rendu)
+      let g = 11;
+      const rnd = () => ((g = (g * 16807) % 2147483647) / 2147483647);
+      const ns = "http://www.w3.org/2000/svg";
+      const dots = (parent, n, x0, y0, w, h, rmin, rmax) => {
+        const el = document.querySelector(parent);
+        for (let i = 0; i < n; i++) {
+          const c = document.createElementNS(ns, "circle");
+          c.setAttribute("cx", (x0 + rnd() * w).toFixed(1)); c.setAttribute("cy", (y0 + rnd() * h).toFixed(1));
+          c.setAttribute("r", (rmin + rnd() * (rmax - rmin)).toFixed(1));
+          el.appendChild(c);
+        }
+      };
+      dots("#s1-g-grains", 150, 180, 650, 350, 860, 3, 10);
+      dots("#s2-pts", 160, 160, 580, 760, 960, 2, 5);
+      dots("#s3-grains", 260, 390, 700, 320, 820, 3, 11);
+
+      // ondes sonores dessinées : sourd = amorti tout de suite, creux = résonne longtemps
+      const onde = (id, decay, freq) => {
+        let d = "M 140 560";
+        for (let x = 0; x <= 800; x += 4) {
+          const y = 560 - 70 * Math.exp(-x / decay) * Math.sin(x / freq);
+          d += ` L ${140 + x} ${y.toFixed(1)}`;
+        }
+        const p = document.querySelector(id); p.setAttribute("d", d);
+        return p.getTotalLength();
+      };
+      const L3 = onde("#s3-wave", 28, 7), L4 = onde("#s4-wave", 320, 9);
+
+      // 1. accroche
+      mots("#s1", 0.15);
+      tl.fromTo("#s1-cam", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.to("#s1-g", { x: -28, duration: 0.6, ease: "power3.inOut" }, 1.2);
+      tl.to("#s1-d", { x: 28, duration: 0.6, ease: "power3.inOut" }, 1.2);
+      tl.to(["#s1-g-in", "#s1-g-grains"], { opacity: 1, duration: 0.5 }, 1.6);
+      tl.to("#s1-d-in", { opacity: 1, duration: 0.5 }, 1.8);
+      pop("#s1-s", 2.0);
+
+      // 2. le test
+      volet("#s2", "#s1", 3.5);
+      mots("#s2", 3.8);
+      camera("#s2-cam", 3.5, 7.5);
+      tl.fromTo("#s2-point", { scale: 0, transformOrigin: "540px 1060px" }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, 4.3);
+      tl.fromTo("#s2-toc", { opacity: 0, scale: 0.4, rotation: -8, transformOrigin: "0% 100%" }, { opacity: 1, scale: 1, rotation: -8, duration: 0.35, ease: "back.out(3)" }, 4.35);
+      tl.to("#s2-toc", { opacity: 0, duration: 0.3 }, 5.4);
+      document.querySelectorAll("#s2-ondes .o").forEach((c, i) => {
+        tl.fromTo(c, { attr: { r: 20 }, opacity: 0.9 }, { attr: { r: 380 }, opacity: 0, duration: 1.4, ease: "power1.out" }, 4.4 + i * 0.4);
+      });
+      pop("#s2-c", 5.2);
+
+      // 3. son sourd
+      volet("#s3", "#s2", 7.0);
+      mots("#s3", 7.3);
+      camera("#s3-cam", 7.0, 14.0);
+      pop("#s3-s", 7.8);
+      tl.fromTo("#s3-wave", { strokeDasharray: L3, strokeDashoffset: L3 }, { strokeDashoffset: 0, duration: 1.1, ease: "power2.out" }, 8.3);
+      tl.fromTo("#s3-onde circle", { attr: { r: 10 }, opacity: 1 }, { attr: { r: 110 }, opacity: 0, duration: 0.45, ease: "power2.out" }, 8.3);
+      tl.set("#s3-cheville", { x: -40, y: 960, scale: 1.35, transformOrigin: "0px 0px", opacity: 0 }, 7.0);
+      tl.set("#s3-vis", { x: -260 }, 7.0);
+      tl.to("#s3-cheville", { opacity: 1, duration: 0.3 }, 10.2);
+      tl.to("#s3-cheville", { x: 405, duration: 0.8, ease: "power2.inOut" }, 10.4);
+      tl.to("#s3-vis", { x: 0, duration: 0.9, ease: "power2.inOut" }, 11.3);
+      tl.to("#s3-corps", { scaleY: 1.32, transformOrigin: "95px 0px", duration: 0.4, ease: "back.out(3)" }, 12.1);
+      pop("#s3-c", 10.6);
+
+      // 4. son creux
+      volet("#s4", "#s3", 13.5);
+      mots("#s4", 13.8);
+      camera("#s4-cam", 13.5, 21.0);
+      pop("#s4-s", 14.3);
+      tl.fromTo("#s4-wave", { strokeDasharray: L4, strokeDashoffset: L4 }, { strokeDashoffset: 0, duration: 2.2, ease: "power1.out" }, 15.0);
+      document.querySelectorAll("#s4-ondes .o").forEach((c, i) => {
+        tl.fromTo(c, { attr: { r: 10 }, opacity: 1 }, { attr: { r: 420 }, opacity: 0, duration: 1.4, ease: "power1.out" }, 15.0 + i * 0.35);
+      });
+      tl.set("#s4-cheville", { x: -40, y: 960, scale: 1.5, transformOrigin: "0px 0px", opacity: 0 }, 13.5);
+      tl.set(["#s4-aile-h", "#s4-aile-b"], { rotation: 0, transformOrigin: "44px 0px" }, 13.5);
+      tl.to("#s4-cheville", { opacity: 1, duration: 0.3 }, 17.2);
+      tl.to("#s4-cheville", { x: 400, duration: 0.9, ease: "power2.inOut" }, 17.4);
+      tl.to("#s4-aile-h", { rotation: -80, duration: 0.5, ease: "back.out(2)" }, 18.4);
+      tl.to("#s4-aile-b", { rotation: 80, duration: 0.5, ease: "back.out(2)" }, 18.4);
+      pop("#s4-c", 17.7);
+
+      // 5. trou d'essai : la mèche bute, vibre, puis traverse d'un coup
+      volet("#s5", "#s4", 20.5);
+      mots("#s5", 20.8);
+      camera("#s5-cam", 20.5, 26.5);
+      tl.set("#s5-meche", { x: 120, y: 960 }, 20.5);
+      tl.set("#s5-poussiere", { opacity: 0 }, 20.5);
+      tl.to("#s5-meche", { x: 392, duration: 0.8, ease: "power2.out" }, 21.4);
+      tl.to("#s5-meche", { x: 412, duration: 1.3, ease: "none" }, 22.2);
+      tl.fromTo("#s5-meche", { y: 960 }, { y: 963, duration: 0.05, repeat: 25, yoyo: true, ease: "none" }, 22.2);
+      tl.to("#s5-poussiere", { opacity: 1, duration: 0.3 }, 22.3);
+      tl.to("#s5-meche", { x: 600, duration: 0.22, ease: "power4.in" }, 23.5);
+      pop("#s5-c1", 23.7);
+      pop("#s5-c2", 24.6);
+
+      // barre de progression
+      tl.fromTo("#progres i", { scaleX: 0 }, { scaleX: 1, duration: 26, ease: "none" }, 0);
+
+      // 6. fin
+      tl.fromTo("#fin", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", duration: 0.7, ease: "power3.inOut" }, 26.0);
+      tl.fromTo("#logo", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, 26.4);
+      pop("#logo-texte", 26.7);
+      pop("#fin-s", 27.1);
+      pop("#url", 27.4);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
