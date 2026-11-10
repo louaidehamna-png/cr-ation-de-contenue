@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0e0e0e}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#fff}
+.clip{position:absolute;inset:0}
+#v-cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+/* zone sûre : texte entre y 250 et 1450, de x 80 à 920 */
+#v-gauge{position:absolute;left:80px;top:250px;width:840px}
+#v-gauge .lb{font:700 40px/1 "InterX";letter-spacing:.06em;display:flex;justify-content:space-between}
+#v-gauge .tr{position:relative;margin-top:16px;height:18px;border-radius:9px;background:#2a2a2a;overflow:hidden}
+#v-fill{position:absolute;left:0;top:0;height:100%;width:840px;background:#e10600;border-radius:9px;transform-origin:0 50%}
+.hd{position:absolute;left:80px;width:840px;top:360px;font:900 96px/1.02 "InterX";letter-spacing:-.02em;text-transform:uppercase;opacity:0;text-shadow:0 0 30px #000,0 0 10px #000}
+.bd{position:absolute;left:80px;width:840px;font:700 56px/1.15 "InterX";color:#d9d9d9;opacity:0;text-shadow:0 0 24px #000,0 0 8px #000}
+#v-sub{position:absolute;left:80px;width:840px;top:1290px;height:160px;display:flex;align-items:flex-end;justify-content:center;text-align:center}
+#v-sub span{font:700 52px/60px "InterX";color:#fff;text-shadow:0 0 18px #000,0 0 6px #000;opacity:0;position:absolute;bottom:0;left:0;width:840px}
+#v-dim{position:absolute;left:0;top:0;font:900 48px/1 "InterX";color:#fff;opacity:0;white-space:nowrap;text-shadow:0 0 12px #000}
+#v-m2{position:absolute;left:80px;top:600px;font:900 150px/1 "InterX";opacity:0}
+#v-m2 i{position:absolute;left:-10px;right:-10px;top:52%;height:16px;background:#e10600;transform:scaleX(0);transform-origin:0 50%;border-radius:8px}
+#v-four{position:absolute;left:80px;top:340px;font:900 340px/1 "InterX";color:#fff;opacity:0}
+.side{position:absolute;top:620px;font:900 64px/1 "InterX";opacity:0}
+#v-logo{position:absolute;left:80px;width:840px;top:1150px;text-align:center;font:600 36px/1 "InterX";color:#bdbdbd;opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="32" data-width="1080" data-height="1920">
+ <div id="v-stage" class="clip" data-start="0" data-duration="32" data-track-index="0">
+  <canvas id="v-cv" width="1080" height="1920"></canvas>
+  <div id="v-gauge"><div class="lb"><span>TAILLE RESSENTIE</span><span id="v-pct">20 %</span></div><div class="tr"><div id="v-fill"></div></div></div>
+
+  <div id="v-h0" class="hd" style="opacity:1">Ton salon a l’air petit.</div>
+  <div id="v-h1" class="hd">C’est pas la surface.</div>
+  <div id="v-m2">m²<i></i></div>
+  <div id="v-h2" class="hd" style="top:800px">C’est 4 erreurs.</div>
+
+  <div id="v-e1" class="hd">1. Tapis trop petit</div><div id="v-b1" class="bd" style="top:575px">les pieds avant des meubles dessus</div>
+  <div id="v-e2" class="hd">2. Rideaux trop bas</div><div id="v-b2" class="bd" style="top:575px">plus haut, plus large</div>
+  <div id="v-e3" class="hd">3. Cadres trop hauts</div><div id="v-b3" class="bd" style="top:575px">le centre à hauteur des yeux</div>
+  <div id="v-four">4.</div>
+  <div id="v-e4" class="hd" style="font-size:84px">4. Une seule lumière au plafond</div><div id="v-b4" class="bd" style="top:640px">3 sources, 3 hauteurs</div>
+  <div id="v-av" class="side" style="left:80px">AVANT</div><div id="v-ap" class="side" style="left:640px">APRÈS</div>
+  <div id="v-ms" class="hd" style="top:1160px;text-align:center">Même salon.</div>
+  <div id="v-end" class="hd" style="font-size:82px">Enregistre-la avant de déménager tes meubles.</div>
+  <div id="v-logo">etageres-murales.fr</div>
+  <div id="v-dim">≈ 1,50 m</div>
+
+  <div id="v-sub">
+   <span id="v-s0">Ton salon a l’air petit.</span><span id="v-s1">C’est pas la surface.</span><span id="v-s2">C’est quatre erreurs.</span>
+   <span id="v-s3">Et la dernière, tu la fais tous les soirs.</span><span id="v-s4">Un : ton tapis est trop petit.</span>
+   <span id="v-s5">Les pieds avant du canapé et des fauteuils doivent être posés dessus.</span><span id="v-s6">Là, il relie tout le coin.</span>
+   <span id="v-s7">Deux : tes rideaux sont trop bas.</span><span id="v-s8">Monte la tringle près du plafond et dépasse de chaque côté de la fenêtre.</span>
+   <span id="v-s9">L’œil croit que tout est plus haut.</span><span id="v-s10">Trois : tes cadres sont trop hauts.</span>
+   <span id="v-s11">Le centre doit être à hauteur des yeux, autour d’un mètre cinquante.</span><span id="v-s12">Sinon ils flottent tout seuls.</span>
+   <span id="v-s13">Quatre, celle du soir : une seule lumière au plafond.</span><span id="v-s14">Mets trois sources à trois hauteurs différentes.</span>
+   <span id="v-s15">Les coins s’éclairent et la pièce s’agrandit.</span><span id="v-s16">Même salon. Rien n’a été cassé.</span>
+   <span id="v-s17">Enregistre la vidéo avant de bouger tes meubles.</span>
+  </div>
+  <audio id="v-sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="32" data-track-index="5"></audio>
+ </div>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var cv=$("v-cv"),ctx=cv.getContext("2d");
+var SC=130,CX=520,CY=1060,PHI=33*Math.PI/180,cP=Math.cos(PHI),sP=Math.sin(PHI);
+var WF=2.8,DF=2.3,HF=2.7,WS=1.5,DS=1.4,HS=2.0;
+/* état animé (tous les paramètres de la scène) */
+var P={s:.25,yaw:35,rug:0,cur:0,fr:0,night:0,white:0,g1:0,g2:0,g3:0,crossR:0,crossC:0,crossL:0,arrowC:0,arrowF:0,dim:0,handR:0,handF:0,ghR:0,ghC:0,ghF:0,split:0,gauge:.2,gw:0};
+var L=function(a,b,k){return a+(b-a)*k};
+function room(S){return {W:L(WF,WS,S.s),D:L(DF,DS,S.s),H:L(HF,HS,S.s)}}
+function pr(p,th){var c=Math.cos(th),s=Math.sin(th),x=p[0]*c+p[2]*s,z=-p[0]*s+p[2]*c;return {x:CX+x*SC,y:CY-p[1]*SC*cP+z*SC*sP,d:z*cP+p[1]*sP}}
+function poly(pts,th,fill,stroke,lw,alpha){var q=pts.map(function(p){return pr(p,th)});ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.beginPath();q.forEach(function(p,i){i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)});ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw||3;ctx.lineJoin="round";ctx.stroke()}ctx.restore()}
+function vis(n,th){var c=Math.cos(th),s=Math.sin(th);var nz=-n[0]*s+n[2]*c;return n[1]*sP+nz*cP>0.001}
+function box(F,x,z,w,d,h,y0,fill){y0=y0||0;var a=x-w/2,b=x+w/2,e=z-d/2,f=z+d/2,t=y0+h;
+ [[[a,t,e],[b,t,e],[b,t,f],[a,t,f],[0,1,0]],[[a,y0,f],[b,y0,f],[b,t,f],[a,t,f],[0,0,1]],[[a,y0,e],[b,y0,e],[b,t,e],[a,t,e],[0,0,-1]],
+  [[b,y0,e],[b,y0,f],[b,t,f],[b,t,e],[1,0,0]],[[a,y0,e],[a,y0,f],[a,t,f],[a,t,e],[-1,0,0]]].forEach(function(q){F.push({p:q.slice(0,4),n:q[4],fill:fill||"#1e1e1e"})})}
+function cross(pt,k,sz){if(k<=0)return;ctx.save();ctx.strokeStyle="#e10600";ctx.lineWidth=10;ctx.lineCap="round";var r=sz*k;ctx.beginPath();ctx.moveTo(pt.x-r,pt.y-r);ctx.lineTo(pt.x+r,pt.y+r);ctx.moveTo(pt.x+r,pt.y-r);ctx.lineTo(pt.x-r,pt.y+r);ctx.stroke();ctx.restore()}
+function arrow(a,b,k){if(k<=0)return;var x=L(a.x,b.x,k),y=L(a.y,b.y,k);ctx.save();ctx.strokeStyle="#e10600";ctx.fillStyle="#e10600";ctx.lineWidth=7;ctx.setLineDash([16,12]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.stroke();ctx.setLineDash([]);
+ var an=Math.atan2(y-a.y,x-a.x);ctx.beginPath();ctx.moveTo(x+Math.cos(an)*22,y+Math.sin(an)*22);ctx.lineTo(x+Math.cos(an+2.4)*26,y+Math.sin(an+2.4)*26);ctx.lineTo(x+Math.cos(an-2.4)*26,y+Math.sin(an-2.4)*26);ctx.closePath();ctx.fill();ctx.restore()}
+function hand(pt,k,rot){if(k<=0)return;ctx.save();ctx.globalAlpha=Math.min(1,k);ctx.translate(pt.x,pt.y);ctx.rotate(rot||0);ctx.scale(1.15,1.15);ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.lineJoin="round";ctx.lineCap="round";ctx.fillStyle="#0e0e0e";
+ ctx.beginPath();ctx.moveTo(-8,8);ctx.bezierCurveTo(-30,14,-46,4,-50,-12);ctx.lineTo(-52,-34);ctx.bezierCurveTo(-52,-42,-42,-42,-40,-34);ctx.lineTo(-38,-22);ctx.lineTo(-40,-58);ctx.bezierCurveTo(-40,-66,-29,-66,-29,-58);ctx.lineTo(-27,-26);
+ ctx.lineTo(-26,-64);ctx.bezierCurveTo(-26,-72,-15,-72,-15,-64);ctx.lineTo(-14,-26);ctx.lineTo(-12,-58);ctx.bezierCurveTo(-12,-66,-2,-66,-2,-58);ctx.lineTo(-2,-22);ctx.lineTo(4,-36);ctx.bezierCurveTo(8,-44,18,-40,14,-30);ctx.lineTo(4,0);ctx.lineTo(-8,8);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-50,-12);ctx.lineTo(-62,22);ctx.moveTo(-8,8);ctx.lineTo(-18,40);ctx.stroke();ctx.restore()}
+function glow(pt,r,col,a){if(a<=0)return;ctx.save();ctx.globalCompositeOperation="lighter";var g=ctx.createRadialGradient(pt.x,pt.y,0,pt.x,pt.y,r);g.addColorStop(0,col.replace("A",(.85*a).toFixed(3)));g.addColorStop(.35,col.replace("A",(.35*a).toFixed(3)));g.addColorStop(1,col.replace("A","0"));ctx.fillStyle=g;ctx.fillRect(pt.x-r,pt.y-r,2*r,2*r);ctx.restore()}
+
+/* géométrie dépendante de l'état */
+function rugQ(k){var w=L(.7,2.3,k),d=L(.5,1.55,k),x=L(-.3,-.15,k),z=L(-.4,-.5,k);return [[x-w/2,.006,z-d/2],[x+w/2,.006,z-d/2],[x+w/2,.006,z+d/2],[x-w/2,.006,z+d/2]]}
+function curG(k,H,D){var rod=L(2.0,H-.12,k),a=L(.3,0,k),b=L(1.3,1.6,k),pw=L(.2,.32,k),bot=L(.95,0,k);return {rod:rod,a:a,b:b,pw:pw,bot:bot,z:-D+.03}}
+function frG(k,H){var y=L(H-.32,1.5,k);return y}
+
+function scene(S,th,warm){
+ var R=room(S),W=R.W,D=R.D,H=R.H;
+ /* sol */
+ poly([[-W,0,-D],[W,0,-D],[W,0,D],[-W,0,D]],th,"#151515","#ffffff",3);
+ /* murs vus de l'intérieur (les murs proches de la caméra sont retirés) */
+ var walls=[{p:[[-W,0,-D],[W,0,-D],[W,H,-D],[-W,H,-D]],n:[0,0,1]},{p:[[-W,0,D],[W,0,D],[W,H,D],[-W,H,D]],n:[0,0,-1]},{p:[[-W,0,-D],[-W,0,D],[-W,H,D],[-W,H,-D]],n:[1,0,0]},{p:[[W,0,-D],[W,0,D],[W,H,D],[W,H,-D]],n:[-1,0,0]}];
+ walls.forEach(function(w){if(vis(w.n,th))poly(w.p,th,"#1a1a1a","#ffffff",3)});
+ var back=vis([0,0,1],th);
+ /* fenêtre, rideaux, cadres sur le mur du fond */
+ if(back){var z=-D+.01;
+  poly([[.4,.9,z],[1.2,.9,z],[1.2,1.9,z],[.4,1.9,z]],th,"#0b0b0b","#ffffff",3);
+  poly([[.8,.9,z],[.8,1.9,z]],th,null,"#ffffff",2);poly([[.4,1.4,z],[1.2,1.4,z]],th,null,"#ffffff",2);
+  function curtains(k,al){var c=curG(k,H,D);poly([[c.a-.05,c.rod,c.z],[c.b+.05,c.rod,c.z]],th,null,"#ffffff",5,al);
+   [[c.a,c.a+c.pw],[c.b-c.pw,c.b]].forEach(function(q){poly([[q[0],c.bot,c.z],[q[1],c.bot,c.z],[q[1],c.rod-.03,c.z],[q[0],c.rod-.03,c.z]],th,"#2b2b2b","#ffffff",3,al)})}
+  if(S.ghC>0)curtains(0,S.ghC*.45);curtains(S.cur,1);
+  function frames(k,al){var y=frG(k,H);[-1.0,-.45].forEach(function(x){poly([[x-.19,y-.24,z],[x+.19,y-.24,z],[x+.19,y+.24,z],[x-.19,y+.24,z]],th,"#262626","#ffffff",4,al);poly([[x-.12,y-.16,z],[x+.12,y-.16,z],[x+.12,y+.16,z],[x-.12,y+.16,z]],th,null,"#ffffff",2,al)})}
+  if(S.ghF>0)frames(0,S.ghF*.45);frames(S.fr,1);
+ }
+ /* tapis (+ fantôme) */
+ if(S.ghR>0)poly(rugQ(0),th,null,"#ffffff",3,S.ghR*.5);
+ poly(rugQ(S.rug),th,"#2a2a2a","#ffffff",3);
+ /* meubles triés par profondeur */
+ var F=[];
+ box(F,-.3,-.9,1.6,.7,.42);box(F,-.3,-1.16,1.6,.18,.85);box(F,-1.02,-.9,.16,.7,.6);box(F,.42,-.9,.16,.7,.6);
+ box(F,-.3,.08,.8,.45,.38);
+ box(F,1.0,.0,.66,.7,.4);box(F,1.25,.0,.16,.7,.82);
+ box(F,1.05,-.95,.4,.4,.5);
+ var fl={x:-W+.35,z:-D+.35};box(F,fl.x,fl.z,.05,.05,1.45,0,"#cccccc");box(F,fl.x,fl.z,.34,.34,.26,1.45,"#2f2f2f");
+ box(F,1.05,-.95,.08,.08,.18,.5,"#cccccc");box(F,1.05,-.95,.26,.26,.16,.68,"#2f2f2f");
+ F.forEach(function(f){var q=f.p.map(function(p){return pr(p,th)});f.d=q.reduce(function(a,b){return a+b.d},0)/4});
+ F.sort(function(a,b){return a.d-b.d});F.forEach(function(f){if(vis(f.n,th))poly(f.p,th,f.fill,"#ffffff",2.5)});
+ /* plafonnier */
+ var lp=[.2,H-.42,-.3];poly([[.2,H,-.3],lp],th,null,"#ffffff",2);var lq=pr(lp,th);
+ ctx.save();ctx.fillStyle="#1e1e1e";ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(lq.x,lq.y+6,30,12,0,0,7);ctx.fill();ctx.stroke();ctx.restore();
+ return {R:R,lamp:lq,floor:pr([fl.x,1.6,fl.z],th),table:pr([1.05,.82,-.95],th),rugC:pr(rugQ(S.rug)[2],th),rugC0:pr(rugQ(0)[2],th),
+   cur0:pr([.8,2.0,-D],th),cur1:pr([.8,H-.12,-D],th),frTop:pr([-.72,frG(S.fr,H)+.24,-D],th),fr0:pr([-.72,frG(0,H),-D],th),fr1:pr([-.72,1.5,-D],th),dimB:pr([-1.35,0,-D+.02],th),dimT:pr([-1.35,1.5,-D+.02],th)};
+}
+function lights(S,G){
+ if(S.night>0){ctx.save();ctx.fillStyle="rgba(0,0,0,"+(.62*S.night).toFixed(3)+")";ctx.fillRect(0,0,1080,1920);ctx.restore()}
+ if(S.white>0){ctx.save();ctx.globalCompositeOperation="lighter";ctx.fillStyle="rgba(235,240,255,"+(.10*S.white).toFixed(3)+")";ctx.beginPath();ctx.moveTo(G.lamp.x,G.lamp.y);ctx.lineTo(G.lamp.x-330,G.lamp.y+560);ctx.lineTo(G.lamp.x+330,G.lamp.y+560);ctx.closePath();ctx.fill();ctx.restore();glow(G.lamp,180,"rgba(235,240,255,A)",S.white)}
+ glow(G.floor,330,"rgba(255,184,107,A)",S.g1);glow(G.table,260,"rgba(255,184,107,A)",S.g2);glow(G.lamp,240,"rgba(255,184,107,A)",S.g3);
+}
+function overlays(S,G){
+ cross(G.rugC0,S.crossR,46);cross(G.lamp,S.crossL,40);
+ arrow(G.cur0,G.cur1,S.arrowC);arrow(G.fr0,G.fr1,S.arrowF);
+ hand(G.rugC,S.handR,-.35);hand(G.frTop,S.handF,0);
+ if(S.dim>0){var b=G.dimB,t=G.dimT,y=L(b.y,t.y,Math.min(1,S.dim));ctx.save();ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(L(b.x,t.x,Math.min(1,S.dim)),y);ctx.moveTo(b.x-16,b.y);ctx.lineTo(b.x+16,b.y);if(S.dim>=1){ctx.moveTo(t.x-16,t.y);ctx.lineTo(t.x+16,t.y)}ctx.stroke();ctx.restore()}
+}
+var BEFORE={s:1,rug:0,cur:0,fr:0,ghR:0,ghC:0,ghF:0};
+function draw(){
+ ctx.fillStyle="#0e0e0e";ctx.fillRect(0,0,1080,1920);
+ var th=P.yaw*Math.PI/180;
+ if(P.split>0){
+  var mid=1080*(1-.5*P.split);
+  ctx.save();ctx.beginPath();ctx.rect(0,0,mid,1920);ctx.clip();ctx.translate(-150*P.split,0);var Gb=scene(Object.assign({},P,BEFORE),th);ctx.fillStyle="rgba(225,6,0,.16)";ctx.fillRect(0,0,1080,1920);ctx.restore();
+  ctx.save();ctx.beginPath();ctx.rect(mid,0,1080-mid,1920);ctx.clip();ctx.translate(150*P.split*.9,0);var G2=scene(P,th);lights(P,G2);ctx.restore();
+  ctx.save();ctx.strokeStyle="#fff";ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(mid,640);ctx.lineTo(mid,1340);ctx.stroke();ctx.restore();
+ }else{var G=scene(P,th);lights(P,G);overlays(P,G);
+  var dl=$("v-dim");if(P.dim>=1){dl.style.opacity=Math.min(1,(P.dim-1)*4);dl.style.transform="translate("+Math.max(80,G.dimT.x-250).toFixed(1)+"px,"+(L(G.dimB.y,G.dimT.y,.5)-24).toFixed(1)+"px)"}else dl.style.opacity=0}
+ $("v-fill").style.transform="scaleX("+P.gauge.toFixed(4)+")";
+ var r=Math.round(225+30*P.gw),g=Math.round(6+249*P.gw),b=Math.round(0+255*P.gw);$("v-fill").style.background="rgb("+r+","+g+","+b+")";
+ $("v-pct").textContent=Math.round(P.gauge*100)+" %";
+}
+
+var tl=gsap.timeline({paused:true});
+tl.to({},{duration:32},0);
+function T(o,t,d,e){var v={};for(var k in o)v[k]=o[k];v.duration=d;v.ease=e||"power2.inOut";tl.to(P,v,t)}
+function show(id,t,out,y){tl.fromTo("#"+id,{opacity:0,y:y==null?30:y},{opacity:1,y:0,duration:.25,ease:"power3.out",immediateRender:false},t);if(out!=null)tl.to("#"+id,{opacity:0,duration:.18,ease:"power2.in"},out)}
+function sub(n,a,b){tl.set("#v-s"+n,{opacity:1},a);tl.set("#v-s"+n,{opacity:0},b)}
+
+/* 0 à 3.5 : la pièce étouffe */
+T({s:1},0,.55,"back.out(1.4)");T({yaw:31},0,9,"none");
+tl.to("#v-h0",{opacity:0,duration:.18},1.42);
+show("v-h1",1.5,3.35);show("v-m2",1.7,3.35,20);tl.to("#v-m2 i",{scaleX:1,duration:.25,ease:"power2.out"},2.2);show("v-h2",2.6,3.35);
+
+/* 3.5 à 9 : erreur 1, le tapis */
+show("v-e1",3.55,8.9);show("v-b1",4.0,8.9);
+T({crossR:1},4.6,.25,"back.out(2)");T({handR:1},5.6,.25);T({crossR:0},6.2,.15);
+T({rug:1},6.4,.95,"back.out(1.6)");T({handR:0},7.45,.2);T({ghR:1},7.35,.05);T({ghR:0},7.85,.2);
+T({s:.75},8.2,.6,"back.out(1.2)");T({gauge:.4},8.6,.3,"back.out(2)");
+
+/* 9 à 15 : erreur 2, les rideaux (la caméra se tourne vers la fenêtre) */
+T({yaw:12},9.0,.8,"power3.inOut");T({yaw:8},9.8,5.2,"none");
+show("v-e2",9.1,14.9);show("v-b2",9.6,14.9);
+T({arrowC:1},11.2,.6);T({cur:1},12.2,1.0,"back.out(1.5)");T({arrowC:0},12.3,.2);T({ghC:1},13.1,.05);T({ghC:0},13.65,.2);
+T({s:.5},14.2,.6,"back.out(1.2)");T({gauge:.6},14.6,.3,"back.out(2)");
+
+/* 15 à 21 : erreur 3, les cadres */
+T({yaw:28},15.0,.8,"power3.inOut");T({yaw:34},15.8,5.2,"none");
+show("v-e3",15.1,20.9);show("v-b3",15.6,20.9);
+T({dim:1},16.6,.8,"power2.out");T({handF:1},17.3,.25);T({arrowF:1},17.2,.5);T({arrowF:0},17.9,.15);
+T({fr:1},18.0,.9,"back.out(1.6)");T({handF:0},18.9,.2);T({dim:1.6},18.9,.25);T({ghF:1},18.85,.05);T({ghF:0},19.35,.2);
+T({s:.3},20.2,.6,"back.out(1.2)");T({gauge:.75},20.6,.3,"back.out(2)");T({dim:0},20.9,.1);
+
+/* 21 à 22 : le soir */
+T({night:1,white:1},21.0,.6);show("v-four",21.05,21.95,0);
+/* 22 à 28 : erreur 4, la lumière */
+show("v-e4",22.0,27.9);show("v-b4",22.5,27.9);T({yaw:44},21.0,7,"none");
+T({crossL:1},22.6,.25,"back.out(2)");T({crossL:0},23.45,.15);
+T({g1:1},23.6,.35,"power2.out");T({g2:1},24.4,.35,"power2.out");T({white:0,g3:.7},25.2,.4,"power2.out");
+T({s:0},27.0,.6,"back.out(1.2)");T({gauge:1,gw:1},27.4,.4,"back.out(2)");
+
+/* 28 à 30 : tour complet, puis avant / après */
+T({yaw:404},28.0,1.0,"power2.inOut");
+T({split:1},28.95,.3,"power3.out");show("v-av",29.0,29.95,0);show("v-ap",29.0,29.95,0);show("v-ms",29.2,29.95);T({split:0},29.92,.12,"power2.in");
+/* 30 à 32 : retour à la position de départ, la pièce se resserre pour la boucle */
+T({yaw:395},30.0,1.6,"power2.inOut");show("v-end",30.1,31.75);show("v-logo",30.0,31.75,0);
+T({night:0,g1:0,g2:0,g3:0},31.0,.6);T({s:.25,rug:0,cur:0,fr:0,gauge:.2,gw:0},31.6,.38,"power2.inOut");
+tl.to("#v-h0",{opacity:1,duration:.2},31.78);
+
+/* sous-titres (voix estimée) */
+[[0,0,1.42],[1,1.5,2.6],[2,2.6,3.4],[3,3.4,4.9],[4,5.0,6.1],[5,6.1,8.0],[6,8.0,9.0],[7,9.2,10.5],[8,10.5,12.8],[9,12.9,14.6],[10,15.1,16.4],[11,16.4,19.0],[12,19.1,20.6],[13,22.0,23.6],[14,23.6,25.6],[15,25.6,27.8],[16,28.2,29.9],[17,30.1,31.8]].forEach(function(s){sub(s[0],s[1],s[2])});
+
+tl.eventCallback("onUpdate",draw);
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;tl.seek(0);draw();
+})();
+</script>
+</body>
+</html>
