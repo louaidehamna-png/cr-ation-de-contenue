@@ -1,0 +1,286 @@
+<template>
+<div id="root" data-composition-id="07-charge" data-width="1080" data-height="1920" data-start="0" data-duration="2.4">
+<script src="assets/gsap.min.js"></script>
+<style id="s07-kit">
+@font-face{font-family:"Inter";font-weight:400;src:url("assets/fonts/Inter-Regular.otf") format("opentype")}
+@font-face{font-family:"Inter";font-weight:500;src:url("assets/fonts/Inter-Medium.otf") format("opentype")}
+@font-face{font-family:"Inter";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
+.em-stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;font-family:"Inter",sans-serif;color:#2c2420}
+.em-ground{position:absolute;inset:0;background:#e9dfcf}
+.em-ground.dark{background:#2c2420}
+/* le mur */
+.em-world{position:absolute;left:0;top:0;width:4000px;height:5000px;transform-origin:0 0;will-change:transform}
+.em-wall{position:absolute;inset:0;background:radial-gradient(120% 80% at 45% 35%,#ece3d4 0%,#e6dccb 45%,#d9ccb7 100%)}
+.em-wall-noise{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply}
+.em-floor{position:absolute;left:0;top:2620px;width:4000px;height:2380px;background:linear-gradient(#b99e7f,#a88c6d)}
+.em-plinth{position:absolute;left:0;top:2600px;width:4000px;height:24px;background:#f3ece1;box-shadow:0 2px 0 #cdbfa9}
+/* canapé en lin */
+.em-sofa{position:absolute;left:820px;top:2050px;width:1360px;height:560px}
+.em-sofa .back{position:absolute;left:0;top:0;width:1360px;height:300px;border-radius:70px 70px 24px 24px;background:linear-gradient(#d3c7b4,#c4b7a2)}
+.em-sofa .seat{position:absolute;left:-40px;top:250px;width:1440px;height:230px;border-radius:40px;background:linear-gradient(#cabda8,#b9ac97);box-shadow:0 30px 60px rgba(60,40,20,.18)}
+.em-sofa .arm{position:absolute;top:150px;width:150px;height:330px;border-radius:60px;background:linear-gradient(#cfc3af,#bcae99)}
+.em-sofa .cush{position:absolute;top:120px;width:300px;height:200px;border-radius:40px;background:linear-gradient(#e9e1d3,#d8cdbb);box-shadow:0 10px 24px rgba(60,40,20,.12)}
+.em-sofa .leg{position:absolute;top:470px;width:26px;height:80px;background:#6b513a;border-radius:6px}
+/* commode */
+.em-dresser{position:absolute;left:2500px;top:2200px;width:800px;height:420px}
+.em-dresser .top{position:absolute;left:-20px;top:0;width:840px;height:34px;border-radius:6px;background:linear-gradient(#d8b98f,#c29f72);box-shadow:0 12px 30px rgba(60,40,20,.18)}
+.em-dresser .body{position:absolute;left:0;top:34px;width:800px;height:330px;background:linear-gradient(#cdab80,#b8946a)}
+.em-dresser .drawer{position:absolute;left:30px;width:740px;height:92px;border:3px solid rgba(90,60,30,.25);border-radius:6px}
+.em-dresser .knob{position:absolute;left:385px;width:30px;height:8px;border-radius:4px;background:#6b513a}
+.em-dresser .leg{position:absolute;top:364px;width:22px;height:56px;background:#8a6a48}
+.em-pile>*{position:absolute;transform-origin:50% 100%}
+/* écriture et croquis au crayon */
+.em-pencil{position:absolute;font:500 44px/1 "Inter";color:#7d7268;transform:rotate(-3deg);white-space:nowrap}
+.em-svg{position:absolute;left:0;top:0;overflow:visible}
+/* téléphone */
+.em-phone{position:absolute;left:0;top:0;width:640px;height:1300px;border-radius:64px;background:#3a2f2a;box-shadow:0 40px 90px rgba(44,36,32,.35),0 4px 10px rgba(44,36,32,.25);transform-origin:50% 50%}
+.em-phone .screen{position:absolute;left:25px;top:25px;width:590px;height:1250px;border-radius:52px;overflow:hidden;background:#fffdf9}
+.em-phone .island{position:absolute;left:250px;top:44px;width:140px;height:40px;border-radius:20px;background:#1a1512;z-index:5}
+.em-phone .off{position:absolute;inset:0;background:#2c2420;opacity:0;z-index:4}
+.em-page{position:absolute;left:0;top:0;width:590px;font:500 30px/1.3 "Inter";color:#2c2420}
+.em-page .bar{height:150px;padding:96px 30px 0;font:500 24px/1 "Inter";color:rgba(44,36,32,.55);background:#f4efe7;border-bottom:1px solid #e4dccf;white-space:nowrap;overflow:hidden}
+.em-page .bar b{font-weight:500;background:#fff;border-radius:14px;padding:12px 18px;display:inline-block}
+.em-page .photo{position:relative;height:430px;background:#efe7da;overflow:hidden}
+.em-page .body{padding:26px 34px}
+.em-page .title{font:600 38px/1.18 "Inter";letter-spacing:-.01em}
+.em-page .price{font:600 36px/1 "Inter";margin:18px 0 22px}
+.em-page .row{position:relative;padding:16px 0 16px 0;border-top:1px solid #ebe3d6;color:rgba(44,36,32,.55);font:500 28px/1.3 "Inter"}
+.em-page .row.ok{padding-left:62px}
+.em-page .row b{font-weight:600;color:#2c2420}
+.em-check{position:absolute;left:0;top:14px;width:40px;height:40px}
+.em-faq{position:absolute;left:0;top:0;width:590px;box-sizing:border-box;padding:34px;background:#fffdf9;font:500 28px/1.35 "Inter"}
+.em-faq .q{font:600 34px/1.2 "Inter";margin:16px 0 20px}
+.em-faq .a{padding:22px 24px;border-radius:20px;background:#f4efe7;color:#2c2420}
+.em-faq .tag{font:500 22px/1 "Inter";letter-spacing:.12em;text-transform:uppercase;color:rgba(44,36,32,.55)}
+/* annotations de la fiche floue */
+.em-note{position:absolute;padding:14px 22px;border-radius:16px;background:#fffdf9;border:3px solid #8c3b2e;font:600 34px/1 "Inter";color:#8c3b2e;white-space:nowrap;box-shadow:0 16px 40px rgba(44,36,32,.18)}
+/* sous-titre mot à mot */
+.em-sub{position:absolute;left:80px;width:920px;top:1370px;text-align:center;font:600 60px/72px "Inter";letter-spacing:-.015em;color:#2c2420;text-shadow:0 0 24px rgba(245,240,232,.9)}
+.em-sub.dark{color:#f5f0e8;text-shadow:none}
+.em-w{display:inline-block;position:relative;opacity:0}
+.em-w .tx{position:relative;z-index:1}
+.em-box{position:absolute;left:-.14em;right:-.14em;top:.04em;bottom:.02em;background:#a97c50;border-radius:4px;transform:scaleX(0);transform-origin:0 50%}
+.em-stroke{position:absolute;left:0;right:0;bottom:-.08em;height:5px;border-radius:3px;background:#a97c50;transform:scaleX(0);transform-origin:0 50%}
+.em-type{position:absolute;left:90px;width:900px;top:820px;text-align:center;font:600 84px/1.1 "Inter";letter-spacing:-.025em;color:#f5f0e8}
+/* curseur */
+.em-cursor{position:absolute;left:0;top:0;width:54px;height:70px;transform-origin:8px 6px;opacity:0;filter:drop-shadow(0 6px 10px rgba(44,36,32,.35))}
+.em-ripple{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:5px solid #a97c50;opacity:0}
+
+.b-bg{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 960px}
+.b-full{position:absolute;inset:0}
+.b-g{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 800px}
+.b-card{position:absolute;left:0;top:0;width:760px;height:420px;border-radius:24px;background:#fffdf9;box-shadow:0 30px 70px rgba(44,36,32,.22),0 3px 8px rgba(44,36,32,.12);transform-origin:0 0}
+.b-photo{position:absolute;left:0;top:0;border-radius:24px 0 0 24px}
+.b-vase{position:absolute;transform-origin:50% 100%}
+.b-tt{position:absolute;left:290px;top:28px;font:600 30px/1.1 "Inter";white-space:nowrap}
+.b-pr{position:absolute;left:290px;top:74px;font:600 32px/1 "Inter"}
+.b-row{position:absolute;left:290px;width:440px;height:30px;font:500 24px/30px "Inter";color:rgba(44,36,32,.6);white-space:nowrap}
+.b-row b{font-weight:600;color:#2c2420}
+.b-val{position:absolute;left:125px;top:0;color:#2c2420;display:inline-block}
+.b-val .q{color:#8c3b2e;font-weight:600}
+.b-btn{position:absolute;left:290px;top:340px;width:260px;height:52px;border-radius:26px;background:#3a2f2a;color:#f5f0e8;font:600 22px/52px "Inter";text-align:center}
+.b-chip{position:absolute;left:0;top:0;padding:16px 28px;border-radius:32px;background:#fffdf9;font:600 40px/1 "Inter";box-shadow:0 18px 40px rgba(44,36,32,.18);white-space:nowrap;opacity:0}
+.b-box{position:absolute;left:0;top:0;width:440px;height:320px}
+.b-box .in{position:absolute;left:14px;top:26px;width:412px;height:40px;background:#2c2420;border-radius:4px}
+.b-box .body{position:absolute;left:0;top:40px;width:440px;height:280px;border-radius:8px;background:linear-gradient(#c8a074,#b38a5e);box-shadow:0 30px 60px rgba(44,36,32,.25)}
+.b-box .tape{position:absolute;left:200px;top:40px;width:40px;height:280px;background:rgba(245,240,232,.35)}
+.b-box .fl{position:absolute;top:8px;width:220px;height:34px;background:linear-gradient(#d4ae82,#c29a6d);border-radius:6px 6px 2px 2px}
+.b-lock{position:absolute;inset:0;background:linear-gradient(#241d1a,#3a2f2a);color:#f5f0e8;text-align:center}
+.b-lock .tm{position:absolute;left:0;width:590px;top:200px;font:600 150px/1 "Inter";letter-spacing:-.03em}
+.b-lock .dy{position:absolute;left:0;width:590px;top:390px;font:500 36px/1 "Inter";opacity:.8}
+.b-tabs{position:absolute;inset:0;background:#ece6dd;opacity:0}
+.b-tabs .hd{position:absolute;left:44px;top:120px;font:600 36px/1 "Inter"}
+.b-tb{position:absolute;left:65px;width:460px;height:300px;border-radius:26px;background:#fffdf9;box-shadow:0 14px 30px rgba(44,36,32,.16);overflow:hidden;opacity:0}
+.b-tb .t1{position:absolute;left:185px;top:60px;font:600 24px/1.2 "Inter"}
+.b-tb .t2{position:absolute;left:185px;top:120px;font:500 21px/1.3 "Inter";color:rgba(44,36,32,.6);width:250px}
+.b-tb .t2 span{color:#2c2420}
+.b-faq{position:absolute;left:0;top:150px;width:590px;height:1100px;box-sizing:border-box;padding:34px;background:#fffdf9;font:500 28px/1.35 "Inter"}
+.b-faq .tag{font:500 22px/1 "Inter";letter-spacing:.12em;text-transform:uppercase;color:rgba(44,36,32,.55)}
+.b-faq .pd{font:500 26px/1.3 "Inter";color:rgba(44,36,32,.55);margin-top:10px}
+.b-faq .q{font:600 36px/1.2 "Inter";margin:22px 0 24px;color:rgba(44,36,32,.35)}
+.b-faq .a{position:relative;padding:24px 26px;border-radius:22px;background:#f4efe7}
+.b-aw{opacity:0}
+.b-badge{position:absolute;right:-14px;top:-18px;width:52px;height:52px;opacity:0}
+.b-lens{position:absolute;left:0;top:0;width:200px;height:250px;opacity:0}
+.b-ring{position:absolute;left:0;top:0;overflow:visible}
+.b-logo{position:absolute;left:480px;top:240px;width:120px;height:120px;opacity:0;transform-origin:50% 50%}
+.b-plaque{position:absolute;left:300px;top:370px;width:480px;height:84px;border-radius:20px;background:#3a2f2a;opacity:0;transform-origin:50% 50%}
+.b-plaque img{position:absolute;left:30px;top:16px;width:420px}
+.b-shelves{position:absolute;left:280px;top:472px;width:520px;opacity:0;transform-origin:50% 50%;filter:drop-shadow(0 30px 40px rgba(60,40,20,.22))}
+.b-end-btn{position:absolute;left:280px;top:1098px;width:520px;height:104px;border-radius:52px;background:#f5f0e8;color:#3a2f2a;font:600 44px/104px "Inter";text-align:center;opacity:0;box-shadow:0 0 60px rgba(200,162,124,.35)}
+</style>
+<div class="em-stage clip" id="s07-stage" data-start="0" data-duration="2.4" data-track-index="0"></div>
+<script id="s07-kit-js">
+/* ---------- utilitaires ---------- */
+function emEl(tag, cls, parent, id, html){const e=document.createElement(tag);if(cls)e.className=cls;if(id)e.id=id;if(html!==undefined)e.innerHTML=html;if(parent)parent.appendChild(e);return e}
+function emSvg(parent, id, w, h, inner, x, y){const d=emEl("div","em-svg",parent,id);d.style.left=(x||0)+"px";d.style.top=(y||0)+"px";d.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="overflow:visible">'+inner+'</svg>';return d}
+function emPos(el,x,y,w,h){el.style.left=x+"px";el.style.top=y+"px";if(w)el.style.width=w+"px";if(h)el.style.height=h+"px";return el}
+
+/* ---------- caméra du mur : base (crans) + dérive (linéaire) ---------- */
+function emCam(world){const c={world:world,x:1500,y:1500,s:1,dx:0,dy:0,ds:0,blur:0};c.apply=function(){const s=c.s+c.ds;const X=c.x+c.dx,Y=c.y+c.dy;world.style.transform="translate("+(540-X*s)+"px,"+(960-Y*s)+"px) scale("+s+")";world.style.filter=c.blur>0.05?"blur("+c.blur.toFixed(2)+"px)":"none"};return c}
+function emCamSet(tl,c,x,y,s,at){tl.set(c,{x:x,y:y,s:s,onUpdate:c.apply,onComplete:c.apply},at||0);c.x=x;c.y=y;c.s=s;c.apply()}
+/* cran : déplace la base vers (x, y, s) ; blurPeak = flou au milieu du geste */
+function emCamTo(tl,c,x,y,s,at,dur,ease,blurPeak){tl.to(c,{x:x,y:y,s:s,duration:dur,ease:ease||"power3.inOut",onUpdate:c.apply},at);if(blurPeak){tl.to(c,{blur:blurPeak,duration:dur*0.45,ease:"power2.in",onUpdate:c.apply},at);tl.to(c,{blur:0,duration:dur*0.55,ease:"power2.out",onUpdate:c.apply},at+dur*0.45)}}
+/* dérive permanente : vitesses en u/s (dx, dy) et en échelle/s (ds), de t0 à t1, linéaire */
+function emCamDrift(tl,c,vx,vy,vs,t0,t1){tl.fromTo(c,{dx:0,dy:0,ds:0},{dx:vx*(t1-t0),dy:vy*(t1-t0),ds:vs*(t1-t0),duration:t1-t0,ease:"none",onUpdate:c.apply,immediateRender:false},t0)}
+
+/* ---------- le mur et ses stations ---------- */
+function emBuildWall(parent,p,o){o=o||{};
+  const world=emEl("div","em-world",parent,p+"-world");
+  emEl("div","em-wall",world,p+"-wall");
+  emSvg(world,p+"-noise",4000,5000,'<filter id="'+p+'-nf"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .3  0 0 0 .55 0"/></filter><rect width="4000" height="5000" filter="url(#'+p+'-nf)"/>').classList.add("em-wall-noise");
+  emEl("div","em-plinth",world,p+"-plinth");emEl("div","em-floor",world,p+"-floor");
+  /* canapé */
+  const sofa=emEl("div","em-sofa",world,p+"-sofa");
+  emEl("div","back",sofa);const a1=emEl("div","arm",sofa);a1.style.left="-60px";const a2=emEl("div","arm",sofa);a2.style.left="1270px";
+  emEl("div","seat",sofa);[[150],[510],[910]].forEach(function(q,i){const k=emEl("div","cush",sofa,p+"-cush"+i);k.style.left=q[0]+"px"});
+  [[30],[1300]].forEach(function(q){const l=emEl("div","leg",sofa);l.style.left=q[0]+"px"});
+  /* commode */
+  const dr=emEl("div","em-dresser",world,p+"-dresser");emEl("div","top",dr);emEl("div","body",dr);
+  [56,160,262].forEach(function(t){const d=emEl("div","drawer",dr);d.style.top=t+"px";const k=emEl("div","knob",dr);k.style.top=(t+42)+"px"});
+  [[20],[758]].forEach(function(q){const l=emEl("div","leg",dr);l.style.left=q[0]+"px"});
+  /* pile d'objets sur la commode (plateau y 2200), chaque objet a son id pour être animé */
+  const pile=emEl("div","em-pile",world,p+"-pile");pile.style.position="absolute";pile.style.left="0";pile.style.top="0";
+  const it={};
+  it.books=emSvg(pile,p+"-books",300,150,'<rect x="0" y="100" width="300" height="50" rx="6" fill="#7a5a44"/><rect x="14" y="52" width="270" height="48" rx="6" fill="#d8cdbb"/><rect x="30" y="8" width="240" height="44" rx="6" fill="#3a2f2a"/><rect x="0" y="118" width="300" height="5" fill="#f5f0e8" opacity=".6"/>',2620,2050);
+  it.vase=emSvg(pile,p+"-vase",130,230,'<path d="M45 0 h40 v34 c0 18 45 40 45 100 c0 60 -30 96 -65 96 c-35 0 -65 -36 -65 -96 c0 -60 45 -82 45 -100 z" fill="#cfc6b6"/><path d="M45 0 h40 v8 h-40z" fill="#b9ae9c"/>',2960,1970);
+  it.frame=emSvg(pile,p+"-frame",210,260,'<rect x="0" y="0" width="210" height="260" rx="8" fill="#5a4636"/><rect x="18" y="18" width="174" height="224" rx="4" fill="#f5f0e8"/><rect x="40" y="44" width="130" height="172" rx="3" fill="#d9ccb7"/>',3110,1945);
+  it.candle=emSvg(pile,p+"-candle",80,130,'<rect x="0" y="30" width="80" height="100" rx="10" fill="#efe7da"/><rect x="37" y="10" width="6" height="22" fill="#3a2f2a"/>',2820,2070);
+  /* croquis au crayon (masqués par défaut : stroke-dashoffset plein) */
+  const sk={};
+  [[1000,1500],[1350,1380],[1700,1500]].forEach(function(q,i){sk[i]=emSvg(world,p+"-sk"+i,300,140,'<path class="em-pen" d="M0 20 H300 M40 20 V120 L120 20 M260 20 V120 L180 20" fill="none" stroke="#7d7268" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><text class="em-q" x="150" y="-24" text-anchor="middle" font-family="Inter" font-weight="600" font-size="64" fill="#7d7268" opacity="0">?</text>',q[0],q[1])});
+  /* repères au crayon et « 6 mois » */
+  const marks=emSvg(world,p+"-marks",900,420,'<path class="em-pen" d="M30 40 v-30 M30 40 h30 M870 40 v-30 M870 40 h-30 M30 380 v30 M30 380 h30 M870 380 v30 M870 380 h-30 M380 210 h140 M450 140 v140" fill="none" stroke="#7d7268" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>',1050,1240);
+  const months=emEl("div","em-pencil",world,p+"-months","6 mois");emPos(months,1120,1150);months.style.opacity=0;
+  const tally=emSvg(world,p+"-tally",220,80,'<path class="em-pen" d="M10 10 v60 M45 10 v60 M80 10 v60 M115 10 v60 M150 10 v60 M0 60 L170 20 M190 10 v60" fill="none" stroke="#7d7268" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>',1330,1150);
+  /* les vraies étagères (masquées par défaut) */
+  const shelves=emEl("img","",world,p+"-shelves");shelves.src="assets/img/vasagle-3-etageres.png";emPos(shelves,1050,950,900);shelves.style.position="absolute";shelves.style.opacity=0;shelves.style.filter="drop-shadow(0 30px 40px rgba(60,40,20,.22))";
+  return {world:world,sofa:sofa,dresser:dr,pile:it,sketches:sk,marks:marks,months:months,tally:tally,shelves:shelves};
+}
+/* dessiner un trait au crayon (tous les .em-pen d'un élément) */
+function emPen(tl,el,at,dur){tl.to(el.querySelectorAll(".em-pen"),{strokeDashoffset:0,duration:dur||0.4,ease:"power2.out",autoRound:false},at)}
+
+/* ---------- le téléphone et ses pages ---------- */
+function emBuildPhone(parent,p){const ph=emEl("div","em-phone",parent,p+"-phone");const sc=emEl("div","screen",ph,p+"-screen");emEl("div","island",ph);const off=emEl("div","off",sc,p+"-off");return {phone:ph,screen:sc,off:off}}
+function emPageFloue(screen,p){
+  const pg=emEl("div","em-page",screen,p+"-pgf");
+  pg.innerHTML='<div class="bar"><b>…/etagere-murale-bois</b></div>'+
+  '<div class="photo" id="'+p+'-pgf-photo"><svg width="590" height="430" viewBox="0 0 590 430"><rect width="590" height="430" fill="#e8dfd0"/><rect x="95" y="250" width="400" height="26" rx="4" fill="#9b7650"/><path d="M140 276 v60 l50 -60 M450 276 v60 l-50 -60" stroke="#2c2420" stroke-width="10" fill="none" stroke-linejoin="round"/><g id="'+p+'-pgf-vases"><path d="M190 150 h30 v20 c0 10 32 26 32 66 c0 6 -2 10 -4 14 h-86 c-2 -4 -4 -8 -4 -14 c0 -40 32 -56 32 -66 z" fill="#cfc6b6"/><path d="M330 120 h26 v30 c0 10 26 30 26 64 c0 14 -4 26 -8 36 h-62 c-4 -10 -8 -22 -8 -36 c0 -34 26 -54 26 -64 z" fill="#b9a58c"/></g></svg></div>'+
+  '<div class="body"><div class="title">Étagère murale en bois</div><div class="price">39,90 €</div>'+
+  '<div class="row" id="'+p+'-pgf-r1"><b>Matière :</b> <span id="'+p+'-pgf-bois">bois</span></div>'+
+  '<div class="row" id="'+p+'-pgf-r2"><b>Charge :</b> –</div>'+
+  '<div class="row" id="'+p+'-pgf-r3"><b>Dimensions :</b> voir photo</div></div>';
+  return pg}
+function emCheckSvg(id){return '<svg class="em-check" id="'+id+'" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#a97c50"/><path class="em-pen" d="M11 21 l6 6 l12 -13" fill="none" stroke="#f5f0e8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>'}
+function emPageEM(screen,p){
+  const pg=emEl("div","em-page",screen,p+"-pge");
+  pg.innerHTML='<div class="bar"><b>etageres-murales.fr</b></div>'+
+  '<div class="photo" id="'+p+'-pge-photo" style="background:#f4efe7"><img id="'+p+'-pge-img" src="assets/img/vasagle-3-etageres.png" style="position:absolute;left:115px;top:20px;width:360px"></div>'+
+  '<div class="body"><div class="title">Étagères murales flottantes lot de 3 VASAGLE</div><div class="price">49,90 €</div>'+
+  '<div class="row ok" id="'+p+'-pge-r1">'+emCheckSvg(p+"-pge-c1")+'<b>Matière :</b> panneau de particules, effet bois vintage</div>'+
+  '<div class="row ok" id="'+p+'-pge-r2">'+emCheckSvg(p+"-pge-c2")+'<b>Dimensions :</b> 30, 35 et 40&nbsp;cm, profondeur 12&nbsp;cm</div>'+
+  '<div class="row ok" id="'+p+'-pge-r3">'+emCheckSvg(p+"-pge-c3")+'<b>Dans le colis :</b> 3 étagères, accessoires de montage et clé Allen, notice en français</div>'+
+  '<div class="row ok" id="'+p+'-pge-r4">'+emCheckSvg(p+"-pge-c4")+'Les objets des photos ne sont <b>pas inclus</b></div></div>';
+  return pg}
+function emFaq(screen,p){
+  const f=emEl("div","em-faq",screen,p+"-faq");
+  f.innerHTML='<div class="tag">Questions fréquentes</div><div style="font:500 26px/1.3 Inter;color:rgba(44,36,32,.55);margin-top:10px">Étagère d’angle de douche en inox 304</div>'+
+  '<div class="q">Quelle charge peut-elle porter&#8239;?</div>'+
+  '<div class="a" id="'+p+'-faq-a"><span id="'+p+'-faq-a1">Le vendeur ne l’a pas encore communiquée.</span> <b id="'+p+'-faq-a2">Nous lui avons posé la question.</b></div>';
+  f.style.top="150px";return f}
+
+/* ---------- annotations ---------- */
+function emNote(parent,id,text,x,y){const n=emEl("div","em-note",parent,id,text);emPos(n,x,y);n.style.opacity=0;return n}
+
+/* ---------- sous-titre mot à mot ----------
+   words : tableau de mots (la ponctuation reste collée au mot) ; key : index du mot clé (boîte) ; peak : index du mot-pic (trait) */
+function emSub(parent,id,words,key,peak,dark){const s=emEl("div","em-sub"+(dark?" dark":""),parent,id);
+  words.forEach(function(w,i){const sp=emEl("span","em-w",s,id+"-w"+i);if(i===key)emEl("span","em-box",sp,id+"-box");if(i===peak)emEl("span","em-stroke",sp,id+"-stroke");emEl("span","tx",sp,null,w);s.appendChild(document.createTextNode(" "))});return s}
+/* cues : temps locaux de chaque mot ; out : temps de sortie de la phrase */
+function emSubTL(tl,s,cues,key,peak,out){const ws=s.querySelectorAll(".em-w");
+  ws.forEach(function(w,i){const t=cues[i];tl.fromTo(w,{opacity:0,y:10},{opacity:0.35,y:0,duration:0.08,ease:"power2.out",immediateRender:false},t-0.05);tl.to(w,{opacity:1,duration:0.2,ease:"power2.out"},t+0.03);
+    if(i===key){tl.to(w.querySelector(".em-box"),{scaleX:1,duration:0.16,ease:"power3.out"},t-0.06);tl.to(w.querySelector(".tx"),{color:"#f5f0e8",duration:0.1},t+0.02)}
+    if(i===peak){tl.to(w.querySelector(".em-stroke"),{scaleX:1,duration:0.35,ease:"power2.out"},t+0.05)}});
+  if(out!==undefined)tl.to(ws,{opacity:0,y:-8,duration:0.18,ease:"power2.in"},out)}
+
+/* ---------- curseur ---------- */
+function emCursor(parent,p){const c=emEl("div","em-cursor",parent,p+"-cursor",'<svg width="54" height="70" viewBox="0 0 54 70"><path d="M6 4 L6 58 L19 46 L28 66 L37 62 L28 43 L46 43 Z" fill="#fff" stroke="#3a2f2a" stroke-width="4" stroke-linejoin="round"/></svg>');const r=emEl("div","em-ripple",parent,p+"-ripple");return {cursor:c,ripple:r}}
+/* arrivée d'un seul mouvement de (x0, y0) à (x1, y1), puis clic direct à at+0.45 */
+function emClick(tl,k,x0,y0,x1,y1,at){tl.set(k.cursor,{x:x0,y:y0,opacity:1},at);tl.to(k.cursor,{x:x1,y:y1,duration:0.45,ease:"power3.out"},at);tl.to(k.cursor,{scale:0.85,duration:0.06,yoyo:true,repeat:1},at+0.45);
+  tl.set(k.ripple,{left:x1+8,top:y1+6},at+0.47);tl.fromTo(k.ripple,{scale:0.2,opacity:1},{scale:1.4,opacity:0,duration:0.5,ease:"power2.out",immediateRender:false},at+0.47)}
+
+var B={};
+B.T0=0;B.D=1;
+/* le monde : fond (flou, net), voile du soir, groupe caméra G ; tout dépend du temps GLOBAL g = T0 + t */
+B.gs=function(g){return 1+0.0008*g};B.gy=function(g){return -0.5*g};
+B.world=function(st,P,T0,D,tl){
+  var bg=emEl("img","b-bg",st,P+"-bg");bg.src="assets/img/mur-flou.png";
+  var net=emEl("img","b-bg",st,P+"-bgnet");net.src="assets/img/mur-net.png";net.style.opacity=0;
+  var dim=emEl("div","b-full",st,P+"-dim");dim.style.background="#2c2420";
+  var G=emEl("div","b-g",st,P+"-g");
+  var c={t:0};
+  function up(t){var g=T0+t,s=1.08+0.0016*g,tr="translate("+(-0.8*g).toFixed(2)+"px,"+(30-1.2*g).toFixed(2)+"px) scale("+s.toFixed(4)+")";
+    bg.style.transform=tr;net.style.transform=tr;dim.style.opacity=Math.max(0,0.5-0.125*g).toFixed(3);
+    G.style.transform="translate(0px,"+B.gy(g).toFixed(2)+"px) scale("+B.gs(g).toFixed(5)+")"}
+  tl.fromTo(c,{t:0},{t:D,duration:D,ease:"none",onUpdate:function(){up(c.t)}},0);up(0);
+  return {bg:bg,net:net,dim:dim,G:G};
+};
+/* point nominal du groupe G -> point écran au temps global g */
+B.gp=function(x,y,g){var s=B.gs(g);return {x:540+(x-540)*s,y:800+(y-800)*s+B.gy(g)}};
+B.place=function(el,cx,cy,s,r){gsap.set(el,{x:cx-320,y:cy-650,scale:s,rotation:r||0,transformOrigin:"50% 50%"})};
+B.ph=function(tl,el,cx,cy,s,r,at,dur,ease){tl.to(el,{x:cx-320,y:cy-650,scale:s,rotation:r||0,duration:dur,ease:ease||"power3.inOut"},at)};
+B.cardAt=function(el,x,y,s){gsap.set(el,{x:x,y:y,scale:s,transformOrigin:"0 0"})};
+B.inn=function(tl,el,at,s0){tl.fromTo(el,{opacity:0,scale:s0||1.2,filter:"blur(8px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",immediateRender:false},at)};
+B.shelfSvg=function(w,h,vases){return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 260 420" preserveAspectRatio="xMidYMid slice"><rect width="260" height="420" fill="#e8dfd0"/><rect x="30" y="250" width="200" height="16" rx="3" fill="#9b7650"/><path d="M55 266 v40 l30 -40 M205 266 v40 l-30 -40" stroke="#2c2420" stroke-width="7" fill="none" stroke-linejoin="round"/>'+(vases?'<path d="M80 168 h20 v14 c0 8 22 18 22 44 c0 12 -6 24 -12 24 h-40 c-6 0 -12 -12 -12 -24 c0 -26 22 -36 22 -44 z" fill="#cfc6b6"/><path d="M155 150 h18 v22 c0 8 18 22 18 46 c0 14 -4 24 -8 32 h-38 c-4 -8 -8 -18 -8 -32 c0 -24 18 -38 18 -46 z" fill="#b9a58c"/>':'')+'</svg>'};
+/* carte d'une boutique anonyme (760 x 420, origine en haut à gauche) */
+B.card=function(par,id,v){var c=emEl("div","b-card",par,id);
+  c.innerHTML='<div class="b-photo" style="width:260px;height:420px;overflow:hidden">'+B.shelfSvg(260,420,false)+'</div>'+
+  '<svg class="b-vase" id="'+id+'-v1" style="left:56px;top:168px" width="68" height="82" viewBox="56 168 68 82"><path d="M80 168 h20 v14 c0 8 22 18 22 44 c0 12 -6 24 -12 24 h-40 c-6 0 -12 -12 -12 -24 c0 -26 22 -36 22 -44 z" fill="#cfc6b6"/></svg>'+
+  '<svg class="b-vase" id="'+id+'-v2" style="left:137px;top:150px" width="54" height="100" viewBox="137 150 54 100"><path d="M155 150 h18 v22 c0 8 18 22 18 46 c0 14 -4 24 -8 32 h-38 c-4 -8 -8 -18 -8 -32 c0 -24 18 -38 18 -46 z" fill="#b9a58c"/></svg>'+
+  '<div class="b-tt" id="'+id+'-tt">Étagère murale en bois</div><div class="b-pr" id="'+id+'-pr">'+v.p+'</div>'+
+  '<div class="b-row" style="top:132px"><b>Matière&nbsp;:</b><span class="b-val" id="'+id+'-mat">'+v.m+'</span></div>'+
+  '<div class="b-row" style="top:178px"><b>Charge&nbsp;:</b><span class="b-val" id="'+id+'-chg">'+v.c+'</span></div>'+
+  '<div class="b-row" id="'+id+'-r3" style="top:224px;opacity:0"><b>Dimensions&nbsp;:</b><span class="b-val" style="left:165px"><span class="q">?</span></span></div>'+
+  '<div class="b-row" id="'+id+'-r4" style="top:270px;opacity:0"><b>Dans le colis&nbsp;:</b><span class="b-val" style="left:170px"><span class="q">?</span></span></div>'+
+  '<div class="b-btn" id="'+id+'-btn">Ajouter au panier</div>';return c};
+B.box=function(par,id){var b=emEl("div","b-box",par,id);
+  b.innerHTML='<div class="in"></div><div class="body"></div><div class="tape"></div><div class="fl" id="'+id+'-fl" style="left:0;transform-origin:0% 100%"></div><div class="fl" id="'+id+'-fr" style="left:220px;transform-origin:100% 100%"></div>';return b};
+B.lock=function(screen,P){var l=emEl("div","b-lock",screen,P+"-lk");l.innerHTML='<div class="tm" id="'+P+'-lk-time" style="opacity:0">21:47</div><div class="dy" id="'+P+'-lk-day" style="opacity:0">dimanche</div>';return l};
+B.tabs=function(screen,P){var t=emEl("div","b-tabs",screen,P+"-tabs");
+  var M=["bois massif","bois","effet bois"],h='<div class="hd" id="'+P+'-tb-head" style="opacity:0">3 onglets</div>';
+  for(var i=0;i<3;i++)h+='<div class="b-tb" id="'+P+'-tb'+i+'" style="top:'+(210+i*320)+'px"><div style="position:absolute;left:0;top:0;width:160px;height:300px">'+B.shelfSvg(160,300,true)+'</div><div class="t1">Étagère murale</div><div class="t2">Matière&nbsp;: <span>'+M[i]+'</span></div></div>';
+  t.innerHTML=h;return t};
+B.faq=function(screen,id,prod,q,words){var f=emEl("div","b-faq",screen,id);
+  f.innerHTML='<div class="tag">Questions fréquentes</div><div class="pd">'+prod+'</div><div class="q" id="'+id+'-q">'+q+'</div><div class="a"><span>'+
+  words.map(function(w,i){return '<span class="b-aw" id="'+id+'-a'+i+'">'+w+'</span>'}).join(' ')+'</span>'+
+  '<svg class="b-badge" id="'+id+'-ok" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#a97c50"/><path d="M11 21 l6 6 l12 -13" fill="none" stroke="#f5f0e8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';return f};
+B.faqDone=function(f){f.querySelectorAll(".b-aw,.b-badge").forEach(function(e){e.style.opacity=1});f.querySelector(".q").style.color="#2c2420"};
+B.words=function(tl,f,n,t0,t1){for(var i=0;i<n;i++)tl.to(f.querySelector("#"+f.id+"-a"+i),{opacity:1,duration:0.08},t0+(t1-t0)*i/Math.max(1,n-1))};
+B.check=function(tl,P,k,at){tl.to("#"+P+"-pge-c"+k+" .em-pen",{strokeDashoffset:0,duration:0.2,ease:"power2.out",autoRound:false},at);tl.to("#"+P+"-pge-r"+k,{color:"#2c2420",duration:0.15},at)};
+B.checkDone=function(P,ks){ks.forEach(function(k){var c=document.querySelector("#"+P+"-pge-c"+k+" .em-pen");if(c)c.style.strokeDashoffset=0;var r=document.getElementById(P+"-pge-r"+k);if(r)r.style.color="#2c2420"})};
+B.ring=function(par,id,x,y,w,h,col){var d=emSvg(par,id,w,h,'<ellipse class="em-pen" cx="'+(w/2)+'" cy="'+(h/2)+'" rx="'+(w/2-4)+'" ry="'+(h/2-4)+'" fill="none" stroke="'+col+'" stroke-width="4" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-4 '+(w/2)+' '+(h/2)+')"/>',x,y);d.classList.add("b-ring");return d};
+B.chip=function(par,id,txt){var c=emEl("div","b-chip",par,id,txt);return c};
+B.type=function(st,id,words){var d=emEl("div","em-type",st,id);d.style.top="760px";d.innerHTML=words.map(function(w,i){return '<span class="em-w" id="'+id+'-w'+i+'" style="opacity:0">'+w+'</span>'}).join(' ');return d};
+B.typeTL=function(tl,d,cues){cues.forEach(function(t,i){tl.fromTo(d.querySelector("#"+d.id+"-w"+i),{opacity:0,scale:1.2,filter:"blur(8px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",immediateRender:false},t)})};
+
+(function(){
+var P="s07",D=2.4,T0=16.80;
+var $=function(i){return document.getElementById(P+"-"+i)};var st=$("stage");
+var tl=gsap.timeline({paused:true});var W=B.world(st,P,T0,D,tl);var G=W.G;
+var C1=B.card(G,P+"-c1",[{m:"bois massif",c:"voir photo",p:"39,90 €"},{m:"bois",c:"–",p:"42,00 €"},{m:"effet bois",c:"non précisée",p:"38,50 €"}][1]);$("c1-mat").style.color="#8c3b2e";$("c1-r3").style.opacity=1;$("c1-r4").style.opacity=1;$("c1-btn").style.opacity=.4;$("c1-chg").style.color="#8c3b2e";
+B.cardAt(C1,-338,346,2.0);$("c1-mat").style.opacity=0;
+var n=emNote(G,P+"-n1","aggloméré",452,596);n.style.opacity=1;
+tl.to(C1,{y:254,duration:.35,ease:"power3.inOut"},0);tl.to(n,{y:-92,opacity:0,duration:.3,ease:"power2.in"},0);
+var L=emSvg(G,P+"-lens",200,250,'<circle cx="90" cy="90" r="70" fill="rgba(255,253,249,.25)" stroke="#2c2420" stroke-width="9"/><path d="M140 140 L190 200" stroke="#2c2420" stroke-width="16" stroke-linecap="round"/><text id="'+P+'-lq" x="90" y="112" text-anchor="middle" font-family="Inter" font-weight="600" font-size="64" fill="#8c3b2e" opacity="0">?</text>',0,0);
+L.classList.add("b-lens");gsap.set(L,{x:110,y:550});
+B.inn(tl,L,.35);tl.to(L,{x:414,duration:.65,ease:"power2.inOut"},.40);
+tl.to($("lq"),{opacity:1,duration:.15},1.15);
+tl.fromTo(L,{rotation:0},{rotation:6,duration:.08,yoyo:true,repeat:3,immediateRender:false,transformOrigin:"45% 36%"},1.60);
+tl.to(L,{opacity:0,scale:1.1,duration:.2,ease:"power2.in"},2.00);
+var s=emSub(st,P+"-s1",["Une","charge…","introuvable."],2,-1);emSubTL(tl,s,[.10,.25,1.10],2,-1,2.18);
+
+window.__timelines=window.__timelines||{};window.__timelines["07-charge"]=tl;
+})();
+</script>
+</div>
+</template>
