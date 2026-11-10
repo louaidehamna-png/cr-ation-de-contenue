@@ -42,8 +42,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#3a2f2a}
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
-  <div id="c-stage" class="clip" data-start="0" data-duration="15" data-track-index="0">
+<div id="root" data-composition-id="main" data-start="0" data-duration="15.4" data-width="1080" data-height="1920">
+  <div id="c-stage" class="clip" data-start="0" data-duration="15.4" data-track-index="0">
     <div id="c-cream" class="clip"></div>
 
     <!-- 1. accroche -->
@@ -70,6 +70,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#3a2f2a}
     <div id="c-s1" class="sub">Dans le colis&#8239;:</div>
     <div id="c-s2" class="sub">trois étagères de 30, 35 et 40&nbsp;cm,</div>
     <div id="c-s3" class="sub">les accessoires de montage,</div>
+    <audio id="c-voix" src="assets/audio/voix.wav" data-start="0" data-duration="15.4" data-track-index="5"></audio>
     <div id="c-s4" class="sub">une clé Allen et la notice en français.</div>
   </div>
 </div>
@@ -97,33 +98,33 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#3a2f2a}
 
   /* 3 à 9.4 : le colis, ligne par ligne */
   R("#c-ht",[{opacity:0,y:20},{opacity:1,y:0,duration:.25,ease:"power3.out"}],3.35);
-  [["#c-r1","#c-k1",3.95],["#c-r2","#c-k2",6.40],["#c-r3","#c-k3",8.20]].forEach(function(r){
+  [["#c-r1","#c-k1",3.72],["#c-r2","#c-k2",6.62],["#c-r3","#c-k3",9.03]].forEach(function(r){
     R(r[0],[{opacity:0,x:30},{opacity:1,x:0,duration:.25,ease:"power3.out"}],r[2]);
     tl.to(r[1],{strokeDashoffset:0,duration:.25,ease:"power2.out",autoRound:false},r[2]+.2)});
   tl.fromTo("#c-screen > div:not(#c-bar)",{y:0},{y:-60,duration:.5,ease:"power2.inOut",immediateRender:false},5.20);
-  [["#c-s1",3.0,3.85],["#c-s2",3.9,6.35],["#c-s3",6.4,7.55],["#c-s4",7.6,9.35]].forEach(function(s){
+  [["#c-s1",2.95,3.6],["#c-s2",3.65,6.42],["#c-s3",6.45,8.0],["#c-s4",8.1,9.92]].forEach(function(s){
     tl.set(s[0],{opacity:1},s[1]);tl.set(s[0],{opacity:0},s[2])});
 
   /* 9.4 à 11.4 : zoom sur la ligne de la fiche */
-  tl.to(["#c-ht","#c-r1","#c-r2","#c-r3"],{opacity:0,y:-30,duration:.25,ease:"power2.in",stagger:.04},9.40);
-  tl.to("#c-phone",{scale:1.4,y:200,opacity:0,duration:.45,ease:"power2.in"},9.40);
-  R("#c-zoom",[{opacity:0,scale:.85},{opacity:1,scale:1,duration:.4,ease:"expo.out"}],9.65);
-  tl.fromTo("#c-zoom",{y:0},{y:-24,duration:1.8,ease:"none",immediateRender:false},10.05);
+  tl.to(["#c-ht","#c-r1","#c-r2","#c-r3"],{opacity:0,y:-30,duration:.25,ease:"power2.in",stagger:.04},9.95);
+  tl.to("#c-phone",{scale:1.4,y:200,opacity:0,duration:.45,ease:"power2.in"},9.95);
+  R("#c-zoom",[{opacity:0,scale:.85},{opacity:1,scale:1,duration:.4,ease:"expo.out"}],10.0);
+  tl.fromTo("#c-zoom",{y:0},{y:-24,duration:1.0,ease:"none",immediateRender:false},10.4);
 
   /* 11.4 à 14.4 : fin sur fond brun */
-  tl.to("#c-zoom",{opacity:0,duration:.2},11.40);
-  tl.to("#c-cream",{opacity:0,duration:.35,ease:"power2.inOut"},11.40);
-  R("#c-end",[{opacity:0},{opacity:1,duration:.3}],11.45);
-  R("#c-end .ph",[{scale:.9},{scale:1,duration:.5,ease:"expo.out"}],11.45);
-  tl.fromTo("#c-end .ph img",{scale:1},{scale:1.06,duration:3,ease:"none",immediateRender:false},11.45);
-  R("#c-end .pr",[{opacity:0,y:30},{opacity:1,y:0,duration:.25,ease:"power3.out"}],12.40);
-  R("#c-end .url",[{opacity:0,y:30},{opacity:1,y:0,duration:.25,ease:"power3.out"}],13.30);
+  tl.to("#c-zoom",{opacity:0,duration:.2},11.05);
+  tl.to("#c-cream",{opacity:0,duration:.35,ease:"power2.inOut"},11.05);
+  R("#c-end",[{opacity:0},{opacity:1,duration:.3}],11.1);
+  R("#c-end .ph",[{scale:.9},{scale:1,duration:.5,ease:"expo.out"}],11.1);
+  tl.fromTo("#c-end .ph img",{scale:1},{scale:1.06,duration:3.7,ease:"none",immediateRender:false},11.1);
+  R("#c-end .pr",[{opacity:0,y:30},{opacity:1,y:0,duration:.25,ease:"power3.out"}],11.94);
+  R("#c-end .url",[{opacity:0,y:30},{opacity:1,y:0,duration:.25,ease:"power3.out"}],13.6);
 
   /* 14.4 à 15 : retour à la première image (boucle) */
-  tl.to("#c-end",{opacity:0,duration:.4,ease:"power2.inOut"},14.45);
-  tl.set("#c-ph1",{x:0,y:0,scale:1,borderRadius:"28px"},14.40);tl.set("#c-pack",{opacity:0},14.40);tl.set("#c-ph1 img",{scale:1},14.40);
-  tl.to("#c-ph1",{opacity:1,duration:.4},14.45);
-  tl.set("#c-h1",{y:0},14.40);tl.to("#c-h1",{opacity:1,duration:.4},14.45);
+  tl.to("#c-end",{opacity:0,duration:.4,ease:"power2.inOut"},14.85);
+  tl.set("#c-ph1",{x:0,y:0,scale:1,borderRadius:"28px"},14.80);tl.set("#c-pack",{opacity:0},14.80);tl.set("#c-ph1 img",{scale:1},14.80);
+  tl.to("#c-ph1",{opacity:1,duration:.4},14.85);
+  tl.set("#c-h1",{y:0},14.80);tl.to("#c-h1",{opacity:1,duration:.4},14.85);
 
   window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;tl.seek(0);
 })();
