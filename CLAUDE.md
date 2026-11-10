@@ -17,6 +17,8 @@ Vidéos et visuels pour la boutique etageres-murales.fr.
 - Charte : crème #F5F0E8, brun #3A2F2A, brun foncé #2C2420, sable #C8A27C (logo), police Inter. Logos HD dans
   `vasagle-video/tuto-mur/assets/` (logo-em-hd.png, logo-texte-hd.png).
 - Visuels produits sur fond blanc : `produits/` (un dossier par produit, avec sa fiche).
+- Êtres vivants : les **mains sont autorisées** (décision de l'utilisateur, 10/11/2026), par exemple pour attraper,
+  poser ou montrer un objet. Toujours aucun corps, aucun visage, aucun animal.
 - Chaque chiffre affiché vient de la fiche Shopify. Pas de superlatif, pas de fausse urgence, pas de faux avis.
 - Rendu de vérification d'images de style : Python playwright avec `executable_path="/opt/pw-browsers/chromium"`.
 - Les anciens projets (`vasagle-video/montage`, `vasagle-video/tuto-mur`) restent en HyperFrames 0.9.26 :
