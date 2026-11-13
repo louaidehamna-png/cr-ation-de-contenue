@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0e0e0e}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#fff}
+.clip{position:absolute;inset:0}
+#v-cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+/* zone sûre : texte entre y 250 et 1450, de x 80 à 1000 */
+#v-gauge{position:absolute;left:80px;top:250px;width:920px}
+#v-gauge .lb{font:700 40px/1 "InterX";letter-spacing:.06em;display:flex;justify-content:space-between}
+#v-gauge .tr{position:relative;margin-top:16px;height:18px;border-radius:9px;background:#2a2a2a;overflow:hidden}
+#v-fill{position:absolute;left:0;top:0;height:100%;width:920px;background:#e10600;border-radius:9px;transform-origin:0 50%}
+.hd{position:absolute;left:80px;width:920px;top:360px;font:900 96px/1.02 "InterX";letter-spacing:-.02em;text-transform:uppercase;opacity:0;text-shadow:0 0 30px #000,0 0 10px #000}
+.bd{position:absolute;left:80px;width:920px;top:575px;font:700 56px/1.15 "InterX";color:#d9d9d9;opacity:0;text-shadow:0 0 24px #000,0 0 8px #000}
+#v-sub{position:absolute;left:80px;width:920px;top:1290px;height:160px}
+#v-sub span{font:700 52px/60px "InterX";color:#fff;text-shadow:0 0 22px #000,0 0 12px #000,0 0 4px #000;opacity:0;position:absolute;bottom:0;left:0;width:920px;text-align:center}
+#v-m2{position:absolute;left:80px;top:610px;font:900 150px/1 "InterX";opacity:0}
+#v-m2 i{position:absolute;left:-10px;right:-10px;top:52%;height:16px;background:#e10600;transform:scaleX(0);transform-origin:0 50%;border-radius:8px}
+#v-three{position:absolute;left:80px;top:340px;font:900 250px/1 "InterX";color:#fff;opacity:0}
+.side{position:absolute;top:640px;font:900 64px/1 "InterX";opacity:0;text-shadow:0 0 20px #000}
+#v-logo{position:absolute;left:80px;width:920px;top:1235px;text-align:center;font:600 40px/1 "InterX";color:#bdbdbd;opacity:0;text-shadow:0 0 16px #000}
+
+.card{position:absolute;left:60px;top:990px;width:470px;padding:18px 22px 20px;border-radius:26px;background:#f5f0e8;color:#2c2420;opacity:0;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+.card img{display:block;width:100%;height:190px;object-fit:contain}
+.card b{display:block;font:900 30px/1.12 "InterX";margin-top:10px;text-transform:uppercase;letter-spacing:-.01em}
+.card i{display:block;font:700 24px/1 "InterX";font-style:normal;color:#7a6f66;margin-top:8px}
+#v-cam{position:absolute;left:80px;top:390px;width:150px;height:120px;opacity:0}
+#v-o3{position:absolute;left:80px;top:860px;padding:14px 26px;border-radius:40px;background:#e10600;font:900 40px/1 "InterX";letter-spacing:.02em;opacity:0;transform-origin:0 50%}
+#v-url{position:absolute;left:80px;top:950px;font:700 40px/1 "InterX";color:#d9d9d9;opacity:0;text-shadow:0 0 16px #000}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="34.2" data-width="1080" data-height="1920">
+ <div id="v-stage" class="clip" data-start="0" data-duration="34.2" data-track-index="0">
+  <canvas id="v-cv" width="1080" height="1920"></canvas>
+  <div id="v-gauge"><div class="lb"><span>PLAN DE TRAVAIL LIBRE</span><span id="v-pct">20 %</span></div><div class="tr"><div id="v-fill"></div></div></div>
+
+  <div id="v-h0" class="hd" style="opacity:1">Ta cuisine déborde ?</div>
+  <div id="v-h1" class="hd">C’est pas la place.</div>
+  <div id="v-m2">m²<i></i></div>
+  <div id="v-three">3</div>
+  <div id="v-h2" class="hd" style="top:610px;font-size:80px">La 3<sup style="font-size:.55em">e</sup>, tout le monde la fait.</div>
+
+  <div id="v-e1" class="hd">1. Tout sur le plan de travail</div><div id="v-b1" class="bd" style="top:575px">monte d’un étage</div>
+  <div id="v-e2" class="hd">2. Les tasses au placard</div><div id="v-b2" class="bd" style="top:575px">à portée de main</div>
+  <div id="v-e3" class="hd">3. Tout à la même hauteur</div><div id="v-b3" class="bd" style="top:575px">le quotidien à hauteur de main, le reste en haut</div>
+  <div id="v-av" class="side" style="left:80px">AVANT</div><div id="v-ap" class="side" style="left:620px">APRÈS</div>
+  <div id="v-ms" class="hd" style="top:1010px;text-align:center;font-size:76px">Plus une cuisine de location.</div>
+
+  <div id="v-c1" class="card"><img src="assets/img/lot3.png" alt=""><b>Lot de 3 étagères flottantes</b><i>etageres-murales.fr</i></div>
+  <div id="v-c2" class="card"><img src="assets/img/crochets.png" alt=""><b>Étagère 3 niveaux, 4 crochets en S</b><i>etageres-murales.fr</i></div>
+
+  <svg id="v-cam" viewBox="0 0 150 120"><rect x="6" y="26" width="138" height="88" rx="16" fill="none" stroke="#fff" stroke-width="8"/><path d="M48 26 L58 8 H92 L102 26" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round"/><circle cx="75" cy="70" r="26" fill="none" stroke="#e10600" stroke-width="8"/></svg>
+  <div id="v-o1" class="hd" style="top:540px">Envoie la photo de ton mur.</div>
+  <div id="v-o2" class="bd" style="top:760px">je te dis quel ensemble poser</div>
+  <div id="v-o3">LIVRAISON OFFERTE EN FRANCE</div>
+  <div id="v-url">etageres-murales.fr · lien en bio</div>
+
+  <div id="v-sub">
+   <span id="v-s0">Ta cuisine déborde ?</span><span id="v-s1">C’est pas la place, c’est trois erreurs.</span><span id="v-s2">Et la troisième, tout le monde la fait.</span>
+   <span id="v-s3">Un : tout est sur le plan de travail.</span><span id="v-s4">Monte d’un étage : trois étagères au mur, et le plan respire.</span>
+   <span id="v-s5">Deux : tes tasses dorment dans le placard.</span><span id="v-s6">Une étagère à crochets, et elles sont à portée de main.</span>
+   <span id="v-s7">Trois : tout est rangé à la même hauteur.</span><span id="v-s8">Ce qui sert tous les jours à hauteur de main, le reste en haut.</span>
+   <span id="v-s9">Trois étagères, un mur qui ne ressemble plus à une cuisine de location.</span>
+   <span id="v-s10">Envoie-moi la photo de ta cuisine en DM : je te dis quel ensemble poser.</span><span id="v-s11">Livraison offerte en France.</span>
+  </div>
+  <audio id="v-voix" src="assets/audio/voix.wav" data-start="0" data-duration="34.2" data-track-index="6"></audio>
+  <audio id="v-sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="34.2" data-track-index="5"></audio>
+ </div>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var cv=$("v-cv"),ctx=cv.getContext("2d");
+var PHI=33*Math.PI/180,cP=Math.cos(PHI),sP=Math.sin(PHI);
+var W=1.5,D=1.2,H=2.4,RED="#e10600";
+/* la pièce grandit : les coordonnées sont écrites pour la petite pièce, chaque objet suit son mur (dW, dD) */
+var dW=0,dD=0;
+function mp(p){return [p[0]+(p[0]>0?dW:-dW),p[1],p[2]+(p[2]>0?dD:-dD)]}
+var L=function(a,b,k){return a+(b-a)*k};
+var cl=function(v){return Math.max(0,Math.min(1,v))};
+var SC=130,CX=540,CY=980,TH=0;
+function prj(p,th){var c=Math.cos(th),s=Math.sin(th),x=p[0]*c+p[2]*s,z=-p[0]*s+p[2]*c;return {x:x,y:-p[1]*cP+z*sP,d:z*cP+p[1]*sP}}
+function setCam(S){TH=S.yaw*Math.PI/180;SC=130*S.zoom;var f=prj(mp([S.fx,S.fy,S.fz]),TH);CX=S.sx-f.x*SC;CY=S.sy-f.y*SC}
+function pr(p,rw){var r=prj(rw?p:mp(p),TH);return {x:CX+r.x*SC,y:CY+r.y*SC,d:r.d}}
+function poly(pts,fill,stroke,lw,alpha,dash,rw){var q=pts.map(function(p){return pr(p,rw)});ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.beginPath();q.forEach(function(p,i){i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)});ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){if(dash)ctx.setLineDash(dash);ctx.strokeStyle=stroke;ctx.lineWidth=(lw||3)*Math.min(1.6,Math.max(.8,SC/130));ctx.lineJoin="round";ctx.stroke()}ctx.restore()}
+function line(a,b,col,lw,alpha){poly([a,b],null,col||"#fff",lw||2,alpha)}
+function vis(n){var c=Math.cos(TH),s=Math.sin(TH);var nz=-n[0]*s+n[2]*c;return n[1]*sP+nz*cP>0.001}
+function box(F,x,z,w,d,h,y0,fill,al){y0=y0||0;var c0=mp([x,0,z]);x=c0[0];z=c0[2];var a=x-w/2,b=x+w/2,e=z-d/2,f=z+d/2,t=y0+h;
+ [[[a,t,e],[b,t,e],[b,t,f],[a,t,f],[0,1,0]],[[a,y0,f],[b,y0,f],[b,t,f],[a,t,f],[0,0,1]],[[a,y0,e],[b,y0,e],[b,t,e],[a,t,e],[0,0,-1]],
+  [[b,y0,e],[b,y0,f],[b,t,f],[b,t,e],[1,0,0]],[[a,y0,e],[a,y0,f],[a,t,f],[a,t,e],[-1,0,0]]].forEach(function(q){F.push({p:q.slice(0,4),n:q[4],fill:fill||"#1e1e1e",al:al==null?1:al,raw:1})})}
+function cross(pt,k,sz){if(k<=0)return;ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=11;ctx.lineCap="round";var r=sz*Math.min(1,k);ctx.globalAlpha=Math.min(1,k*1.5);ctx.beginPath();ctx.moveTo(pt.x-r,pt.y-r);ctx.lineTo(pt.x+r,pt.y+r);ctx.moveTo(pt.x+r,pt.y-r);ctx.lineTo(pt.x-r,pt.y+r);ctx.stroke();ctx.restore()}
+function ring(pt,k,r){if(k<=0)return;ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=8;ctx.globalAlpha=Math.min(1,k);ctx.beginPath();ctx.arc(pt.x,pt.y,r*(.6+.4*Math.min(1,k)),0,7);ctx.stroke();ctx.restore()}
+function arrow(a,b,k){if(k<=0)return;var x=L(a.x,b.x,Math.min(1,k)),y=L(a.y,b.y,Math.min(1,k));ctx.save();ctx.strokeStyle=RED;ctx.fillStyle=RED;ctx.lineWidth=7;ctx.setLineDash([16,12]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.stroke();ctx.setLineDash([]);
+ var an=Math.atan2(y-a.y,x-a.x);ctx.beginPath();ctx.moveTo(x+Math.cos(an)*22,y+Math.sin(an)*22);ctx.lineTo(x+Math.cos(an+2.4)*26,y+Math.sin(an+2.4)*26);ctx.lineTo(x+Math.cos(an-2.4)*26,y+Math.sin(an-2.4)*26);ctx.closePath();ctx.fill();ctx.restore()}
+function hand(pt,k,rot){if(k<=0)return;ctx.save();ctx.globalAlpha=Math.min(1,k);ctx.translate(pt.x,pt.y);ctx.rotate(rot||0);ctx.scale(1.15,1.15);ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.lineJoin="round";ctx.lineCap="round";ctx.fillStyle="#0e0e0e";
+ ctx.beginPath();ctx.moveTo(-8,8);ctx.bezierCurveTo(-30,14,-46,4,-50,-12);ctx.lineTo(-52,-34);ctx.bezierCurveTo(-52,-42,-42,-42,-40,-34);ctx.lineTo(-38,-22);ctx.lineTo(-40,-58);ctx.bezierCurveTo(-40,-66,-29,-66,-29,-58);ctx.lineTo(-27,-26);
+ ctx.lineTo(-26,-64);ctx.bezierCurveTo(-26,-72,-15,-72,-15,-64);ctx.lineTo(-14,-26);ctx.lineTo(-12,-58);ctx.bezierCurveTo(-12,-66,-2,-66,-2,-58);ctx.lineTo(-2,-22);ctx.lineTo(4,-36);ctx.bezierCurveTo(8,-44,18,-40,14,-30);ctx.lineTo(4,0);ctx.lineTo(-8,8);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-50,-12);ctx.lineTo(-62,22);ctx.moveTo(-8,8);ctx.lineTo(-18,40);ctx.stroke();ctx.restore()}
+
+/* ---------- la cuisine ---------- */
+var P={yaw:38,zoom:1.25,fx:0,fy:1.1,fz:0,sx:540,sy:1000,
+  s:1,flash:1,wob:0,pop:9,m1:0,shelf:0,m2:0,ind:0,pdoor:0,m3:0,hand:0,
+  crossA:0,crossB:0,crossC:0,ringA:0,ringB:0,ringC:0,arrowA:0,arrowB:0,
+  split:0,gauge:.2,gw:0,dim:0};
+var FINAL={s:0,m1:6,shelf:1,m2:4,ind:1,pdoor:0,m3:4,wob:0,pop:9,crossA:0,crossB:0,crossC:0,ringA:0,ringB:0,ringC:0,arrowA:0,arrowB:0,hand:0};
+var BEFORE={s:1,m1:0,shelf:0,m2:0,ind:0,pdoor:0,m3:0};
+function boxR(F,x,z,w,d,h,y0,fill,al){y0=y0||0;var a=x-w/2,b=x+w/2,e=z-d/2,f=z+d/2,t=y0+h;
+ [[[a,t,e],[b,t,e],[b,t,f],[a,t,f],[0,1,0]],[[a,y0,f],[b,y0,f],[b,t,f],[a,t,f],[0,0,1]],[[a,y0,e],[b,y0,e],[b,t,e],[a,t,e],[0,0,-1]],
+  [[b,y0,e],[b,y0,f],[b,t,f],[b,t,e],[1,0,0]],[[a,y0,e],[a,y0,f],[a,t,f],[a,t,e],[-1,0,0]]].forEach(function(q){F.push({p:q.slice(0,4),n:q[4],fill:fill||"#1e1e1e",al:al==null?1:al,raw:1})})}
+function easeIO(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function moveK(m,i){return easeIO(cl(m-i))}
+/* plan de travail le long du mur du fond ; tout ce qui est posé dessus suit son centre */
+var CT={x:-.3,z:-.89,w:2.3,d:.62,h:.86};
+/* étagères flottantes au-dessus du plan (décalage depuis le centre du plan, hauteur) */
+var SH=[[-.30,1.22],[-.75,1.50],[-.35,1.78]];
+/* objets du plan : décalage x, hauteur, largeur, reste sur le plan (1), niveau final après l'erreur 3 */
+var IT=[[-1.0,.30,.10,0,0],[-.86,.22,.12,0,1],[-.72,.34,.08,0,2],[.02,.18,.13,0,0],[.16,.26,.10,0,1],[.30,.20,.12,0,2],[-.14,.28,.22,1],[.98,.18,.2,1],[-.32,.10,.18,1]];
+/* étagère à crochets (mur de droite), placard (mur de droite) */
+var IND={z:-.45,len:.8,dep:.25,lv:[1.0,1.28,1.56]};
+var PL={x:W-.18,z:.55,w:.36,d:.8,h:.55,y0:1.45};
+function scene(S){
+ dW=.7*(1-S.s);dD=.55*(1-S.s);H=2.4+.25*(1-S.s);setCam(S);
+ var Wr=W+dW,Dr=D+dD;
+ poly([[-W,0,-D],[W,0,-D],[W,0,D],[-W,0,D]],"#151515","#ffffff",3);
+ for(var g=-Wr+.5;g<Wr;g+=.5)poly([[g,.001,-Dr],[g,.001,Dr]],null,"#ffffff",1,.18,null,1);
+ for(var h=-Dr+.5;h<Dr;h+=.5)poly([[-Wr,.001,h],[Wr,.001,h]],null,"#ffffff",1,.18,null,1);
+ var walls=[{p:[[-W,0,-D],[W,0,-D],[W,H,-D],[-W,H,-D]],n:[0,0,1]},{p:[[-W,0,D],[W,0,D],[W,H,D],[-W,H,D]],n:[0,0,-1]},{p:[[-W,0,-D],[-W,0,D],[-W,H,D],[-W,H,-D]],n:[1,0,0]},{p:[[W,0,-D],[W,0,D],[W,H,D],[W,H,-D]],n:[-1,0,0]}];
+ walls.forEach(function(w){if(vis(w.n))poly(w.p,"#1a1a1a","#ffffff",3)});
+ var cc=mp([CT.x,0,CT.z]),zb=-Dr+.01,xr=Wr-.01;
+ /* crédence : une ligne de carrelage au-dessus du plan */
+ if(vis([0,0,1]))poly([[cc[0]-CT.w/2,1.15,zb],[cc[0]+CT.w/2,1.15,zb]],null,"#ffffff",1.5,.25,null,1);
+ var F=[];
+ /* hotte au-dessus des plaques */
+ boxR(F,cc[0]+.65,zb+.22,.6,.42,.28,1.62,"#1c1c1c");boxR(F,cc[0]+.65,zb+.1,.22,.2,.6,1.9,"#1c1c1c");
+ /* plan et meubles bas */
+ boxR(F,cc[0],cc[2],CT.w,CT.d,CT.h,0,"#1c1c1c");boxR(F,cc[0],cc[2]+.01,CT.w+.06,CT.d+.06,.05,CT.h,"#262626");
+ /* étagères flottantes */
+ if(S.shelf>0)SH.forEach(function(sh,i){var k=cl(S.shelf*3-i);if(k>0)boxR(F,cc[0]+sh[0],zb+.1,.62*k,.2,.04,sh[1],"#2a2a2a")});
+ /* étagère à crochets (mur de droite) */
+ if(S.ind>0){var k=S.ind,zc=mp([0,0,IND.z])[2];IND.lv.forEach(function(y,i){var kk=cl(k*3-i);if(kk>0)boxR(F,xr-IND.dep/2,zc,IND.dep,IND.len*kk,.035,y,"#2a2a2a")})}
+ /* placard haut (mur de droite) */
+ var pc=mp([PL.x,0,PL.z]);boxR(F,pc[0],pc[2],PL.w,PL.d,PL.h,PL.y0,"#1c1c1c");
+ /* objets du plan */
+ var j=0;IT.forEach(function(it,i){var pop=cl(S.pop-i);if(pop<=0)return;var x=cc[0]+it[0],y=CT.h+.05,z=cc[2]-.12;
+  if(!it[3]){var k1=moveK(S.m1,i),sl=SH[2],tx=cc[0]+sl[0]-.25+i*.1,ty=sl[1]+.04;
+   var k3=moveK(S.m3,[0,1,9,2,3,9][i]);if(it[4]===2)k3=0;var s3=SH[it[4]],ux=cc[0]+s3[0]+(i<3?-.12:.12),uy=s3[1]+.04;
+   var x1=L(x,tx,k1),y1=L(y,ty,k1)+Math.sin(Math.PI*k1)*.3,z1=L(z,zb+.1,k1);
+   x=L(x1,ux,k3);y=L(y1,uy,k3)+Math.sin(Math.PI*k3)*.18;z=z1;}
+  else if(S.wob>0&&S.m1<.01){y+=Math.abs(Math.sin(S.wob*6+i*1.7))*.025}
+  if(!it[3]&&S.m1<.01&&S.wob>0)y+=Math.abs(Math.sin(S.wob*6+i*1.3))*.025;
+  boxR(F,x,z,it[2],it[2]*.9,it[1]*Math.min(1,pop*1.2),y,i%2?"#2b2b2b":"#232323")});
+ /* tasses : dans le placard, puis aux crochets */
+ var zc0=mp([0,0,IND.z])[2];for(var m=0;m<4;m++){var k=moveK(S.m2,m);var ax=pc[0]+.02,ay=PL.y0+.04,az=pc[2]-.27+m*.18;
+  var bx=xr-IND.dep+.02,by=IND.lv[0]-.2,bz=zc0-.3+m*.2;boxR(F,L(ax,bx,k),L(az,bz,k),.09,.09,.1,L(ay,by,k)+Math.sin(Math.PI*k)*.2,"#2f2f2f")}
+ F.forEach(function(f){var q=f.p.map(function(p){return pr(p,f.raw)});f.d=q.reduce(function(a,b){return a+b.d},0)/4});
+ F.sort(function(a,b){return a.d-b.d});F.forEach(function(f){if(vis(f.n))poly(f.p,f.fill,"#ffffff",2.5,f.al,null,f.raw)});
+ /* façade des meubles bas, évier, plaques */
+ var fz=cc[2]+CT.d/2+.001;[-1.0,-.45,.1,.55].forEach(function(dx){poly([[cc[0]+dx,.08,fz],[cc[0]+dx,.8,fz]],null,"#ffffff",2,.8,null,1)});
+ var sx=cc[0]-.45,sy=CT.h+.052;poly([[sx-.25,sy,cc[2]-.18],[sx+.25,sy,cc[2]-.18],[sx+.25,sy,cc[2]+.18],[sx-.25,sy,cc[2]+.18]],"#0b0b0b","#ffffff",2,null,null,1);
+ [[-.13,-.1],[.13,-.1],[-.13,.1],[.13,.1]].forEach(function(o){var p=pr([cc[0]+.65+o[0],sy,cc[2]+o[1]],1);ctx.save();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(p.x,p.y,16*SC/130,8*SC/130,0,0,7);ctx.stroke();ctx.restore()});
+ /* crochets en S sous l'étagère */
+ if(S.ind>.7){for(var c=0;c<4;c++){var hz=zc0-.3+c*.2;poly([[xr-IND.dep+.05,IND.lv[0],hz],[xr-IND.dep+.05,IND.lv[0]-.09,hz]],null,"#ffffff",2.5,cl((S.ind-.7)*3.4),null,1)}}
+ /* porte du placard */
+ var fx=pc[0]-PL.w/2,a=S.pdoor*1.3,hw=PL.d;poly([[fx,PL.y0+.02,pc[2]+hw/2],[fx-Math.sin(a)*hw,PL.y0+.02,pc[2]+hw/2-Math.cos(a)*hw],[fx-Math.sin(a)*hw,PL.y0+PL.h-.02,pc[2]+hw/2-Math.cos(a)*hw],[fx,PL.y0+PL.h-.02,pc[2]+hw/2]],"#1f1f1f","#ffffff",2.5,null,null,1);
+ return {counter:pr([cc[0]-.1,1.1,cc[2]],1),wall:pr([cc[0]-.5,1.55,zb],1),top:pr([cc[0]+SH[2][0],1.95,zb],1),placard:pr([pc[0]-.2,PL.y0+.3,pc[2]],1),hooks:pr([xr-.2,1.1,zc0],1),
+   handA:pr([cc[0]+SH[2][0],1.95,zb+.1],1),handB:pr([xr-.25,1.0,zc0],1),handC:pr([cc[0]+SH[0][0],1.4,zb+.1],1)};
+}
+function overlays(S,G){
+ ring(G.counter,S.ringA,70);ring(G.placard,S.ringB,70);ring(G.wall,S.ringC,70);
+ cross(G.counter,S.crossA,60);cross(G.placard,S.crossB,52);cross(G.top,S.crossC,56);
+ arrow(G.counter,G.wall,S.arrowA);arrow(G.placard,G.hooks,S.arrowB);
+ var hp=S.m3>0&&S.m3<4?G.handC:(S.m2>0&&S.m2<4?G.handB:G.handA);hand({x:hp.x+30,y:hp.y-10},S.hand,-.2);
+}
+function draw(){
+ ctx.fillStyle="#0e0e0e";ctx.fillRect(0,0,1080,1920);
+ var S=P.flash>.5?Object.assign({},P,FINAL):P;
+ if(P.split>0){
+  var mid=1080*(1-.5*P.split);
+  ctx.save();ctx.beginPath();ctx.rect(0,0,mid,1920);ctx.clip();var B=Object.assign({},P,BEFORE);B.sx=P.sx-170*P.split;scene(B);ctx.fillStyle="rgba(225,6,0,.14)";ctx.fillRect(0,0,1080,1920);ctx.restore();
+  ctx.save();ctx.beginPath();ctx.rect(mid,0,1080-mid,1920);ctx.clip();var N=Object.assign({},P);N.sx=P.sx+170*P.split;scene(N);ctx.restore();
+  ctx.save();ctx.strokeStyle="#fff";ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(mid,600);ctx.lineTo(mid,990);ctx.stroke();ctx.restore();
+ }else{var G=scene(S);overlays(S,G)}
+ if(P.dim>0){ctx.fillStyle="rgba(14,14,14,"+(.62*P.dim).toFixed(3)+")";ctx.fillRect(0,0,1080,1920)}
+ $("v-fill").style.transform="scaleX("+P.gauge.toFixed(4)+")";
+ var r=Math.round(225+30*P.gw),g=Math.round(6+249*P.gw),b=Math.round(255*P.gw);$("v-fill").style.background="rgb("+r+","+g+","+b+")";
+ $("v-pct").textContent=Math.round(P.gauge*100)+" %";
+}
+var tl=gsap.timeline({paused:true});
+tl.to({},{duration:34.2},0);
+function T(o,t,d,e){var v={};for(var k in o)v[k]=o[k];v.duration=d;v.ease=e||"power2.inOut";tl.to(P,v,t)}
+function show(id,t,out,y){tl.fromTo("#"+id,{opacity:0,y:y==null?30:y},{opacity:1,y:0,duration:.25,ease:"power3.out",immediateRender:false},t);if(out!=null)tl.to("#"+id,{opacity:0,duration:.18,ease:"power2.in"},out)}
+function card(id,t,out){tl.fromTo("#"+id,{opacity:0,x:-60,scale:1.08},{opacity:1,x:0,scale:1,duration:.4,ease:"expo.out",immediateRender:false},t);tl.to("#"+id,{opacity:0,x:-40,duration:.2,ease:"power2.in"},out)}
+function sub(n,a,b){tl.set("#v-s"+n,{opacity:1},a);tl.set("#v-s"+n,{opacity:0},b)}
+function cam(o,t,d,e){T(o,t,d,e||"power3.inOut")}
+
+/* P1 (0 – 1.4) « Ta cuisine déborde ? » : 0,45 s du résultat, puis retour au chaos */
+T({yaw:34},0,.45,"none");T({flash:0},.45,.01,"none");gsap.set(P,{pop:9});
+tl.set(P,{pop:0},.46);T({pop:9},.48,.75,"none");T({yaw:30},.46,1.0,"none");
+tl.to("#v-h0",{opacity:0,duration:.18},1.3);
+/* P2 (1.4 – 3.7) « C'est pas la place, c'est trois erreurs. » */
+cam({yaw:24,zoom:1.32,sy:1010},1.4,.5);T({yaw:20},1.9,1.8,"none");
+show("v-h1",1.5,3.6);show("v-m2",1.65,3.6,20);tl.to("#v-m2 i",{scaleX:1,duration:.25,ease:"power2.out"},2.15);
+/* P3 (3.7 – 6.0) « Et la troisième, tout le monde la fait. » : trois repères */
+cam({yaw:34,zoom:1.18,sy:1060},3.7,.45);T({yaw:38},4.15,1.8,"none");
+show("v-three",3.8,5.9,0);show("v-h2",3.95,5.9);
+T({ringA:1},4.1,.2,"back.out(2)");T({ringB:1},4.4,.2,"back.out(2)");T({ringC:1},4.7,.2,"back.out(2)");T({ringA:0,ringB:0,ringC:0},5.8,.15);
+/* P4 (6.0 – 8.3) « Un : tout est sur le plan de travail. » */
+cam({yaw:22,zoom:2.0,fx:-.3,fy:1.05,fz:-.9,sy:1000},5.95,.6);T({yaw:18,zoom:2.12},6.55,1.7,"none");
+show("v-e1",6.1,12.45);T({crossA:1},6.9,.25,"back.out(2)");T({wob:1},6.9,.3);T({wob:4},7.2,1.0,"none");
+/* P5 (8.3 – 12.5) « Monte d'un étage : trois étagères au mur, et le plan respire. » */
+cam({yaw:20,zoom:1.6,fx:-.6,fy:1.4,fz:-1.1},8.25,.6);T({yaw:16,zoom:1.68},8.85,3.6,"none");
+T({crossA:0,wob:0},8.3,.15);show("v-b1",8.4,12.45);
+T({arrowA:1},8.45,.4);T({shelf:1},8.75,.7,"back.out(1.4)");T({arrowA:0},9.0,.2);
+T({hand:1},9.3,.2);T({m1:6},9.4,2.0,"none");T({hand:0},11.4,.2);card("v-c1",9.2,12.3);
+T({gauge:.55},11.6,.35,"back.out(2)");T({s:.66},11.55,.6,"back.out(1.3)");
+/* P6 (12.5 – 15.1) « Deux : tes tasses dorment dans le placard. » */
+cam({yaw:52,zoom:1.9,fx:1.25,fy:1.55,fz:.4,sy:1000},12.5,.7);T({yaw:56,zoom:2.0},13.2,1.9,"none");
+show("v-e2",12.65,17.85);T({pdoor:1},13.1,.45,"back.out(1.4)");T({crossB:1},13.8,.25,"back.out(2)");
+/* P7 (15.1 – 17.9) « Une étagère à crochets, et elles sont à portée de main. » */
+cam({yaw:50,zoom:1.75,fx:1.3,fy:1.25,fz:0},15.1,.6);T({yaw:46,zoom:1.82},15.7,2.2,"none");
+T({crossB:0},15.15,.15);show("v-b2",15.3,17.85);
+T({ind:1},15.35,.6,"back.out(1.4)");T({arrowB:1},15.5,.35);T({arrowB:0},15.9,.2);
+T({hand:1},15.8,.2);T({m2:4},15.9,1.3,"none");T({hand:0},17.2,.2);T({pdoor:0},17.1,.35,"power2.in");card("v-c2",15.5,17.8);
+T({gauge:.75},17.3,.35,"back.out(2)");T({s:.33},17.25,.6,"back.out(1.3)");
+/* P8 (17.9 – 20.3) « Trois : tout est rangé à la même hauteur. » */
+cam({yaw:24,zoom:1.95,fx:-.6,fy:1.55,fz:-1.1},17.9,.65);T({yaw:20,zoom:2.05},18.55,1.7,"none");
+show("v-e3",18.0,23.85);T({crossC:1},18.7,.25,"back.out(2)");
+/* P9 (20.3 – 23.9) « Ce qui sert tous les jours à hauteur de main, le reste en haut. » */
+cam({yaw:30,zoom:1.7},20.3,.5);T({yaw:33,zoom:1.78},20.8,3.0,"none");
+T({crossC:0},20.35,.15);show("v-b3",20.45,23.85);
+T({hand:1},20.7,.2);T({m3:4},20.8,2.0,"none");T({hand:0},22.85,.2);
+T({gauge:1,gw:1},23.0,.4,"back.out(2)");T({s:0},22.95,.6,"back.out(1.3)");
+/* P10 (23.9 – 27.8) « Trois étagères, un mur qui ne ressemble plus à une cuisine de location. » */
+cam({yaw:36,zoom:.66,fx:0,fy:1.1,fz:0,sy:830},23.9,.6);T({yaw:33},24.5,3.2,"none");
+T({split:1},24.15,.35,"power3.out");show("v-av",24.2,27.6,0);show("v-ap",24.2,27.6,0);show("v-ms",24.3,27.6);T({split:0},27.6,.15,"power2.in");
+/* P11-P12 (27.8 – 34.2) l'offre, puis retour au plan de départ pour la boucle */
+cam({yaw:44,zoom:1.15,sy:1050},27.75,.6);T({yaw:52},28.35,4.6,"none");T({dim:1},27.85,.4);
+show("v-cam",27.95,33.55,0);show("v-o1",28.05,33.55);show("v-o2",28.9,33.55);show("v-o3",31.55,33.55,0);show("v-url",32.0,33.55,0);
+tl.fromTo("#v-o3",{scale:1.15},{scale:1,duration:.35,ease:"back.out(2)",immediateRender:false},31.55);
+T({dim:0},33.5,.4);cam({yaw:34,zoom:1.25,fx:0,fy:1.1,fz:0,sy:1000},33.3,.9,"power2.inOut");
+tl.to("#v-h0",{opacity:1,duration:.2},33.95);
+/* sous-titres */
+[[0,.1,1.4],[1,1.45,3.7],[2,3.81,6.0],[3,6.11,8.3],[4,8.38,12.5],[5,12.61,15.1],[6,15.23,17.9],[7,17.98,20.3],[8,20.36,23.9],[9,24.01,27.8],[10,27.88,31.45],[11,31.54,33.5]].forEach(function(s){sub(s[0],s[1],s[2])});
+tl.eventCallback("onUpdate",draw);
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;
+Promise.all([document.fonts.load("900 96px InterX"),document.fonts.load("700 52px InterX")]).then(function(){tl.seek(0);draw()});
+})();
+</script>
+</body>
+</html>

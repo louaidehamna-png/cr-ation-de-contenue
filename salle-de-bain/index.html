@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0e0e0e}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#fff}
+.clip{position:absolute;inset:0}
+#v-cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+/* zone sûre : texte entre y 250 et 1450, de x 80 à 1000 */
+#v-gauge{position:absolute;left:80px;top:250px;width:920px}
+#v-gauge .lb{font:700 40px/1 "InterX";letter-spacing:.06em;display:flex;justify-content:space-between}
+#v-gauge .tr{position:relative;margin-top:16px;height:18px;border-radius:9px;background:#2a2a2a;overflow:hidden}
+#v-fill{position:absolute;left:0;top:0;height:100%;width:920px;background:#e10600;border-radius:9px;transform-origin:0 50%}
+.hd{position:absolute;left:80px;width:920px;top:360px;font:900 96px/1.02 "InterX";letter-spacing:-.02em;text-transform:uppercase;opacity:0;text-shadow:0 0 30px #000,0 0 10px #000}
+.bd{position:absolute;left:80px;width:920px;top:575px;font:700 56px/1.15 "InterX";color:#d9d9d9;opacity:0;text-shadow:0 0 24px #000,0 0 8px #000}
+#v-sub{position:absolute;left:80px;width:920px;top:1290px;height:160px}
+#v-sub span{font:700 52px/60px "InterX";color:#fff;text-shadow:0 0 22px #000,0 0 12px #000,0 0 4px #000;opacity:0;position:absolute;bottom:0;left:0;width:920px;text-align:center}
+#v-m2{position:absolute;left:80px;top:610px;font:900 150px/1 "InterX";opacity:0}
+#v-m2 i{position:absolute;left:-10px;right:-10px;top:52%;height:16px;background:#e10600;transform:scaleX(0);transform-origin:0 50%;border-radius:8px}
+#v-three{position:absolute;left:80px;top:340px;font:900 250px/1 "InterX";color:#fff;opacity:0}
+.side{position:absolute;top:640px;font:900 64px/1 "InterX";opacity:0;text-shadow:0 0 20px #000}
+#v-logo{position:absolute;left:80px;width:920px;top:1235px;text-align:center;font:600 40px/1 "InterX";color:#bdbdbd;opacity:0;text-shadow:0 0 16px #000}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="30.8" data-width="1080" data-height="1920">
+ <div id="v-stage" class="clip" data-start="0" data-duration="30.8" data-track-index="0">
+  <canvas id="v-cv" width="1080" height="1920"></canvas>
+  <div id="v-gauge"><div class="lb"><span>PLACE LIBRE</span><span id="v-pct">20 %</span></div><div class="tr"><div id="v-fill"></div></div></div>
+
+  <div id="v-h0" class="hd" style="opacity:1">Ta salle de bain déborde.</div>
+  <div id="v-h1" class="hd">C’est pas la place.</div>
+  <div id="v-m2">m²<i></i></div>
+  <div id="v-three">3</div>
+  <div id="v-h2" class="hd" style="top:610px">C’est 3 erreurs.</div>
+  <div id="v-h3" class="hd">La première ?</div>
+  <div id="v-b3" class="bd">à chaque douche</div>
+
+  <div id="v-e1" class="hd">1. Tout sur le rebord</div><div id="v-b1" class="bd">le rebord n’est pas une étagère</div><div id="v-b1b" class="bd">monte d’un étage</div>
+  <div id="v-e2" class="hd">2. L’angle vide</div><div id="v-b2" class="bd">une étagère d’angle</div><div id="v-b2b" class="bd">là où tu prends tes flacons</div>
+  <div id="v-e3" class="hd">3. Tout à la vue</div><div id="v-b3a" class="bd">dehors : ce qui sert chaque jour</div><div id="v-b3b" class="bd">le reste, rangé</div>
+  <div id="v-av" class="side" style="left:80px">AVANT</div><div id="v-ap" class="side" style="left:620px">APRÈS</div>
+  <div id="v-ms" class="hd" style="top:1130px;text-align:center">Même salle de bain.</div>
+  <div id="v-ju" class="hd" style="top:1130px;text-align:center;font-size:76px">Juste rangée autrement.</div>
+  <div id="v-end" class="hd" style="font-size:82px">Enregistre-la pour ton prochain rangement.</div>
+  <div id="v-logo">etageres-murales.fr</div>
+
+  <div id="v-sub">
+   <span id="v-s0">Ta salle de bain déborde.</span><span id="v-s1">C’est pas la place qui manque.</span><span id="v-s2">C’est trois erreurs.</span>
+   <span id="v-s3">Et la première, tu la vois à chaque douche.</span><span id="v-s4">Un : le rebord de la baignoire n’est pas une étagère.</span>
+   <span id="v-s5">Monte d’un étage : une étagère au mur libère le rebord.</span><span id="v-s6">Deux : l’angle de la douche est vide.</span>
+   <span id="v-s7">Une étagère d’angle range les flacons là où tu les prends.</span><span id="v-s8">Trois : tout est à la vue.</span>
+   <span id="v-s9">Garde dehors ce qui sert chaque jour, range le reste.</span><span id="v-s10">Même salle de bain. Juste rangée autrement.</span>
+   <span id="v-s11">Enregistre la vidéo pour ton prochain rangement.</span>
+  </div>
+  <audio id="v-voix" src="assets/audio/voix.wav" data-start="0" data-duration="30.8" data-track-index="6"></audio>
+  <audio id="v-sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="30.8" data-track-index="5"></audio>
+ </div>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var cv=$("v-cv"),ctx=cv.getContext("2d");
+var PHI=33*Math.PI/180,cP=Math.cos(PHI),sP=Math.sin(PHI);
+var W=1.5,D=1.2,H=2.4,RED="#e10600";
+/* la pièce grandit : les coordonnées sont écrites pour la petite pièce, chaque objet suit son mur (dW, dD) */
+var dW=0,dD=0;
+function mp(p){return [p[0]+(p[0]>0?dW:-dW),p[1],p[2]+(p[2]>0?dD:-dD)]}
+/* état animé : caméra (yaw, zoom, point visé), rangement (m1, m2, m3), étagères, repères */
+var P={yaw:38,zoom:.6,fx:0,fy:1.0,fz:0,sx:540,sy:980,
+  s:1,wob:0,m1:0,shelf:0,m2:0,cs:0,m3:0,door:0,hand:0,
+  crossA:0,crossB:0,crossC:0,ringA:0,ringB:0,ringC:0,arrowA:0,arrowB:0,corner:0,ghA:0,ghB:0,
+  split:0,gauge:.2,gw:0,pop:0,popB:0,popC:0};
+var L=function(a,b,k){return a+(b-a)*k};
+var cl=function(v){return Math.max(0,Math.min(1,v))};
+var SC=130,CX=540,CY=980,TH=0;
+function prj(p,th){var c=Math.cos(th),s=Math.sin(th),x=p[0]*c+p[2]*s,z=-p[0]*s+p[2]*c;return {x:x,y:-p[1]*cP+z*sP,d:z*cP+p[1]*sP}}
+function setCam(S){TH=S.yaw*Math.PI/180;SC=130*S.zoom;var f=prj(mp([S.fx,S.fy,S.fz]),TH);CX=S.sx-f.x*SC;CY=S.sy-f.y*SC}
+function pr(p,rw){var r=prj(rw?p:mp(p),TH);return {x:CX+r.x*SC,y:CY+r.y*SC,d:r.d}}
+function poly(pts,fill,stroke,lw,alpha,dash,rw){var q=pts.map(function(p){return pr(p,rw)});ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.beginPath();q.forEach(function(p,i){i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)});ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){if(dash)ctx.setLineDash(dash);ctx.strokeStyle=stroke;ctx.lineWidth=(lw||3)*Math.min(1.6,Math.max(.8,SC/130));ctx.lineJoin="round";ctx.stroke()}ctx.restore()}
+function line(a,b,col,lw,alpha){poly([a,b],null,col||"#fff",lw||2,alpha)}
+function vis(n){var c=Math.cos(TH),s=Math.sin(TH);var nz=-n[0]*s+n[2]*c;return n[1]*sP+nz*cP>0.001}
+function box(F,x,z,w,d,h,y0,fill,al){y0=y0||0;var c0=mp([x,0,z]);x=c0[0];z=c0[2];var a=x-w/2,b=x+w/2,e=z-d/2,f=z+d/2,t=y0+h;
+ [[[a,t,e],[b,t,e],[b,t,f],[a,t,f],[0,1,0]],[[a,y0,f],[b,y0,f],[b,t,f],[a,t,f],[0,0,1]],[[a,y0,e],[b,y0,e],[b,t,e],[a,t,e],[0,0,-1]],
+  [[b,y0,e],[b,y0,f],[b,t,f],[b,t,e],[1,0,0]],[[a,y0,e],[a,y0,f],[a,t,f],[a,t,e],[-1,0,0]]].forEach(function(q){F.push({p:q.slice(0,4),n:q[4],fill:fill||"#1e1e1e",al:al==null?1:al,raw:1})})}
+function cross(pt,k,sz){if(k<=0)return;ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=11;ctx.lineCap="round";var r=sz*Math.min(1,k);ctx.globalAlpha=Math.min(1,k*1.5);ctx.beginPath();ctx.moveTo(pt.x-r,pt.y-r);ctx.lineTo(pt.x+r,pt.y+r);ctx.moveTo(pt.x+r,pt.y-r);ctx.lineTo(pt.x-r,pt.y+r);ctx.stroke();ctx.restore()}
+function ring(pt,k,r){if(k<=0)return;ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=8;ctx.globalAlpha=Math.min(1,k);ctx.beginPath();ctx.arc(pt.x,pt.y,r*(.6+.4*Math.min(1,k)),0,7);ctx.stroke();ctx.restore()}
+function arrow(a,b,k){if(k<=0)return;var x=L(a.x,b.x,Math.min(1,k)),y=L(a.y,b.y,Math.min(1,k));ctx.save();ctx.strokeStyle=RED;ctx.fillStyle=RED;ctx.lineWidth=7;ctx.setLineDash([16,12]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.stroke();ctx.setLineDash([]);
+ var an=Math.atan2(y-a.y,x-a.x);ctx.beginPath();ctx.moveTo(x+Math.cos(an)*22,y+Math.sin(an)*22);ctx.lineTo(x+Math.cos(an+2.4)*26,y+Math.sin(an+2.4)*26);ctx.lineTo(x+Math.cos(an-2.4)*26,y+Math.sin(an-2.4)*26);ctx.closePath();ctx.fill();ctx.restore()}
+function hand(pt,k,rot){if(k<=0)return;ctx.save();ctx.globalAlpha=Math.min(1,k);ctx.translate(pt.x,pt.y);ctx.rotate(rot||0);ctx.scale(1.15,1.15);ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.lineJoin="round";ctx.lineCap="round";ctx.fillStyle="#0e0e0e";
+ ctx.beginPath();ctx.moveTo(-8,8);ctx.bezierCurveTo(-30,14,-46,4,-50,-12);ctx.lineTo(-52,-34);ctx.bezierCurveTo(-52,-42,-42,-42,-40,-34);ctx.lineTo(-38,-22);ctx.lineTo(-40,-58);ctx.bezierCurveTo(-40,-66,-29,-66,-29,-58);ctx.lineTo(-27,-26);
+ ctx.lineTo(-26,-64);ctx.bezierCurveTo(-26,-72,-15,-72,-15,-64);ctx.lineTo(-14,-26);ctx.lineTo(-12,-58);ctx.bezierCurveTo(-12,-66,-2,-66,-2,-58);ctx.lineTo(-2,-22);ctx.lineTo(4,-36);ctx.bezierCurveTo(8,-44,18,-40,14,-30);ctx.lineTo(4,0);ctx.lineTo(-8,8);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-50,-12);ctx.lineTo(-62,22);ctx.moveTo(-8,8);ctx.lineTo(-18,40);ctx.stroke();ctx.restore()}
+
+/* ---------- les objets et leurs deux places (avant, après) ---------- */
+/* baignoire : bord arrière à y .55 ; étagère murale au-dessus à y 1.25 */
+var TUB={x:-.6,z:-.8,w:1.75,d:.8,h:.55};
+var A=[ // flacons du rebord : [x, h, w]
+ [-1.32,.30,.10],[-1.12,.22,.09],[-.92,.34,.11],[-.70,.18,.10],[-.48,.27,.09],[-.26,.21,.12],[-.05,.25,.08]];
+var Ashelf=function(i){return [-1.14+i*.15,1.29,-1.11]};
+var Arim=function(i){return [A[i][0],.55,-1.13]};
+/* douche : angle du fond à droite (x 1.5, z -1.2) ; étagère d'angle à deux niveaux */
+var Bf=[[1.36,-1.06,.30],[1.18,-1.08,.22],[1.38,-.86,.26],[1.08,-.92,.18]]; // flacons posés au sol de la douche : x, z, h
+var Bs=[[1.40,1.12,-1.10],[1.28,1.12,-1.12],[1.40,1.47,-1.10],[1.30,1.47,-1.12]];
+/* meuble vasque contre le mur de droite (x 1.5), plan à y .9 */
+var V={x:1.24,z:.6,w:.52,d:1.0};
+var C=[ // objets du plan : x, z, h, w, garde (1 = reste dehors)
+ [1.12,.22,.20,.09,0],[1.32,.30,.26,.08,0],[1.16,.44,.14,.10,1],[1.36,.52,.30,.09,0],[1.12,.72,.18,.08,1],[1.34,.80,.24,.10,0],[1.18,.95,.12,.12,1]];
+
+function easeIO(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function moveK(m,i){return easeIO(cl(m-i))}
+
+function scene(S){
+ dW=.7*(1-S.s);dD=.55*(1-S.s);H=2.4+.25*(1-S.s);setCam(S);
+ /* sol carrelé */
+ poly([[-W,0,-D],[W,0,-D],[W,0,D],[-W,0,D]],"#151515","#ffffff",3);
+ var Wr=W+dW,Dr=D+dD;for(var g=-Wr+.5;g<Wr;g+=.5)poly([[g,.001,-Dr],[g,.001,Dr]],null,"#ffffff",1,.18,null,1);
+ for(var h=-Dr+.5;h<Dr;h+=.5)poly([[-Wr,.001,h],[Wr,.001,h]],null,"#ffffff",1,.18,null,1);
+ var walls=[{p:[[-W,0,-D],[W,0,-D],[W,H,-D],[-W,H,-D]],n:[0,0,1]},{p:[[-W,0,D],[W,0,D],[W,H,D],[-W,H,D]],n:[0,0,-1]},{p:[[-W,0,-D],[-W,0,D],[-W,H,D],[-W,H,-D]],n:[1,0,0]},{p:[[W,0,-D],[W,0,D],[W,H,D],[W,H,-D]],n:[-1,0,0]}];
+ walls.forEach(function(w){if(vis(w.n))poly(w.p,"#1a1a1a","#ffffff",3)});
+ /* faïence : une ligne à 1,2 m sur le mur du fond */
+ if(vis([0,0,1]))line([-W,1.2,-D+.005],[W,1.2,-D+.005],"#ffffff",1.5,.25);
+ /* pomme de douche */
+ var bz=-D+.02;line([1.32,1.0,bz],[1.32,2.05,bz],"#ffffff",3);line([1.32,2.05,bz],[1.32,2.05,-.95],"#ffffff",3);
+ var hd=pr([1.32,2.0,-.95]);ctx.save();ctx.fillStyle="#1e1e1e";ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(hd.x,hd.y,22*SC/130,9*SC/130,0,0,7);ctx.fill();ctx.stroke();ctx.restore();
+ /* miroir au-dessus du meuble */
+ if(vis([-1,0,0]))poly([[W-.005,1.2,V.z-.38],[W-.005,1.2,V.z+.38],[W-.005,1.9,V.z+.38],[W-.005,1.9,V.z-.38]],"#121212","#ffffff",3);
+ /* étagère murale (grandit depuis son centre) */
+ var F=[];
+ if(S.shelf>0){var sw=1.15*S.shelf;box(F,-.6,-1.11,sw,.18,.04,1.25,"#2a2a2a");}
+ /* étagère d'angle : deux triangles */
+ if(S.cs>0){[1.08,1.43].forEach(function(y){var r=.4*S.cs;F.push({p:[[W,y+.03,-D],[W-r,y+.03,-D],[W,y+.03,-D+r],[W,y+.03,-D]],n:[0,1,0],fill:"#2a2a2a",al:1});F.push({p:[[W-r,y,-D],[W,y,-D+r],[W,y+.03,-D+r],[W-r,y+.03,-D]],n:[-.7,0,.7],fill:"#2a2a2a",al:1})});}
+ /* baignoire */
+ box(F,TUB.x,TUB.z,TUB.w,TUB.d,TUB.h);
+ /* bac de douche + paroi */
+ box(F,1.0,-.7,1.0,1.0,.06,0,"#181818");
+ /* meuble vasque suspendu + plan */
+ box(F,V.x,V.z,V.w,V.d,.5,.32,"#1c1c1c");box(F,V.x-.02,V.z,V.w+.06,V.d+.06,.06,.82,"#262626");
+ /* flacons du rebord (A) */
+ A.forEach(function(a,i){var k=moveK(S.m1,i),p0=Arim(i),p1=Ashelf(i);var pop=cl(S.pop-i);if(pop<=0)return;
+  var x=L(p0[0],p1[0],k),y=L(p0[1],p1[1],k)+Math.sin(Math.PI*k)*.35+(k===0?Math.abs(Math.sin(S.wob*6+i*1.7))*.03*S.wob:0),z=L(p0[2],p1[2],k);
+  var hh=a[1]*Math.min(1,pop*1.2);box(F,x,z,a[2],a[2],hh,y,i%2?"#2b2b2b":"#232323")});
+ /* flacons de la douche (B) */
+ Bf.forEach(function(b,i){var k=moveK(S.m2,i),p1=Bs[i];var pop=cl(S.popB-i);if(pop<=0)return;
+  var x=L(b[0],p1[0],k),y=L(.06,p1[1]+.03,k)+Math.sin(Math.PI*k)*.3,z=L(b[1],p1[2],k);box(F,x,z,.09,.09,b[2]*.85*Math.min(1,pop*1.2),y,i%2?"#2b2b2b":"#232323")});
+ /* objets du plan (C) : ceux qui ne restent pas rentrent dans le meuble */
+ var j=0;C.forEach(function(c,i){var pop=cl(S.popC-i);if(pop<=0)return;var k=0,al=1;
+  if(!c[4]){k=moveK(S.m3,j);j++;al=1-cl((k-.75)*4)}
+  var x=L(c[0],V.x-.05,k),y=L(.88,.5,k)+Math.sin(Math.PI*k)*.25,z=L(c[1],V.z,k);if(al>0)box(F,x,z,c[3],c[3],c[2]*Math.min(1,pop*1.2),y,i%2?"#2b2b2b":"#232323",al)});
+ F.forEach(function(f){var q=f.p.map(function(p){return pr(p,f.raw)});f.d=q.reduce(function(a,b){return a+b.d},0)/4});
+ F.sort(function(a,b){return a.d-b.d});F.forEach(function(f){if(vis(f.n))poly(f.p,f.fill,"#ffffff",2.5,f.al,null,f.raw)});
+ /* intérieur de la baignoire */
+ var ti=.07,tc=mp([TUB.x,0,TUB.z]);poly([[tc[0]-TUB.w/2+ti,.551,tc[2]-TUB.d/2+ti+.08],[tc[0]+TUB.w/2-ti,.551,tc[2]-TUB.d/2+ti+.08],[tc[0]+TUB.w/2-ti,.551,tc[2]+TUB.d/2-ti],[tc[0]-TUB.w/2+ti,.551,tc[2]+TUB.d/2-ti]],"#0b0b0b","#ffffff",2,null,null,1);
+ /* portes du meuble (s'ouvrent vers la pièce) */
+ var fx=V.x-V.w/2,a=S.door*1.25,hw=V.d/2;
+ [[V.z-hw,1],[V.z+hw,-1]].forEach(function(hg){var ex=fx-Math.sin(a)*hw,ez=hg[0]+hg[1]*Math.cos(a)*hw;
+  poly([[fx,.33,hg[0]],[ex,.33,ez],[ex,.81,ez],[fx,.81,hg[0]]],"#1f1f1f","#ffffff",2.5)});
+ /* paroi de douche en verre */
+ poly([[.5,0,-.2],[1.1,0,-.2],[1.1,2.0,-.2],[.5,2.0,-.2]],"rgba(255,255,255,.04)","#ffffff",2,.9);
+ return {rim:pr([-.65,.75,-1.13]),shelf:pr([-.6,1.35,-1.11]),rimL:pr([-1.0,.62,-1.13]),corner:pr([1.32,.3,-1.02]),cornerS:pr([1.36,1.3,-1.1]),vanity:pr([1.22,1.05,.55]),
+   handA:pr(Ashelf(Math.min(6,Math.floor(S.m1)))),handB:pr(Bs[Math.min(3,Math.floor(S.m2))]),handC:pr([V.x-.3,.95,V.z])};
+}
+function overlays(S,G){
+ ring(G.rim,S.ringA,70);ring(G.corner,S.ringB,70);ring(G.vanity,S.ringC,70);
+ cross(G.rim,S.crossA,58);cross(G.corner,S.crossB,52);cross(G.vanity,S.crossC,58);
+ arrow(G.rimL,G.shelf,S.arrowA);arrow(G.corner,G.cornerS,S.arrowB);
+ if(S.corner>0){ctx.save();ctx.globalAlpha=S.corner*(.6+.4*Math.abs(Math.sin(S.corner*9)));poly([[W,.005,-D],[W-.5,.005,-D],[W-.5,.005,-D+.5],[W,.005,-D+.5]],"rgba(225,6,0,.18)",RED,4,1,[14,10]);ctx.restore()}
+ var hp=S.m3>0&&S.m3<4?G.handC:(S.m2>0&&S.m2<4?G.handB:G.handA);hand({x:hp.x+30,y:hp.y-10},S.hand,-.2);
+}
+var BEFORE={s:1,m1:0,shelf:0,m2:0,cs:0,m3:0,door:0};
+function draw(){
+ ctx.fillStyle="#0e0e0e";ctx.fillRect(0,0,1080,1920);
+ if(P.split>0){
+  var mid=1080*(1-.5*P.split);
+  ctx.save();ctx.beginPath();ctx.rect(0,0,mid,1920);ctx.clip();var B=Object.assign({},P,BEFORE);B.sx=P.sx-170*P.split;scene(B);ctx.fillStyle="rgba(225,6,0,.14)";ctx.fillRect(0,0,1080,1920);ctx.restore();
+  ctx.save();ctx.beginPath();ctx.rect(mid,0,1080-mid,1920);ctx.clip();var N=Object.assign({},P);N.sx=P.sx+170*P.split;scene(N);ctx.restore();
+  ctx.save();ctx.strokeStyle="#fff";ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(mid,620);ctx.lineTo(mid,1260);ctx.stroke();ctx.restore();
+ }else{var G=scene(P);overlays(P,G)}
+ $("v-fill").style.transform="scaleX("+P.gauge.toFixed(4)+")";
+ var r=Math.round(225+30*P.gw),g=Math.round(6+249*P.gw),b=Math.round(255*P.gw);$("v-fill").style.background="rgb("+r+","+g+","+b+")";
+ $("v-pct").textContent=Math.round(P.gauge*100)+" %";
+}
+
+var tl=gsap.timeline({paused:true});
+tl.to({},{duration:30.8},0);
+function T(o,t,d,e){var v={};for(var k in o)v[k]=o[k];v.duration=d;v.ease=e||"power2.inOut";tl.to(P,v,t)}
+function show(id,t,out,y){tl.fromTo("#"+id,{opacity:0,y:y==null?30:y},{opacity:1,y:0,duration:.25,ease:"power3.out",immediateRender:false},t);if(out!=null)tl.to("#"+id,{opacity:0,duration:.18,ease:"power2.in"},out)}
+function sub(n,a,b){tl.set("#v-s"+n,{opacity:1},a);tl.set("#v-s"+n,{opacity:0},b)}
+function cam(o,t,d,e){T(o,t,d,e||"power3.inOut")}
+
+/* Plan 1 (0 – 1.8) « Ta salle de bain déborde. » : la pièce s'ouvre, les flacons s'empilent partout */
+T({zoom:1.3},0,.55,"back.out(1.4)");T({yaw:32},0,1.8,"none");
+T({pop:7},.15,.9,"none");T({popB:4},.35,.6,"none");T({popC:7},.5,.9,"none");
+T({gauge:.2},0,.01);
+tl.to("#v-h0",{opacity:0,duration:.18},1.62);
+
+/* Plan 2 (1.8 – 3.15) « C'est pas la place qui manque. » */
+cam({yaw:24,zoom:1.38,sy:1010},1.75,.5);T({yaw:20},2.25,.9,"none");
+show("v-h1",1.85,3.05);show("v-m2",2.0,3.05,20);tl.to("#v-m2 i",{scaleX:1,duration:.25,ease:"power2.out"},2.45);
+
+/* Plan 3 (3.15 – 4.25) « C'est trois erreurs. » : trois repères rouges */
+cam({yaw:34,zoom:1.2,sy:1060},3.1,.45);T({yaw:37},3.55,.75,"none");
+show("v-three",3.15,4.15,0);show("v-h2",3.25,4.15);
+T({ringA:1},3.35,.2,"back.out(2)");T({ringB:1},3.6,.2,"back.out(2)");T({ringC:1},3.85,.2,"back.out(2)");
+T({ringA:0,ringB:0,ringC:0},4.15,.15);
+
+/* Plan 4 (4.25 – 7.1) « Et la première, tu la vois à chaque douche. » : plongée sur la baignoire */
+cam({yaw:24,zoom:1.95,fx:-.6,fy:.75,fz:-1.0,sy:1000},4.2,.8);T({zoom:2.1,yaw:20},5.0,2.1,"none");
+show("v-h3",4.35,7.0);show("v-b3",4.9,7.0);
+T({wob:1},5.3,.3);T({wob:2.5},5.6,1.4,"none");
+
+/* Plan 5 (7.1 – 10.05) « Un : le rebord de la baignoire n'est pas une étagère. » */
+cam({yaw:30,zoom:2.25},7.05,.5);T({yaw:34,zoom:2.35},7.55,2.5,"none");
+show("v-e1",7.15,13.7);show("v-b1",7.9,9.95);
+T({crossA:1},8.4,.25,"back.out(2)");T({wob:4},8.4,1.4,"none");T({wob:0},9.8,.2);
+
+/* Plan 6 (10.05 – 13.8) « Monte d'un étage : une étagère au mur libère le rebord. » */
+cam({yaw:18,zoom:1.65,fy:1.0,fz:-1.1},10.0,.6);T({yaw:14,zoom:1.72},10.6,3.1,"none");
+T({crossA:0},10.05,.15);show("v-b1b",10.15,13.7);
+T({arrowA:1},10.2,.45);T({shelf:1},10.7,.5,"back.out(1.6)");T({arrowA:0},11.0,.2);
+T({hand:1},11.0,.2);T({m1:7},11.1,2.1,"none");T({hand:0},13.2,.2);
+T({gauge:.45},13.0,.35,"back.out(2)");T({s:.66},12.95,.6,"back.out(1.3)");
+
+/* Plan 7 (13.8 – 16.35) « Deux : l'angle de la douche est vide. » : bascule vers la douche */
+cam({yaw:42,zoom:1.95,fx:1.15,fy:.75,fz:-.85},13.75,.7);T({yaw:46,zoom:2.05},14.45,1.9,"none");
+show("v-e2",13.9,19.6);
+T({corner:1},14.6,.3);T({crossB:1},15.2,.25,"back.out(2)");
+
+/* Plan 8 (16.35 – 19.7) « Une étagère d'angle range les flacons là où tu les prends. » */
+cam({yaw:50,zoom:2.0,fy:1.0,fz:-1.0},16.3,.55);T({yaw:53,zoom:2.12},16.85,2.8,"none");
+T({corner:0,crossB:0},16.35,.2);show("v-b2",16.45,17.9);show("v-b2b",17.95,19.6);
+T({cs:1},16.6,.45,"back.out(1.6)");T({arrowB:1},16.9,.35);T({arrowB:0},17.3,.2);
+T({hand:1},17.2,.2);T({m2:4},17.3,1.6,"none");T({hand:0},18.9,.2);
+T({gauge:.7},18.95,.35,"back.out(2)");T({s:.33},18.9,.6,"back.out(1.3)");
+
+/* Plan 9 (19.7 – 21.45) « Trois : tout est à la vue. » : vers le meuble vasque */
+cam({yaw:64,zoom:1.95,fx:1.2,fy:.85,fz:.55,sy:1000},19.65,.7);T({yaw:67,zoom:2.05},20.35,1.1,"none");
+show("v-e3",19.85,24.7);T({crossC:1},20.4,.25,"back.out(2)");
+
+/* Plan 10 (21.45 – 24.8) « Garde dehors ce qui sert chaque jour, range le reste. » */
+cam({yaw:58,zoom:2.2},21.45,.5);T({yaw:55,zoom:2.3},21.95,2.8,"none");
+T({crossC:0},21.5,.15);show("v-b3a",21.55,23.0);show("v-b3b",23.05,24.7);
+T({door:1},22.2,.4,"back.out(1.4)");T({hand:1},22.4,.2);T({m3:4},22.5,1.4,"none");T({hand:0},23.9,.2);T({door:0},23.9,.35,"power2.in");
+T({gauge:1,gw:1},24.2,.4,"back.out(2)");T({s:0},24.15,.6,"back.out(1.3)");
+
+/* Plan 11 (24.8 – 27.3) « Même salle de bain. Juste rangée autrement. » : avant / après */
+cam({yaw:36,zoom:.66,fx:0,fy:1.0,fz:0,sy:900},24.75,.6);T({yaw:33},25.35,1.9,"none");
+T({split:1},25.0,.35,"power3.out");show("v-av",25.05,27.15,0);show("v-ap",25.05,27.15,0);show("v-ms",25.1,25.95);show("v-ju",26.0,27.15);T({split:0},27.15,.15,"power2.in");
+
+/* Plan 12 (27.3 – 30.8) « Enregistre la vidéo pour ton prochain rangement. » : lent tour de la pièce */
+cam({zoom:.85,sy:980},27.25,.5);T({yaw:2,zoom:.95},27.75,3.05,"sine.inOut");
+show("v-end",27.4,null);show("v-logo",28.6,null,0);
+
+/* sous-titres, calés sur la voix */
+[[0,.07,1.75],[1,1.87,3.1],[2,3.19,4.2],[3,4.29,7.1],[4,7.17,10.0],[5,10.12,13.8],[6,13.88,16.35],[7,16.42,19.7],[8,19.83,21.45],[9,21.52,24.8],[10,24.9,27.3],[11,27.36,30.8]].forEach(function(s,i){sub(s[0],s[1],s[2])});
+
+tl.eventCallback("onUpdate",draw);
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;
+Promise.all([document.fonts.load("900 96px InterX"),document.fonts.load("700 52px InterX")]).then(function(){tl.seek(0);draw()});
+})();
+</script>
+</body>
+</html>

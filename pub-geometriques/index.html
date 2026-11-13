@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Étagères géométriques en métal noir — etageres-murales.fr</title>
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/Inter-Regular.otf") format("opentype"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/Inter-Medium.otf") format("opentype"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/Inter-SemiBold.otf") format("opentype"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #f5f0e8; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #f5f0e8; }
+      .stage { position: absolute; inset: 0; overflow: hidden; font-family: "Inter", sans-serif; color: #2c2420; }
+      .abs { position: absolute; }
+      .m { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.08em; }
+      .w { display: inline-block; }
+      svg { overflow: visible; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="17.5" data-width="1080" data-height="1920">
+      <div id="stage" class="stage clip" data-start="0" data-duration="17.5" data-track-index="0">
+        <div id="shell" class="abs" style="left:0;top:0;width:1080px;height:1920px">
+          <div id="world" class="abs" style="left:0;top:0;width:1080px;height:2600px"></div>
+        </div>
+        <div id="hl" class="abs" style="left:0;top:0;width:1080px;height:1920px"></div>
+        <div id="end" class="abs" style="left:0;top:0;width:1080px;height:1920px;background:#3a2f2a"></div>
+        <svg id="grain" class="abs" width="1300" height="2140" style="left:-110px;top:-110px;opacity:.05;mix-blend-mode:multiply">
+          <filter id="gf"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5" /><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .2  0 0 0 1.2 -0.1" /></filter>
+          <rect width="1300" height="2140" filter="url(#gf)" />
+        </svg>
+      </div>
+      <audio id="sfx" src="assets/audio/mix.wav" data-start="0" data-duration="17.5" data-track-index="2" data-volume="1"></audio>
+    </div>
+
+    <script>
+      (function () {
+        const CR = "#f5f0e8", BR = "#3a2f2a", DK = "#2c2420", SA = "#c8a27c", WALL = "#ece4d6", CARTON = "#dcc7a6";
+        const world = document.getElementById("world"), hl = document.getElementById("hl"), endL = document.getElementById("end"), shell = document.getElementById("shell");
+
+        function el(tag, css, parent, id, html) {
+          const e = document.createElement(tag);
+          if (css) e.setAttribute("style", css);
+          if (id) e.id = id;
+          if (html !== undefined) e.innerHTML = html;
+          parent.appendChild(e);
+          return e;
+        }
+        function abs(css, parent, id, html) { const e = el("div", css, parent, id, html); e.className = "abs"; return e; }
+        function svgBox(parent, id, x, y, w, h, inner) {
+          const d = abs("left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + h + "px", parent, id);
+          d.innerHTML = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + " " + h + '">' + inner + "</svg>";
+          return d;
+        }
+        function rr(x, y, w, h, r) { // rounded rectangle as one path, starting top middle
+          return "M" + (x + w / 2) + " " + y + " H" + (x + w - r) + " Q" + (x + w) + " " + y + " " + (x + w) + " " + (y + r) + " V" + (y + h - r) + " Q" + (x + w) + " " + (y + h) + " " + (x + w - r) + " " + (y + h) +
+            " H" + (x + r) + " Q" + x + " " + (y + h) + " " + x + " " + (y + h - r) + " V" + (y + r) + " Q" + x + " " + y + " " + (x + r) + " " + y + " Z";
+        }
+        const pen = function (d, w, col, extra) { return '<path class="pen" d="' + d + '" fill="none" stroke="' + (col || BR) + '" stroke-width="' + (w || 6) + '" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" ' + (extra || "") + "/>"; };
+
+        /* headline helper: words rise from a mask */
+        function headline(lines, top, size, weight, id) {
+          const box = abs("left:60px;top:" + top + "px;width:960px;text-align:center;font:" + (weight || 600) + " " + size + "px/1.12 Inter;letter-spacing:-.03em;color:" + DK, hl, id);
+          const words = [];
+          lines.forEach(function (line) {
+            const row = el("div", "", box);
+            line.split(" ").forEach(function (w, i) {
+              const m = el("span", "", row); m.className = "m";
+              const s = el("span", "", m, null, w); s.className = "w";
+              if (i < line.split(" ").length - 1) el("span", "", row, null, " ");
+              words.push(s);
+            });
+          });
+          gsap.set(words, { yPercent: 115 });
+          return { box: box, words: words };
+        }
+
+        function build() {
+          const tl0 = gsap.timeline({ paused: true });
+          /* time-warp: the animation was laid out on a 15 s grid; these anchors pin each scene to its sentence of the voice */
+          const AN = [[0, 0], [1.45, 1.27], [1.7, 1.95], [2.95, 2.64], [5.3, 5.3], [7.25, 7.06], [10.75, 9.87], [13.08, 12.9], [15, 17.5]];
+          const W = function (t) {
+            if (t <= 0) return t;
+            for (let i = 1; i < AN.length; i++) if (t <= AN[i][0]) { const a = AN[i - 1], b = AN[i]; return a[1] + (t - a[0]) * (b[1] - a[1]) / (b[0] - a[0]); }
+            return AN[AN.length - 1][1] + (t - 15);
+          };
+          const slope = function (t) { return (W(t + 0.01) - W(t)) / 0.01; };
+          const fix = function (v, at) {
+            if (!v) return v;
+            const o = Object.assign({}, v);
+            if (typeof o.duration === "number") o.duration = W(at + o.duration) - W(at);
+            if (typeof o.repeatDelay === "number") o.repeatDelay *= slope(at);
+            if (typeof o.stagger === "number") o.stagger *= slope(at);
+            else if (o.stagger && typeof o.stagger.each === "number") { o.stagger = Object.assign({}, o.stagger, { each: o.stagger.each * slope(at) }); }
+            return o;
+          };
+          const tl = {
+            to: function (t, v, at) { tl0.to(t, fix(v, at), W(at)); return tl; },
+            set: function (t, v, at) { tl0.set(t, v, W(at)); return tl; },
+            fromTo: function (t, a, b, at) { tl0.fromTo(t, a, fix(b, at), W(at)); return tl; },
+            call: function (f, p, at) { tl0.call(f, p, W(at)); return tl; }
+          };
+
+          /* ============ CAMERA (world): always moving, zoom only ever goes in ============ */
+          const cam = { x: 540, y: 1900, s: 1 };
+          const apply = function () { world.style.transform = "translate(" + (540 - cam.x * cam.s) + "px," + (960 - cam.y * cam.s) + "px) scale(" + cam.s + ")"; };
+          world.style.transformOrigin = "0 0"; apply();
+          const camTo = function (x, y, s, at, dur, ease) { tl.to(cam, { x: x, y: y, s: s, duration: dur, ease: ease || "none", onUpdate: apply }, at); };
+          camTo(540, 1860, 1.03, 0, 2.0);
+          camTo(540, 890, 1.05, 2.0, 0.9, "power2.inOut");
+          camTo(540, 900, 1.12, 2.9, 3.9);
+          camTo(540, 1020, 1.2, 6.8, 3.9);
+          camTo(540, 1190, 1.32, 10.7, 1.65, "sine.inOut");
+          camTo(540, 1210, 14, 12.35, 0.75, "power3.in");
+
+          /* ============ THE ROOM ============ */
+          abs("left:-400px;top:-400px;width:1880px;height:2800px;background:" + WALL, world, "wall");
+          abs("left:-400px;top:2440px;width:1880px;height:600px;background:#d9c9b0", world, "floor");
+          const plinth = svgBox(world, "plinth", 0, 2420, 1080, 40, pen("M-200 20 H1280", 6, BR));
+          const sofa = svgBox(world, "sofa", 140, 2060, 800, 400,
+            '<path class="fill" d="M70 40 Q70 0 110 0 H690 Q730 0 730 40 V190 H70 Z" fill="#d6c8b1" opacity="0"/>' +
+            '<path class="fill" d="M20 170 Q0 170 0 200 V330 H800 V200 Q800 170 780 170 Z" fill="#cbbb9f" opacity="0"/>' +
+            pen("M70 190 V40 Q70 0 110 0 H690 Q730 0 730 40 V190") +
+            pen("M0 330 V200 Q0 170 30 170 H110 V260 H690 V170 H770 Q800 170 800 200 V330 Z") +
+            pen("M110 260 V200 H690 V260 M400 200 V260") +
+            pen("M60 330 V380 M740 330 V380"));
+          const lamp = svgBox(world, "lamp", 960, 1880, 120, 560, pen("M60 560 V60 M10 60 H110 L80 0 H40 Z", 6, BR));
+          const buff = svgBox(world, "plant-free-vase", 40, 2330, 120, 100, pen("M40 100 Q10 60 30 20 H90 Q110 60 80 100 Z", 5, BR));
+
+          /* ============ THE SHELVES: drawn lines that become the photo ============ */
+          const PH = { x: 150, y: 480, k: 780 / 1051 };
+          const photo = el("img", "position:absolute;left:" + PH.x + "px;top:" + PH.y + "px;width:780px;mix-blend-mode:multiply", world, "photo");
+          photo.src = "assets/img/etageres.png";
+          const fr = [
+            { n: "A", x: 130, y: 58, w: 495, h: 610, r: 60, lab: "43 × 32 cm" },
+            { n: "B", x: 860, y: 212, w: 188, h: 386, r: 50, lab: "15 × 20" },
+            { n: "C", x: 170, y: 845, w: 590, h: 380, r: 60, lab: "40,5 × 15 cm" },
+            { n: "D", x: 858, y: 718, w: 190, h: 392, r: 50, lab: "15 × 20" }
+          ].map(function (f) {
+            const x = PH.x + f.x * PH.k, y = PH.y + f.y * PH.k, w = f.w * PH.k, h = f.h * PH.k, r = f.r * PH.k;
+            const d = svgBox(world, "fr-" + f.n, x, y, w, h, pen(rr(0, 0, w, h, r), 7, DK) + pen("M10 " + (h - 6) + " H" + (w - 10), 12, DK));
+            const pill = abs("left:" + (x + w / 2 - 150) + "px;top:" + (y + h / 2 - 26) + "px;width:300px;text-align:center", world, "lab-" + f.n,
+              '<span style="display:inline-block;padding:10px 20px;border-radius:30px;background:' + DK + ";color:" + CR + ';font:600 ' + (f.w < 300 ? 30 : 36) + 'px/1 Inter;white-space:nowrap">' + f.lab + "</span>");
+            gsap.set(pill, { scale: 0, opacity: 0 });
+            return { el: d, pill: pill, x: x, y: y, w: w, h: h };
+          });
+          gsap.set(photo, { opacity: 0, scale: 1.04, transformOrigin: "50% 50%" });
+
+          /* callouts on the real photo */
+          function callout(id, x1, y1, x2, y2, text, align) {
+            const line = svgBox(world, id + "-l", 0, 0, 1080, 2600, pen("M" + x1 + " " + y1 + " L" + x2 + " " + y2, 4, DK) + '<circle class="dot" cx="' + x1 + '" cy="' + y1 + '" r="9" fill="' + DK + '"/>');
+            const t = abs("left:" + (x2 + 8) + "px;top:" + (y2 - 24) + "px;padding:10px 16px;border-radius:12px;background:rgba(245,240,232,.92);font:600 32px/1.2 Inter;color:" + DK + ";white-space:nowrap", world, id + "-t", text);
+            gsap.set(line.querySelector(".dot"), { scale: 0, transformOrigin: "50% 50%" });
+            gsap.set(t, { opacity: 0, y: 14 });
+            return { line: line, t: t };
+          }
+          const co1 = callout("co1", 248, 590, 280, 610, "Cadre en fil d'acier,<div style='font-weight:400'>revêtement en</div><div style='font-weight:400'>poudre noir</div>");
+          const co2 = callout("co2", 484, 1367, 560, 1440, "Plateau en MDF noir");
+
+          /* ============ THE BOX ============ */
+          const BX = { x: 260, y: 1000, w: 560, h: 360 };
+          const flapL = svgBox(world, "flapL", BX.x, BX.y - 150, BX.w / 2, 150, '<path d="M0 150 L-50 10 H' + (BX.w / 2 - 20) + ' L' + (BX.w / 2) + ' 150 Z" fill="' + CARTON + '" stroke="' + BR + '" stroke-width="6" stroke-linejoin="round"/>');
+          const flapR = svgBox(world, "flapR", BX.x + BX.w / 2, BX.y - 150, BX.w / 2, 150, '<path d="M0 150 L20 10 H' + (BX.w / 2 + 50) + ' L' + (BX.w / 2) + ' 150 Z" fill="' + CARTON + '" stroke="' + BR + '" stroke-width="6" stroke-linejoin="round"/>');
+          const boxBack = svgBox(world, "boxback", BX.x, BX.y - 30, BX.w, 60, '<path d="M0 30 L40 0 H' + (BX.w - 40) + " L" + BX.w + ' 30 Z" fill="#b89f7c" stroke="' + BR + '" stroke-width="6" stroke-linejoin="round"/>');
+          // shelves go between the back and the front of the box
+          fr.forEach(function (f) { world.appendChild(f.el); });
+          const boxFront = svgBox(world, "boxfront", BX.x, BX.y, BX.w, BX.h, '<rect x="0" y="0" width="' + BX.w + '" height="' + BX.h + '" rx="6" fill="' + CARTON + '" stroke="' + BR + '" stroke-width="6"/>');
+          const tape = abs("left:" + (BX.x + BX.w / 2 - 40) + "px;top:" + (BX.y - 4) + "px;width:80px;height:150px;background:#c4a47d;border:4px solid " + BR + ";border-top:0", world, "tape");
+          [flapL, flapR].forEach(function (f) { gsap.set(f, { transformOrigin: "50% 100%", scaleY: 0, opacity: 0 }); });
+          gsap.set([boxBack, boxFront], { opacity: 0, y: 160 });
+          gsap.set(tape, { scaleY: 0, transformOrigin: "50% 0%" });
+
+          // contents list (above the box)
+          const icons = {
+            shelf: '<path d="M8 8 H52 Q60 8 60 16 V44 Q60 52 52 52 H8 Q0 52 0 44 V16 Q0 8 8 8 Z" fill="none" stroke="' + DK + '" stroke-width="5"/><path d="M4 48 H56" stroke="' + DK + '" stroke-width="8"/>',
+            vis: '<path d="M14 6 H46 L42 18 H18 Z" fill="' + DK + '"/><path d="M30 18 V56" stroke="' + DK + '" stroke-width="8"/><path d="M22 28 L38 24 M22 38 L38 34 M22 48 L38 44" stroke="' + WALL + '" stroke-width="3"/>',
+            cheville: '<path d="M22 4 H38 L36 56 H24 Z" fill="none" stroke="' + DK + '" stroke-width="5" stroke-linejoin="round"/><path d="M24 20 H36 M24 32 H36 M24 44 H36" stroke="' + DK + '" stroke-width="3"/>'
+          };
+          const rows = [["shelf", 4, "étagères"], ["vis", 8, "vis"], ["cheville", 8, "chevilles"]].map(function (r, i) {
+            const row = abs("left:270px;top:" + (560 + i * 105) + "px;width:600px;height:80px;display:flex;align-items:center;gap:26px;font:600 54px/1 Inter;color:" + DK, world, "row" + i);
+            el("div", "width:60px;height:60px", row).innerHTML = '<svg width="60" height="60" viewBox="0 0 60 60">' + icons[r[0]] + "</svg>";
+            const n = el("span", "display:inline-block;min-width:44px;text-align:right", row, null, String(r[1]));
+            el("span", "font-weight:500", row, null, r[2]);
+            gsap.set(row, { opacity: 0, x: -40 });
+            return { row: row, n: n, v: r[1] };
+          });
+          const note = abs("left:0;top:1395px;width:1080px;text-align:center;font:400 34px/1 Inter;color:" + BR, world, "note", "Les objets des photos ne sont pas inclus.");
+          gsap.set(note, { opacity: 0 });
+
+          // price card on the box front
+          const card = abs("left:330px;top:1120px;width:420px;height:180px;border-radius:14px;background:" + BR + ";color:" + CR + ";text-align:center", world, "card",
+            '<div style="font:600 82px/1 Inter;letter-spacing:-.03em;padding-top:30px">59,90&nbsp;€</div><div style="font:500 26px/1 Inter;margin-top:16px;color:' + SA + '">le lot de 4</div>');
+          gsap.set(card, { scale: 1.4, opacity: 0, rotation: -4, transformOrigin: "50% 50%" });
+
+          /* ===================== TIMELINE ===================== */
+          // ---- 0 – 2.9  HOOK
+          const h1 = headline(["Le salon", "est meublé."], 300, 120, 600, "h1");
+          const h2 = headline(["Le mur,"], 300, 120, 600, "h2");
+          const non = abs("left:0;top:438px;width:1080px;text-align:center", hl, "h2-non", '<span id="nonbox" style="display:inline-block;position:relative;padding:4px 30px 12px;font:600 120px/1.05 Inter;letter-spacing:-.03em;color:' + CR + '"><span id="nonbg" style="position:absolute;inset:0;border-radius:16px;background:' + BR + '"></span><span id="nontx" style="position:relative">non.</span></span>');
+          const nonbg = document.getElementById("nonbg"), nontx = document.getElementById("nontx");
+          gsap.set(nonbg, { scaleX: 0, transformOrigin: "0 50%" });
+          gsap.set(nontx, { opacity: 0, y: 30 });
+
+          tl.to(sofa.querySelectorAll(".pen"), { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut", stagger: 0.12 }, 0.0);
+          tl.to(h1.words, { yPercent: 0, duration: 0.5, ease: "expo.out", stagger: 0.16 }, 0.1);
+          tl.to(sofa.querySelectorAll(".fill"), { opacity: 1, duration: 0.4 }, 0.6);
+          tl.to(plinth.querySelectorAll(".pen"), { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 0.5);
+          tl.to(lamp.querySelectorAll(".pen"), { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 0.8);
+          tl.to(buff.querySelectorAll(".pen"), { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 1.0);
+          tl.to(h1.words, { yPercent: -115, duration: 0.35, ease: "power3.in", stagger: 0.04 }, 1.15);
+          tl.to(h2.words, { yPercent: 0, duration: 0.45, ease: "expo.out" }, 1.45);
+          tl.to(nonbg, { scaleX: 1, duration: 0.35, ease: "expo.inOut" }, 1.7);
+          tl.to(nontx, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 1.85);
+          tl.to([h2.box, non], { opacity: 0, y: -60, duration: 0.3, ease: "power2.in" }, 2.6);
+
+          // ---- 2.9 – 4.9  DRAWING THE SHELVES ON THE EMPTY WALL
+          const h3 = headline(["4 étagères", "géométriques"], 250, 96, 600, "h3");
+          const h3s = abs("left:0;top:478px;width:1080px;text-align:center;font:500 38px/1 Inter;color:" + BR, hl, "h3s", "profondeur 12 cm");
+          gsap.set(h3s, { opacity: 0, y: 16 });
+          fr.forEach(function (f, i) {
+            const t = 2.75 + i * 0.42;
+            tl.to(f.el.querySelectorAll(".pen")[0], { strokeDashoffset: 0, duration: 0.55, ease: "power2.inOut" }, t);
+            tl.to(f.el.querySelectorAll(".pen")[1], { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, t + 0.4);
+            tl.to(f.pill, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.7)" }, t + 0.45);
+          });
+          tl.to(h3.words, { yPercent: 0, duration: 0.5, ease: "expo.out", stagger: 0.12 }, 2.95);
+          tl.to(h3s, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, 4.45);
+
+          // ---- 4.9 – 6.9  LINES BECOME THE REAL PRODUCT
+          tl.to(fr.map(function (f) { return f.pill; }), { scale: 0.6, opacity: 0, duration: 0.25, ease: "power2.in", stagger: 0.04 }, 4.85);
+          tl.to(photo, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 4.95);
+          tl.to(fr.map(function (f) { return f.el; }), { opacity: 0, duration: 0.4 }, 5.2);
+          tl.to(h3.words, { yPercent: -115, duration: 0.35, ease: "power3.in", stagger: 0.04 }, 4.95);
+          tl.to(h3s, { opacity: 0, duration: 0.25 }, 4.95);
+          const h4 = headline(["Métal noir,", "plateaux noirs"], 250, 96, 600, "h4");
+          tl.to(h4.words, { yPercent: 0, duration: 0.5, ease: "expo.out", stagger: 0.1 }, 5.3);
+          [co1, co2].forEach(function (c, i) {
+            const t = 5.6 + i * 0.5;
+            tl.to(c.line.querySelector(".dot"), { scale: 1, duration: 0.25, ease: "back.out(2)" }, t);
+            tl.to(c.line.querySelector(".pen"), { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, t + 0.05);
+            tl.to(c.t, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, t + 0.25);
+          });
+
+          // ---- 6.9 – 10.7  INTO THE BOX
+          tl.to([co1.line, co1.t, co2.line, co2.t], { opacity: 0, duration: 0.25 }, 6.85);
+          tl.to(h4.words, { yPercent: -115, duration: 0.35, ease: "power3.in", stagger: 0.04 }, 6.9);
+          const h5 = headline(["Dans le colis"], 300, 96, 600, "h5");
+          tl.to(h5.words, { yPercent: 0, duration: 0.5, ease: "expo.out", stagger: 0.1 }, 7.25);
+          // the lines come back on top of the photo, the photo goes: only the drawn shelves are left
+          tl.to(fr.map(function (f) { return f.el; }), { opacity: 1, duration: 0.25 }, 6.95);
+          tl.to(photo, { opacity: 0, duration: 0.35 }, 7.1);
+          // the box rises in, the shelves lift, shrink and drop in
+          tl.to([boxBack, boxFront], { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 7.35);
+          tl.to([flapL, flapR], { scaleY: 1, opacity: 1, duration: 0.4, ease: "back.out(1.6)", stagger: 0.06 }, 7.6);
+          const BC = { x: BX.x + BX.w / 2, y: BX.y };
+          fr.forEach(function (f, i) {
+            const cx = f.x + f.w / 2, cy = f.y + f.h / 2;
+            const k = 0.42;
+            tl.to(f.el, { x: BC.x - cx + (i - 1.5) * 70, y: (BC.y - 300) - cy, scale: k, rotation: [-8, 6, -4, 9][i], duration: 0.45, ease: "power3.inOut" }, 7.45 + i * 0.07);
+            tl.to(f.el, { y: (BC.y + 140) - cy, rotation: 0, duration: 0.35, ease: "power2.in" }, 7.95 + i * 0.1);
+          });
+          rows.forEach(function (r, i) {
+            const t = 8.55 + i * 0.4;
+            tl.to(r.row, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out" }, t);
+
+          });
+          tl.to(note, { opacity: 1, duration: 0.35 }, 9.85);
+          tl.to([flapL, flapR], { scaleY: 0, duration: 0.35, ease: "power3.in", stagger: 0.08 }, 10.05);
+          tl.to(tape, { scaleY: 1, duration: 0.3, ease: "power2.out" }, 10.45);
+
+          // ---- 10.7 – 13.1  PRICE, THEN INTO THE CARD
+          tl.to(rows.map(function (r) { return r.row; }).concat([note]), { opacity: 0, duration: 0.3 }, 10.6);
+          tl.to(h5.words, { yPercent: -115, duration: 0.35, ease: "power3.in" }, 10.6);
+          tl.to(card, { scale: 1, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }, 10.75);
+          const h6 = headline(["Livraison offerte", "en France"], 300, 88, 600, "h6");
+          tl.to(h6.words, { yPercent: 0, duration: 0.5, ease: "expo.out", stagger: 0.12 }, 11.2);
+          tl.to(h6.box, { opacity: 0, duration: 0.25 }, 12.35);
+          gsap.set(endL, { opacity: 0 });
+          tl.set(endL, { opacity: 1 }, 13.08);
+
+          // ---- 13.1 – 15  BRAND CLOSE (dark)
+          const endIn = abs("left:0;top:0;width:1080px;height:1920px", endL, "endin");
+          gsap.set(endIn, { transformOrigin: "50% 45%" });
+          tl.fromTo(endIn, { scale: 1 }, { scale: 1.06, duration: 1.92, ease: "none", immediateRender: false }, 13.08);
+          const logo = el("img", "position:absolute;left:400px;top:520px;width:280px", endIn, "logo"); logo.src = "assets/img/logo-em-hd.png";
+          gsap.set(logo, { scale: 0.6, opacity: 0, rotation: -8, transformOrigin: "50% 50%" });
+          tl.to(logo, { scale: 1, opacity: 1, rotation: 0, duration: 0.6, ease: "expo.out" }, 13.12);
+          const phrase = abs("left:100px;top:880px;width:880px;text-align:center;font:500 54px/1.25 Inter;letter-spacing:-.02em;color:" + CR, endIn, "phrase");
+          const pw = "Des étagères murales pour sublimer vos murs et finir vos pièces.".split(" ").map(function (w) {
+            const m = el("span", "", phrase); m.className = "m"; const s = el("span", "", m, null, w); s.className = "w"; el("span", "", phrase, null, " "); return s;
+          });
+          gsap.set(pw, { yPercent: 115 });
+          tl.to(pw, { yPercent: 0, duration: 0.4, ease: "expo.out", stagger: 0.07 }, 13.35);
+          const url = abs("left:0;top:1170px;width:1080px;text-align:center;font:600 46px/1 Inter;color:" + SA, endIn, "url", "etageres-murales.fr");
+          const ul = abs("left:330px;top:1232px;width:420px;height:4px;border-radius:2px;background:" + SA, endIn, "url-ul");
+          gsap.set(url, { opacity: 0, y: 20 });
+          gsap.set(ul, { scaleX: 0, transformOrigin: "50% 50%" });
+          tl.to(url, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 14.15);
+          tl.to(ul, { scaleX: 1, duration: 0.45, ease: "expo.inOut" }, 14.4);
+
+          // light grain shimmer, deterministic
+          const grain = document.getElementById("grain"), gp = { f: 0 };
+          tl0.to(gp, { f: 525, duration: 17.5, ease: "none", onUpdate: function () { const j = (Math.round(gp.f) * 7919) % 97; grain.style.transform = "translate(" + ((j % 9) - 4) * 10 + "px," + ((Math.floor(j / 9) % 9) - 4) * 10 + "px)"; } }, 0);
+
+          window.__timelines["main"] = tl0;
+        }
+
+        Promise.all([document.fonts.load("600 100px Inter"), document.fonts.load("500 40px Inter"), document.fonts.load("400 30px Inter")])
+          .then(function () { return document.fonts.ready; }).then(build);
+      })();
+    </script>
+  </body>
+</html>
