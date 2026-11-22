@@ -11,9 +11,9 @@ L'illimité Higgsfield ne marche pas depuis Claude Code : c'est pour ça qu'on p
 
 ## Contenu du dossier
 - `01-PROMPT-A-COLLER.md` : le brief complet à coller.
-- `02-PLANS-PHRASE-PAR-PHRASE.md` : les 17 plans, un par phrase, avec le moment exact où chacun commence.
+- `02-PLANS-PHRASE-PAR-PHRASE.md` : les 16 plans, un par phrase, avec le moment exact où chacun commence.
 - `03-VOIX.md` : le texte de la voix et les réglages ElevenLabs.
-- `voix-nicolas.mp3` : la voix prête (Nicolas, ton animateur radio), 37,6 s.
+- `voix-nicolas.mp3` : la voix prête (Nicolas, ton animateur radio), 35,4 s.
 - `logo-em.png` : le logo, en petit sur les 2 dernières secondes.
 
 ## Couleur fluo

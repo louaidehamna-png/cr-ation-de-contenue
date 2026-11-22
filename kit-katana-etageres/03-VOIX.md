@@ -1,6 +1,6 @@
 # La voix
 
-`voix-nicolas.mp3` est prête (37,6 s), à utiliser telle quelle.
+`voix-nicolas.mp3` est prête (35,4 s), à utiliser telle quelle.
 
 ## Si tu veux la régénérer (ElevenLabs, Text to Speech)
 - Voix : **Voix Nicolas Petit ton Animateur Radio** · modèle **Eleven v4** · langue **Français**
@@ -8,7 +8,7 @@
 
 ```
 [confident] Tes étagères font fouillis.
-C'est pas le nombre d'objets. C'est quatre erreurs ! Et la troisième... tout le monde la fait.
+C'est pas le nombre d'objets. C'est quatre erreurs !
 
 Un ! Tout est aligné, à la même hauteur. Mélange les hauteurs : un objet haut, un moyen, un bas. L'œil dessine un triangle.
 
