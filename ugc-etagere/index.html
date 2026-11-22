@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#2C2420}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#fff}
+.shot{position:absolute;inset:0;overflow:hidden;opacity:0}
+.bg{position:absolute;inset:-80px;background-size:cover;background-position:center;filter:blur(38px) brightness(.55)}
+.fg{position:absolute;left:0;top:400px;width:1080px;height:1080px;background-size:cover;background-position:center;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+#s0,#s8{background:radial-gradient(90% 60% at 50% 45%,#F5F0E8 0%,#E2D6C4 100%)}
+.w{position:absolute;left:0;width:1080px;text-align:center;opacity:0;white-space:nowrap}
+.w span{display:inline-block;padding:10px 30px 16px;border-radius:22px;background:#111;font-weight:900;letter-spacing:-.02em}
+.w.a span{background:#C8A27C;color:#2C2420}
+.w.n span{background:none;padding:0;color:#2C2420}
+#logo{position:absolute;left:460px;top:1195px;width:160px;opacity:0}
+#arrow{position:absolute;left:510px;top:1590px;width:60px;height:60px;border-left:12px solid #2C2420;border-top:12px solid #2C2420;transform:rotate(45deg);opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+  <div id="s0" class="shot"></div>
+  <div id="s8" class="shot"><div class="fg" style="background-image:url(assets/img/packshot.jpg);left:240px;top:560px;width:600px;height:600px;border-radius:30px"></div></div>
+  <img id="logo" src="assets/img/logo.png" alt="" />
+  <div id="arrow"></div>
+  <audio id="sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="20" data-track-index="5"></audio>
+</div>
+<script>
+(function(){
+var R=document.getElementById("root");
+/* plans photo : début, image */
+var SHOTS=[[2.2,"packshot"],[4.4,"dim"],[6.8,"support"],[8.9,"montages"],[10.9,"structure"],[12.6,"salon"],[14.6,"ambiance"]];
+var CUTS=[0].concat(SHOTS.map(function(s){return s[0]})).concat([16.4,20]);
+SHOTS.forEach(function(s,i){var d=document.createElement("div");d.className="shot";d.id="s"+(i+1);
+  d.innerHTML='<div class="bg" style="background-image:url(assets/img/'+s[1]+'.jpg)"></div><div class="fg" style="background-image:url(assets/img/'+s[1]+'.jpg)"></div>';
+  R.insertBefore(d,document.getElementById("s8"))});
+/* mots : temps, texte, haut, taille, style (""=noir, "a"=sable, "n"=sans fond), fin */
+var W=[
+ [0.10,"TON",330,190,"n",2.2],[0.45,"MUR",530,190,"n",2.2],[0.80,"EST",730,190,"n",2.2],[1.15,"VIDE ?",930,230,"a",2.2],
+ [2.35,"3 étagères",1200,96,"",4.4],[2.95,"1 seul lot",1330,96,"a",4.4],
+ [4.55,"30 cm",230,90,"",6.8],[5.00,"35 cm",230,90,"",6.8],[5.45,"40 cm",230,90,"",6.8],[5.95,"12 cm de profondeur",1520,72,"a",6.8],
+ [6.95,"Supports",1200,96,"",8.9],[7.45,"acier noir mat",1330,96,"a",8.9],
+ [9.05,"2 montages",230,96,"",10.9],[9.55,"supports en bas",1520,72,"",10.9],[10.05,"ou en haut",1630,72,"a",10.9],
+ [11.05,"5 kg",1180,170,"a",12.6],[11.55,"par étagère",1380,84,"",12.6],
+ [12.75,"Plante.",230,96,"",14.6],[13.20,"Cadre.",230,96,"",14.6],[13.65,"Vases.",230,96,"",14.6],[14.10,"Et de la place.",1520,68,"a",14.6],
+ [14.75,"Ton mur,",1200,110,"",16.4],[15.25,"fini.",1340,130,"a",16.4],
+ [16.60,"49,90 €",250,180,"n",20.1],[17.10,"le lot de 3",440,84,"a",20.1],[18.20,"Lien en bio",1380,96,"",20.1]];
+/* les mots qui se remplacent au même endroit (30/35/40, plante/cadre/vases) sortent quand le suivant arrive */
+W.forEach(function(w,i){var n=W[i+1];if(n&&n[2]==w[2]&&n[0]<w[5])w[5]=n[0]});
+var tl=gsap.timeline({paused:true});
+tl.to({},{duration:20},0);
+/* chaque plan : entrée rapide (glisse + zoom), caméra toujours en mouvement, sortie nette */
+var ids=["s0"].concat(SHOTS.map(function(s,i){return "s"+(i+1)})).concat(["s8"]);
+ids.forEach(function(id,i){var t0=CUTS[i],t1=CUTS[i+1],el=document.getElementById(id),fg=el.querySelector(".fg")||el,dir=i%2?1:-1;
+  tl.set(el,{opacity:1,zIndex:i+1},t0);
+  if(i>0)tl.fromTo(el,{x:dir*1080*.35,scale:1.18},{x:0,scale:1,duration:.22,ease:"power3.out",immediateRender:false},t0);
+  tl.fromTo(fg,{scale:1.0,xPercent:0},{scale:1.12,xPercent:dir*2,duration:t1-t0,ease:"none",immediateRender:false},t0);
+  if(i<ids.length-1)tl.set(el,{opacity:0},t1+.22)});
+W.forEach(function(w,i){var d=document.createElement("div");d.className="w "+w[4];d.style.top=w[2]+"px";d.innerHTML='<span style="font-size:'+w[3]+'px">'+w[1]+'</span>';R.appendChild(d);
+  d.style.zIndex=50;
+  tl.fromTo(d,{opacity:0,scale:1.5,y:20},{opacity:1,scale:1,y:0,duration:.18,ease:"back.out(2.4)",immediateRender:false},w[0]);
+  tl.set(d,{opacity:0},w[5])});
+tl.set(["#logo","#arrow"],{zIndex:60},0);
+tl.fromTo("#logo",{opacity:0,scale:.6},{opacity:1,scale:1,duration:.25,ease:"back.out(2)",immediateRender:false},17.6);
+tl.fromTo("#arrow",{opacity:0,y:0},{opacity:1,y:0,duration:.1,immediateRender:false},18.3);
+tl.to("#arrow",{y:-30,duration:.25,ease:"power2.out",yoyo:true,repeat:5},18.4);
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;tl.seek(0);
+})();
+</script>
+</body>
+</html>
