@@ -50,7 +50,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
   <div id="e-t3" class="hd" style="font-size:80px"><span class="g">3.</span> Pas un centimètre de libre</div>
   <div id="e-t4" class="hd"><span class="g">4.</span> Trop de couleurs</div>
   <div id="e-av" class="lab" style="left:150px">AVANT</div><div id="e-ap" class="lab g" style="left:640px">APRÈS</div>
-  <div id="e-rien" class="hd" style="top:1160px;text-align:center">Rien <span class="g">acheté.</span></div>
+  <div id="e-rien" class="hd" style="top:470px;text-align:center">Rien <span class="g">acheté.</span></div>
   <div id="e-cta" class="hd" style="font-size:70px"><span class="g">Enregistre-la</span> avant de ranger ce soir.</div>
   <img id="e-logo" src="assets/img/logo-em.png" alt="">
 
@@ -229,6 +229,12 @@ tl.to([z1,z2],{opacity:0,duration:.1},30.2);
 tl.set("#e-camB",{opacity:1},30.23);
 tl.fromTo("#e-camB",{x:-30,y:980-1060*.47,scale:.47},{x:-38,y:980-1060*.49,scale:.49,duration:2.81,ease:"none",immediateRender:false},30.23);
 tl.fromTo("#e-camA",{x:478,y:980-1060*.47,scale:.47},{x:470,y:980-1060*.49,scale:.49,duration:2.81,ease:"none",immediateRender:false},30.23);
+/* les objets sortis pendant le rangement sont dans un carton sous l'étagère : mêmes objets des deux côtés */
+var crate=document.createElementNS(NS,"g");crate.setAttribute("id","crate");crate.style.opacity=0;
+crate.innerHTML='<rect x="190" y="'+(S3+300)+'" width="710" height="96" rx="6" fill="#7a5a3c" stroke="#fff" stroke-width="3"/><text x="545" y="'+(S3+366)+'" text-anchor="middle" font-family="InterX" font-weight="900" font-size="50" fill="#fff">RANGÉS AILLEURS</text>';
+svA.appendChild(crate);
+[["j1",250],["j2",335],["j3",420],["j4",505],["j5",590],["k2",670],["bx",760],["k3",850]].forEach(function(r){tl.set(A(r[0]),{x:r[1],y:S3+300,rotation:0,opacity:1},30.23);tl.to(A(r[0]),{opacity:0,duration:.15},33.0)});
+tl.set(crate,{opacity:1},30.23);tl.to(crate,{opacity:0,duration:.15},33.0);
 pop("e-av",30.3,33.0);pop("e-ap",30.3,33.0);pop("e-rien",31.9,33.0);sub(15,30.23,33.04);
 /* 16. 33.04 : retour au plan large rangé, appel */
 tl.set("#e-camB",{opacity:0},33.04);
