@@ -222,10 +222,8 @@ gauge(1,29.55,true);sub(14,26.99,30.23);
 /* 15. 30.23 : avant / après */
 tl.to([z1,z2],{opacity:0,duration:.1},30.2);
 tl.set("#e-camB",{opacity:1},30.23);
-shot(30.23,33.04,[540,1060,.47],[540,1060,.49],"#e-camB");
-tl.fromTo("#e-camB",{x:-25},{x:-15,duration:2.81,ease:"none",immediateRender:false},30.23);
-shot(30.23,33.04,[540,1060,.47],[540,1060,.49]);
-tl.fromTo("#e-camA",{x:520},{x:530,duration:2.81,ease:"none",immediateRender:false},30.23);
+tl.fromTo("#e-camB",{x:-30,y:980-1060*.47,scale:.47},{x:-38,y:980-1060*.49,scale:.49,duration:2.81,ease:"none",immediateRender:false},30.23);
+tl.fromTo("#e-camA",{x:478,y:980-1060*.47,scale:.47},{x:470,y:980-1060*.49,scale:.49,duration:2.81,ease:"none",immediateRender:false},30.23);
 pop("e-av",30.3,33.0);pop("e-ap",30.3,33.0);pop("e-rien",31.9,33.0);sub(15,30.23,33.04);
 /* 16. 33.04 : retour au plan large rangé, appel */
 tl.set("#e-camB",{opacity:0},33.04);
