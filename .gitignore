@@ -28,3 +28,7 @@ kit-katana-salon.zip
 kit-katana-etageres.zip
 etageres-fouillis/renders/
 etageres-fouillis/snapshots/
+
+# outils tiers (réinstaller avec bash outils/installer.sh)
+outils/repos/
+outils/node_modules/

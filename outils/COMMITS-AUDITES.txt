@@ -1,0 +1,10 @@
+ClaudeAnimationBase https://github.com/JohnHeibel/ClaudeAnimationBase.git 0ac8bf2b31942376cb6b8c4074715595d512acd2
+awesome-opus5-5-videos https://github.com/yihui-dev/awesome-opus5-5-videos.git 92aee2f586ac0715cb3cbcb6384834f98a33383d
+lemo-opuscar https://github.com/lemomo-ai/lemo-opuscar.git f9e204293930952b61ba921cd8944d05f121beee
+librosa https://github.com/librosa/librosa.git 087a8607dd86e98a9032a62b357eb9afd23a14c5
+mcp-for-blender https://github.com/ahujasid/mcp-for-blender.git a5a8acf2c6ae44a73670e0caf34663f16456d645
+opus-video-prompts https://github.com/joeseesun/opus-video-prompts.git 7977c807781d4ba7c235247b8899a72575a30d00
+pixelfx https://github.com/patch-gg/pixelfx.git 5294518ce7c72e48b6100a744596e0acf57f2826
+react-postprocessing https://github.com/pmndrs/react-postprocessing.git e07ef9a890c8a202a3b20eac0249032cff4e7805
+react-three-rapier https://github.com/pmndrs/react-three-rapier.git ae5c3fede5ca489fd7eaa8271e9d9c5eabc88e98
+video-shotcraft https://github.com/Vincentwei1021/video-shotcraft.git 59f3e9b9e936ff2bce0e18446226d770a3f2f61f

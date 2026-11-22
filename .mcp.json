@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "blender": {
+      "command": "mcp-for-blender",
+      "args": [],
+      "env": {
+        "BLENDER_MCP_DISABLE_TELEMETRY": "true",
+        "DISABLE_TELEMETRY": "true",
+        "MCP_DISABLE_TELEMETRY": "true"
+      }
+    }
+  }
+}
