@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#2C2420}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#fff}
+.shot{position:absolute;inset:0;overflow:hidden;opacity:0}
+.img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 62%,rgba(0,0,0,.35) 100%)}
+#wall{position:absolute;inset:0;z-index:3;background:linear-gradient(115deg,#cfc6b8 0%,#e4ddd2 38%,#efe9df 52%,#d8cfc2 100%)}
+#wall:after{content:"";position:absolute;left:-200px;top:-400px;width:900px;height:2800px;background:linear-gradient(115deg,rgba(255,240,210,.35),rgba(255,240,210,0));transform:skewX(-18deg)}
+#s7{background:radial-gradient(90% 60% at 50% 45%,#F5F0E8 0%,#E2D6C4 100%)}
+#s7 .card{position:absolute;left:240px;top:620px;width:600px;height:600px;border-radius:30px;background:url(assets/img/packshot.jpg) center/cover;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.w{position:absolute;left:0;width:1080px;text-align:center;opacity:0;white-space:nowrap;z-index:50}
+.w span{display:inline-block;padding:10px 30px 16px;border-radius:22px;background:#111;font-weight:900;letter-spacing:-.02em}
+.w.a span{background:#C8A27C;color:#2C2420}
+.w.n span{background:none;padding:0;color:#2C2420}
+.w.b span{background:none;padding:0;color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.35),0 0 40px rgba(0,0,0,.6)}
+#logo{position:absolute;left:460px;top:1250px;width:160px;opacity:0;z-index:60}
+#arrow{position:absolute;left:510px;top:1610px;width:60px;height:60px;border-left:12px solid #2C2420;border-top:12px solid #2C2420;transform:rotate(45deg);opacity:0;z-index:60}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="19.6" data-width="1080" data-height="1920">
+  <div id="s7" class="shot"><div class="card"></div></div>
+  <img id="logo" src="assets/img/logo.png" alt="" />
+  <div id="arrow"></div>
+  <audio id="voix" src="assets/audio/voix.mp3" data-start="0" data-duration="19.04" data-track-index="4"></audio>
+  <audio id="sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="19.6" data-track-index="5"></audio>
+</div>
+<script>
+(function(){
+var R=document.getElementById("root");
+/* plans plein cadre calés sur le début des phrases de la voix : début, image, cadrage (position du fond) */
+var SHOTS=[[0,"packshot","50% 50%"],[3.59,"dim","50% 40%"],[6.61,"support","40% 50%"],[8.26,"montages","50% 22%"],[10.25,"structure","20% 60%"],[12.28,"salon","72% 50%"],[14.45,"ambiance","50% 50%"]];
+var CUTS=SHOTS.map(function(s){return s[0]}).concat([15.59,19.6]);
+SHOTS.forEach(function(s,i){var d=document.createElement("div");d.className="shot";d.id="s"+i;
+  d.innerHTML='<div class="img" style="background-image:url(assets/img/'+s[1]+'.jpg);background-position:'+s[2]+'"></div><div class="shade"></div>';
+  R.insertBefore(d,document.getElementById("s7"))});
+/* mots : temps, texte, haut, taille, style, fin */
+var W=[
+ [0.05,"TON MUR",380,150,"b",1.08],[0.40,"EST VIDE ?",560,150,"a",1.08],
+ [1.10,"REGARDE.",380,150,"b",1.80],
+ [1.85,"3 étagères",1250,110,"",3.59],[2.60,"1 seul lot",1400,110,"a",3.59],
+ [3.65,"30",300,140,"",6.61],[4.15,"35",300,140,"",6.61],[4.65,"40 cm",300,140,"",6.61],[5.45,"12 cm de profondeur",1400,80,"a",6.61],
+ [6.70,"Supports",1250,110,"",8.26],[7.25,"acier noir mat",1400,110,"a",8.26],
+ [8.30,"vers le bas",1300,110,"",10.25],[9.50,"ou vers le haut",1300,110,"a",10.25],
+ [10.30,"Chacune",1150,110,"",12.28],[11.10,"5 kg",1300,200,"a",12.28],
+ [12.35,"Plante.",320,120,"",14.45],[12.95,"Cadre.",320,120,"",14.45],[13.55,"Vases.",320,120,"",14.45],
+ [14.50,"Ton mur,",1250,130,"",15.59],[14.95,"fini.",1410,150,"a",15.59],
+ [15.65,"49,90 €",300,190,"n",19.7],[16.40,"le lot de 3",500,90,"a",19.7],[17.85,"Lien en bio",1440,100,"",19.7]];
+W.forEach(function(w,i){var n=W[i+1];if(n&&n[2]==w[2]&&n[0]<w[5])w[5]=n[0]});
+var tl=gsap.timeline({paused:true});
+tl.to({},{duration:19.6},0);
+var ids=SHOTS.map(function(s,i){return "s"+i}).concat(["s7"]);
+ids.forEach(function(id,i){var t0=CUTS[i],t1=CUTS[i+1],el=document.getElementById(id),im=el.querySelector(".img")||el.querySelector(".card"),dir=i%2?1:-1;
+  tl.set(el,{opacity:1,zIndex:i+1},t0);
+  if(i>0)tl.fromTo(el,{x:dir*1080*.35,scale:1.2},{x:0,scale:1,duration:.22,ease:"power3.out",immediateRender:false},t0);
+  if(i==0){/* hook : on part serré sur le mur vide, « Regarde » dézoome et révèle les étagères */
+    var wall=document.createElement("div");wall.id="wall";el.appendChild(wall);
+    tl.fromTo(wall,{scale:1.0},{scale:1.06,duration:1.08,ease:"none",immediateRender:false},0);tl.to(wall,{opacity:0,duration:.25},1.08);
+    tl.fromTo(im,{scale:1.6},{scale:1.0,duration:.55,ease:"power3.out",immediateRender:false},1.08);
+    tl.set(im,{scale:1.6},0);
+    tl.to(im,{scale:1.08,duration:t1-1.63,ease:"none"},1.63);}
+  else if(id=="s3"){/* montages : on descend du montage « vers le bas » au montage « vers le haut » */
+    tl.fromTo(im,{scale:1.4,y:330},{scale:1.42,y:300,duration:1.16,ease:"none",immediateRender:false},t0);
+    tl.to(im,{y:-320,duration:.4,ease:"power3.inOut"},9.42);
+    tl.to(im,{scale:1.48,duration:t1-9.82,ease:"none"},9.82);}
+  else tl.fromTo(im,{scale:1.02,xPercent:0},{scale:1.14,xPercent:dir*2,duration:t1-t0,ease:"none",immediateRender:false},t0);
+  if(i<ids.length-1)tl.set(el,{opacity:0},t1+.22)});
+W.forEach(function(w){var d=document.createElement("div");d.className="w "+w[4];d.style.top=w[2]+"px";d.innerHTML='<span style="font-size:'+w[3]+'px">'+w[1]+'</span>';R.appendChild(d);
+  tl.fromTo(d,{opacity:0,scale:1.5,y:20},{opacity:1,scale:1,y:0,duration:.18,ease:"back.out(2.4)",immediateRender:false},w[0]);
+  tl.set(d,{opacity:0},w[5])});
+tl.fromTo("#logo",{opacity:0,scale:.6},{opacity:1,scale:1,duration:.25,ease:"back.out(2)",immediateRender:false},17.0);
+tl.fromTo("#arrow",{opacity:0},{opacity:1,duration:.1,immediateRender:false},17.95);
+tl.to("#arrow",{y:-30,duration:.25,ease:"power2.out",yoyo:true,repeat:5},18.05);
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;tl.seek(0);
+})();
+</script>
+</body>
+</html>
