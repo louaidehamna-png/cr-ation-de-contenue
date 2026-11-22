@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#F5F0E8}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#2C2420;background:#F5F0E8}
+.layer{position:absolute;inset:0;overflow:hidden}
+#wall{background:#F5F0E8}
+#cam{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:380px 755px}
+#cam svg,#endsvg{position:absolute;left:0;top:0;overflow:visible}
+.lab{position:absolute;font:900 44px/1 "InterX";color:#2C2420;text-align:center;opacity:0}
+.photo{position:absolute;top:0;width:1920px;height:1920px;background-size:cover}
+#p02,#p05,#p03{opacity:0}
+#end{background:#F5F0E8;opacity:0}
+#end2{position:absolute;inset:0;z-index:40;pointer-events:none}
+.w{position:absolute;left:0;width:1080px;text-align:center;opacity:0;white-space:nowrap;z-index:50}
+.w span{display:inline-block;padding:10px 30px 16px;border-radius:22px;background:#2C2420;color:#F5F0E8;font-weight:900;letter-spacing:-.02em}
+.w.a span{background:#C8A27C;color:#2C2420}
+.w.n span{background:none;padding:0;color:#2C2420}
+#logo{position:absolute;left:480px;top:1335px;width:120px;opacity:0;z-index:60}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+  <div id="wall" class="layer"><div id="cam"></div></div>
+  <div id="p02" class="layer"><div class="photo" style="background-image:url(assets/img/02-detail-grand-cadre.jpg);left:-336px"></div></div>
+  <div id="p05" class="layer"><div class="photo" style="background-image:url(assets/img/05-buffet-radio.jpg);left:0"></div></div>
+  <div id="end" class="layer"></div>
+  <div id="p03" class="layer"><div class="photo" style="background-image:url(assets/img/03-petits-cadres-chambre.jpg);left:-420px"></div></div>
+  <div id="end2"></div>
+  <img id="logo" src="assets/img/logo.png" alt="" />
+  <audio id="sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="15" data-track-index="5"></audio>
+</div>
+<script>
+(function(){
+var NS="http://www.w3.org/2000/svg",$=function(i){return document.getElementById(i)},R=$("root");
+function rr(x,y,w,h,r,lead){/* rectangle arrondi en un seul trait, départ en haut à gauche */
+ return (lead||("M "+(x+r)+" "+y))+" L "+(x+w-r)+" "+y+" Q "+(x+w)+" "+y+" "+(x+w)+" "+(y+r)+" L "+(x+w)+" "+(y+h-r)+" Q "+(x+w)+" "+(y+h)+" "+(x+w-r)+" "+(y+h)+" L "+(x+r)+" "+(y+h)+" Q "+x+" "+(y+h)+" "+x+" "+(y+h-r)+" L "+x+" "+(y+r)+" Q "+x+" "+y+" "+(x+r)+" "+y}
+function svg(host){var s=document.createElementNS(NS,"svg");s.setAttribute("width","1080");s.setAttribute("height","1920");host.appendChild(s);return s}
+function line(s,d,w,col){var p=document.createElementNS(NS,"path");p.setAttribute("d",d);p.setAttribute("fill","none");p.setAttribute("stroke",col||"#1b1b1b");p.setAttribute("stroke-width",w||7);
+ p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");p.setAttribute("pathLength","1");p.setAttribute("stroke-dasharray","1");p.setAttribute("stroke-dashoffset","1");s.appendChild(p);return p}
+function plate(s,x,y,w){var r=document.createElementNS(NS,"rect");r.setAttribute("x",x+6);r.setAttribute("y",y-14);r.setAttribute("width",w-12);r.setAttribute("height",14);r.setAttribute("rx",4);r.setAttribute("fill","#1b1b1b");r.style.opacity=0;s.appendChild(r);return r}
+var S=svg($("cam"));
+/* les 4 cadres dessinés : grand, petit, long, petit (comme sur la photo de la fiche) */
+var F=[[120,560,520,390,"43 × 32 cm"],[720,600,200,270,"15 × 20"],[120,1010,520,200,"40,5 × 15 cm"],[720,1000,200,270,"15 × 20"]];
+var paths=F.map(function(f,i){return line(S,i==0?rr(f[0],f[1],f[2],f[3],46,"M -80 "+f[1]+" L "+(f[0]+46)+" "+f[1]):rr(f[0],f[1],f[2],f[3],40))});
+var plates=F.map(function(f){return plate(S,f[0],f[1]+f[3],f[2])});
+var labs=F.map(function(f){var d=document.createElement("div");d.className="lab";d.style.left=f[0]+"px";d.style.width=f[2]+"px";d.style.top=(f[1]+f[3]/2-22)+"px";d.textContent=f[4];$("cam").appendChild(d);return d});
+/* fin : le trait dessine le contour de la carte prix */
+var E=svg($("end2"));var cardLine=line(E,rr(305,530,470,790,48),7,"#2C2420");
+
+var W=[
+ [0.15,"TON MUR",330,150,"n",2.35],[0.65,"EST PLAT ?",500,120,"a",2.35],[1.60,"Un trait suffit.",1330,90,"",2.35],
+ [2.45,"4 étagères",330,120,"n",5.4],[2.95,"1 seul lot",470,90,"a",5.4],[4.85,"12 cm de profondeur",1330,72,"",5.4],
+ [6.10,"Fil d'acier",330,120,"",8.0],[6.60,"noir mat",470,110,"a",8.0],[7.30,"Plateaux en MDF noir",1400,72,"",8.0],
+ [8.30,"4 étagères",330,120,"",10.4],[8.90,"3 formats",470,110,"a",10.4],[9.60,"À composer",1400,90,"",10.4],
+ [10.80,"Au-dessus du lit",330,110,"",12.0],[11.40,"8 vis + 8 chevilles fournies",1400,64,"a",12.0],
+ [12.40,"59,90 €",220,170,"n",15.1],[12.90,"le lot de 4",400,80,"a",15.1],[13.90,"Lien en bio",1480,96,"",15.1]];
+W.forEach(function(w,i){var n=W[i+1];if(n&&n[2]==w[2]&&n[0]<w[5])w[5]=n[0]});
+
+var tl=gsap.timeline({paused:true});tl.to({},{duration:15},0);
+function draw(p,t,d,ease){tl.fromTo(p,{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:d,ease:ease||"power2.out",immediateRender:false},t)}
+function pop(el,t,o){tl.fromTo(el,{opacity:0,scale:1.4},{opacity:1,scale:1,duration:.18,ease:"back.out(2.4)",immediateRender:false},t);if(o!=null)tl.set(el,{opacity:0},o)}
+/* A + B : le mur, le trait arrive vite et se pose en dessinant les 4 cadres ; caméra en poussée lente */
+tl.fromTo("#cam",{scale:1},{scale:1.06,duration:5.4,ease:"none",immediateRender:false},0);
+draw(paths[0],0.0,2.2,"power3.out");tl.to(plates[0],{opacity:1,duration:.15},2.2);pop(labs[0],2.25);
+[[1,3.3],[2,2.65],[3,3.9]].forEach(function(r){draw(paths[r[0]],r[1],.55,"power2.out");tl.to(plates[r[0]],{opacity:1,duration:.12},r[1]+.55);pop(labs[r[0]],r[1]+.58)});
+/* C : plongée dans le grand cadre dessiné, qui devient le vrai cadre en gros plan */
+tl.to(labs,{opacity:0,duration:.15},5.35);
+tl.to("#cam",{scale:3.1,duration:.6,ease:"power3.in"},5.4);
+tl.fromTo("#p02",{opacity:0},{opacity:1,duration:.25,ease:"none",immediateRender:false},5.75);
+tl.fromTo("#p02 .photo",{scale:1.12},{scale:1.0,duration:2.25,ease:"power1.out",immediateRender:false},5.75);
+/* D : on recule, le gros plan devient le grand cadre du plan large, puis travelling vers la droite */
+tl.set("#p05",{opacity:1},8.0);tl.set("#p02",{opacity:0},8.0);
+tl.fromTo("#p05 .photo",{scale:2.1,x:-150,transformOrigin:"720px 552px"},{scale:1,duration:.6,ease:"power3.out",immediateRender:false},8.0);
+tl.fromTo("#p05 .photo",{x:-150},{x:-700,duration:2.4,ease:"none",immediateRender:false},8.0);
+/* E : le travelling continue et amène la chambre */
+tl.to("#p05 .photo",{x:-1700,duration:.3,ease:"power2.in"},10.4);
+tl.set("#p03",{opacity:1},10.4);
+tl.fromTo("#p03",{x:1080},{x:0,duration:.3,ease:"power2.out",immediateRender:false},10.4);
+tl.fromTo("#p03 .photo",{scale:1},{scale:1.25,duration:4.6,ease:"none",immediateRender:false},10.4);
+/* F : la photo se réduit et devient la carte prix ; le trait en dessine le contour */
+tl.set("#end",{opacity:1},12.0);tl.set("#p05",{opacity:0},12.0);
+tl.to("#p03",{scale:.38,y:-35,borderRadius:"60px",duration:.5,ease:"power3.inOut",transformOrigin:"540px 960px"},12.0);
+draw(cardLine,12.5,.6,"power2.out");
+
+tl.fromTo("#logo",{opacity:0,scale:.6},{opacity:1,scale:1,duration:.25,ease:"back.out(2)",immediateRender:false},13.4);
+W.forEach(function(w){var d=document.createElement("div");d.className="w "+w[4];d.style.top=w[2]+"px";d.innerHTML='<span style="font-size:'+w[3]+'px">'+w[1]+'</span>';R.appendChild(d);pop(d,w[0],w[5])});
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;tl.seek(0);
+})();
+</script>
+</body>
+</html>
