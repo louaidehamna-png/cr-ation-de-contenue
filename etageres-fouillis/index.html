@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+@font-face{font-family:"InterX";font-weight:900;src:url("assets/fonts/Inter-Black.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:700;src:url("assets/fonts/Inter-Bold.otf") format("opentype")}
+@font-face{font-family:"InterX";font-weight:600;src:url("assets/fonts/Inter-SemiBold.otf") format("opentype")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"InterX",sans-serif;color:#fff;background:#000}
+.clip{position:absolute;inset:0}
+.cam{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0}
+.cam svg{position:absolute;left:0;top:0;overflow:visible}
+#e-vig{background:radial-gradient(120% 70% at 50% 55%,rgba(0,0,0,0) 40%,rgba(0,0,0,.85) 100%);pointer-events:none}
+/* zone sûre : texte entre y 250 et 1450, de x 80 à 920 */
+#e-gauge{position:absolute;left:80px;top:250px;width:840px}
+#e-gauge .lb{font:700 40px/1 "InterX";letter-spacing:.06em;display:flex;justify-content:space-between}
+#e-gauge .tr{position:relative;margin-top:16px;height:18px;border-radius:9px;background:#1c1c1c;overflow:hidden}
+#e-fill{position:absolute;left:0;top:0;height:100%;width:840px;background:#39ff14;border-radius:9px;transform-origin:0 50%;box-shadow:0 0 16px #39ff14}
+.hd{position:absolute;left:80px;width:840px;top:350px;font:900 92px/1.02 "InterX";letter-spacing:-.02em;text-transform:uppercase;opacity:0;text-shadow:0 0 30px #000,0 0 10px #000}
+.g{color:#39ff14;text-shadow:0 0 18px rgba(57,255,20,.7),0 0 4px rgba(57,255,20,.9)}
+#e-sub{position:absolute;left:80px;width:840px;top:1290px;height:160px}
+#e-sub span{position:absolute;left:0;bottom:0;width:840px;text-align:center;font:700 52px/60px "InterX";color:#fff;opacity:0;background:rgba(0,0,0,.78);border-radius:20px;padding:12px 20px}
+#e-cnt{position:absolute;left:80px;top:350px;font:900 150px/1 "InterX";opacity:0}
+#e-cnt small{font-size:64px;margin-left:18px}
+#e-cnt i{position:absolute;left:-12px;right:-12px;top:50%;height:16px;background:#39ff14;box-shadow:0 0 18px #39ff14;transform:scaleX(0);transform-origin:0 50%;border-radius:8px}
+#e-big{position:absolute;left:80px;top:320px;font:900 320px/1 "InterX";opacity:0}
+.lab{position:absolute;top:690px;font:900 60px/1 "InterX";opacity:0}
+#e-logo{position:absolute;left:80px;top:520px;width:84px;opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="35.4" data-width="1080" data-height="1920">
+ <div id="e-stage" class="clip" data-start="0" data-duration="35.4" data-track-index="0">
+  <div id="e-camB" class="cam"></div>
+  <div id="e-camA" class="cam"></div>
+  <div id="e-vig" class="clip"></div>
+
+  <div id="e-gauge"><div class="lb"><span>CALME VISUEL</span><span id="e-pct">20 %</span></div><div class="tr"><div id="e-fill"></div></div></div>
+
+  <div id="e-h0" class="hd" style="opacity:1">Tes étagères font <span class="g">fouillis.</span></div>
+  <div id="e-cnt"><span id="e-cntn">1</span><small>objets</small><i></i></div>
+  <div id="e-big" class="g">4</div>
+  <div id="e-big3" class="hd g" style="font-size:320px;top:320px">3</div>
+  <div id="e-t1" class="hd"><span class="g">1.</span> Tout à la même hauteur</div>
+  <div id="e-t2" class="hd"><span class="g">2.</span> Tous les livres debout</div>
+  <div id="e-t3" class="hd" style="font-size:80px"><span class="g">3.</span> Pas un centimètre de libre</div>
+  <div id="e-t4" class="hd"><span class="g">4.</span> Trop de couleurs</div>
+  <div id="e-av" class="lab" style="left:150px">AVANT</div><div id="e-ap" class="lab g" style="left:640px">APRÈS</div>
+  <div id="e-rien" class="hd" style="top:1160px;text-align:center">Rien <span class="g">acheté.</span></div>
+  <div id="e-cta" class="hd" style="font-size:70px"><span class="g">Enregistre-la</span> avant de ranger ce soir.</div>
+  <img id="e-logo" src="assets/img/logo-em.png" alt="">
+
+  <div id="e-sub">
+   <span id="e-s2">C’est pas le <b class="g">nombre</b> d’objets.</span>
+   <span id="e-s3">C’est <b class="g">quatre</b> erreurs&#8239;!</span>
+   <span id="e-s4">Un&#8239;! Tout est aligné, à la même <b class="g">hauteur</b>.</span>
+   <span id="e-s5"><b class="g">Mélange</b> les hauteurs&#8239;: un objet haut, un moyen, un bas.</span>
+   <span id="e-s6">L’œil dessine un <b class="g">triangle</b>.</span>
+   <span id="e-s7">Deux&#8239;! Tes livres sont tous <b class="g">debout</b>.</span>
+   <span id="e-s8">Couches-en une <b class="g">pile</b>, et pose un petit objet dessus.</span>
+   <span id="e-s9">Ça casse la <b class="g">ligne</b>.</span>
+   <span id="e-s10">Trois… tu remplis chaque <b class="g">centimètre</b>.</span>
+   <span id="e-s11">Laisse du <b class="g">vide</b>&#8239;! Un tiers de l’étagère libre.</span>
+   <span id="e-s12">C’est le vide qui met le reste en <b class="g">valeur</b>.</span>
+   <span id="e-s13">Quatre&#8239;! Trop de <b class="g">couleurs</b>.</span>
+   <span id="e-s14">Garde deux ou trois <b class="g">teintes</b>, et fais-les revenir d’une étagère à l’autre.</span>
+   <span id="e-s15">Même étagère. Mêmes objets. <b class="g">Rien acheté.</b></span>
+   <span id="e-s16"><b class="g">Enregistre</b> la vidéo avant de ranger ce soir&#8239;!</span>
+  </div>
+  <audio id="e-voix" src="assets/audio/voix.mp3" data-start="0" data-duration="35.4" data-track-index="6"></audio>
+  <audio id="e-sfx" src="assets/audio/sfx.wav" data-start="0" data-duration="35.4" data-track-index="5"></audio>
+ </div>
+</div>
+<script>
+(function(){
+var NS="http://www.w3.org/2000/svg";
+var $=function(i){return document.getElementById(i)};
+var GAR=["#ff2bd6","#2b7bff","#ffd400","#00e5ff","#ff6a00","#a64dff","#ff3355"];
+var TINT={sable:"#c8a27c",brun:"#6b4a33",blanc:"#ece7df"};
+var S1=880,S2=1060,S3=1240;
+var SHAPE={
+ jar:function(o){var w=o.w||74,h=o.h||120;return '<rect class="f" x="'+(-w/2)+'" y="'+(-h)+'" width="'+w+'" height="'+h+'" rx="14"/><rect x="'+(-w/2+8)+'" y="'+(-h-14)+'" width="'+(w-16)+'" height="16" rx="4" fill="#111"/>'},
+ vase:function(){return '<path class="f" d="M -22 0 C -62 -30 -62 -112 -24 -150 L -18 -196 L -30 -230 L 30 -230 L 18 -196 L 24 -150 C 62 -112 62 -30 22 0 Z"/>'},
+ candle:function(o){var h=o.h||110;return '<rect class="f" x="-25" y="'+(-h)+'" width="50" height="'+h+'" rx="6"/><line x1="0" y1="'+(-h)+'" x2="0" y2="'+(-h-14)+'"/><path d="M0 '+(-h-16)+' C -11 '+(-h-28)+' -4 '+(-h-42)+' 0 '+(-h-50)+' C 4 '+(-h-42)+' 11 '+(-h-28)+' 0 '+(-h-16)+' Z" fill="#ffb86b" stroke="none"/>'},
+ bowl:function(){return '<path class="f" d="M -62 -52 L 62 -52 C 58 -18 32 0 0 0 C -32 0 -58 -18 -62 -52 Z"/>'},
+ book:function(o){var w=o.w||34,h=o.h||150;return '<rect class="f" x="'+(-w/2)+'" y="'+(-h)+'" width="'+w+'" height="'+h+'" rx="3"/><line x1="'+(-w/2+4)+'" y1="'+(-h+22)+'" x2="'+(w/2-4)+'" y2="'+(-h+22)+'"/>'},
+ lie:function(){return '<rect class="f" x="-78" y="-28" width="156" height="28" rx="3"/><line x1="54" y1="-28" x2="54" y2="0"/>'},
+ stone:function(){return '<ellipse class="f" cx="0" cy="-17" rx="32" ry="17"/>'},
+ frame:function(){return '<rect class="f" x="-52" y="-140" width="104" height="140" rx="4"/><rect x="-36" y="-122" width="72" height="104" fill="#0b0b0b"/>'},
+ box:function(){return '<rect class="f" x="-52" y="-72" width="104" height="72" rx="4"/><line x1="-52" y1="-44" x2="52" y2="-44"/>'}};
+/* objets : id, étagère, x, forme, options, couleur criarde, teinte finale */
+var OBJ=[
+ ["j1",S1,230,"jar",{},0,"blanc"],["j2",S1,380,"jar",{},1,"sable"],["j3",S1,530,"jar",{},2,"brun"],["j4",S1,680,"jar",{},3,"blanc"],["j5",S1,830,"jar",{},4,"sable"],
+ ["va",S1,330,"vase",{},5,"sable"],["ca",S1,540,"candle",{h:118},3,"blanc"],["bo",S1,745,"bowl",{},2,"brun"],
+ ["b1",S2,222,"book",{h:150},0,"brun"],["b2",S2,258,"book",{h:162},1,"brun"],["b3",S2,294,"book",{h:144},2,"blanc"],["b4",S2,330,"book",{h:156},3,"brun"],["b5",S2,366,"book",{h:148},4,"sable"],["b6",S2,402,"book",{h:160},5,"brun"],
+ ["b7",S2,438,"book",{h:146},6,"brun"],["b8",S2,474,"book",{h:158},1,"brun"],["b9",S2,510,"book",{h:150},3,"brun"],["fr",S2,820,"frame",{},4,"brun"],
+ ["l1",S2,640,"lie",{},6,"sable"],["l2",S2,646,"lie",{},1,"sable"],["l3",S2,636,"lie",{},3,"sable"],["st",S2,650,"stone",{},2,"blanc"],
+ ["f2",S3,215,"frame",{},1,"sable"],["k1",S3,318,"jar",{h:90,w:66},2,"brun"],["m1",S3,382,"book",{h:140,w:30},0,"brun"],["m2",S3,414,"book",{h:150,w:30},4,"brun"],["m3",S3,446,"book",{h:134,w:30},3,"brun"],
+ ["bw",S3,528,"bowl",{},5,"blanc"],["c2",S3,615,"candle",{h:96},6,"blanc"],["k2",S3,700,"jar",{h:140,w:66},0,"sable"],["bx",S3,795,"box",{},1,"brun"],["k3",S3,880,"jar",{h:80,w:60},2,"blanc"]];
+var LATE={va:1,ca:1,bo:1,l1:1,l2:1,l3:1,st:1};
+
+function build(host,P,after){
+ var s=document.createElementNS(NS,"svg");s.setAttribute("width","1080");s.setAttribute("height","1920");s.setAttribute("viewBox","0 0 1080 1920");host.appendChild(s);
+ var h='<defs><radialGradient id="'+P+'gl"><stop offset="0" stop-color="#ffb86b" stop-opacity=".55"/><stop offset="1" stop-color="#ffb86b" stop-opacity="0"/></radialGradient></defs>';
+ h+='<ellipse id="'+P+'glow" cx="420" cy="'+(S3-60)+'" rx="360" ry="150" fill="url(#'+P+'gl)" opacity="0"/>';
+ [S1,S2,S3].forEach(function(y,i){h+='<g id="'+P+'sh'+i+'"><rect x="150" y="'+y+'" width="780" height="24" rx="3" fill="#4a3324" stroke="#fff" stroke-width="3"/><path d="M 200 '+(y+24)+' v 70 l 60 -70 M 880 '+(y+24)+' v 70 l -60 -70" fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="round"/></g>'});
+ s.innerHTML=h;
+ OBJ.forEach(function(o){
+  var late=!!LATE[o[0]],gone=after&&{j1:1,j2:1,j3:1,j4:1,j5:1,b7:1,b8:1,b9:1,k2:1,bx:1,k3:1}[o[0]];
+  if(!after&&late)return;
+  var g=document.createElementNS(NS,"g");g.setAttribute("id",P+o[0]);g.setAttribute("stroke","#fff");g.setAttribute("stroke-width","3");g.setAttribute("stroke-linejoin","round");
+  g.innerHTML=SHAPE[o[3]](o[4]);s.appendChild(g);
+  var y=o[1];if(o[0]=="l2")y-=28;if(o[0]=="l3")y-=56;if(o[0]=="st")y-=84;
+  gsap.set(g,{x:o[2],y:y,opacity:(gone?0:(late&&!after?0:1))});
+  g.querySelectorAll(".f").forEach(function(f){f.setAttribute("fill",after?TINT[o[6]]:GAR[o[5]])});
+  if(!after&&late)g.style.opacity=0;
+ });
+ return s;
+}
+var svA=build($("e-camA"),"a",false);
+/* les objets « après » de l'étagère du haut et du milieu sont créés cachés dans la scène principale */
+OBJ.forEach(function(o){if(!LATE[o[0]])return;var g=document.createElementNS(NS,"g");g.setAttribute("id","a"+o[0]);g.setAttribute("stroke","#fff");g.setAttribute("stroke-width","3");g.setAttribute("stroke-linejoin","round");g.innerHTML=SHAPE[o[3]](o[4]);svA.appendChild(g);
+ var y=o[1];if(o[0]=="l2")y-=28;if(o[0]=="l3")y-=56;if(o[0]=="st")y-=84;gsap.set(g,{x:o[2],y:y,opacity:0});g.querySelectorAll(".f").forEach(function(f){f.setAttribute("fill",GAR[o[5]])})});
+var svB=build($("e-camB"),"b",false);$("e-camB").style.opacity=0;
+var A=function(i){return document.getElementById("a"+i)};
+/* annotations néon */
+function neon(d,id,dash){var p=document.createElementNS(NS,"path");p.setAttribute("id",id);p.setAttribute("d",d);p.setAttribute("fill","none");p.setAttribute("stroke","#39ff14");p.setAttribute("stroke-width","8");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");
+ p.setAttribute("style","filter:drop-shadow(0 0 8px #39ff14)");p.setAttribute("pathLength","1");p.setAttribute("stroke-dasharray",dash?"0.02 0.025":"1");p.setAttribute("stroke-dashoffset",dash?"0":"1");if(dash)p.style.opacity=0;svA.appendChild(p);return p}
+function cross(x,y,id){var p=neon("M "+(x-30)+" "+(y-30)+" L "+(x+30)+" "+(y+30)+" M "+(x+30)+" "+(y-30)+" L "+(x-30)+" "+(y+30),id);return p}
+var X=[cross(530,S1-60,"x1"),cross(360,S2-75,"x2"),cross(780,S3-50,"x3"),cross(650,S1-140,"x4")];
+var ln1=neon("M 170 "+(S1-136)+" L 910 "+(S1-136),"ln1");
+var tri=neon("M 330 "+(S1-232)+" L 540 "+(S1-168)+" L 745 "+(S1-54)+" Z","tri");
+var wallL=neon("M 410 "+(S2-172)+" L 196 "+(S2-172)+" L 196 "+(S2+4)+" L 410 "+(S2+4),"wl"),wallR=neon("M 410 "+(S2-172)+" L 532 "+(S2-172)+" L 532 "+(S2+4)+" L 410 "+(S2+4),"wr");
+var brace=neon("M 672 "+(S3-200)+" L 672 "+(S3-180)+" L 920 "+(S3-180)+" L 920 "+(S3-200)+" M 796 "+(S3-180)+" L 796 "+(S3-160),"br");
+var third=document.createElementNS(NS,"text");third.setAttribute("x","796");third.setAttribute("y",String(S3-212));third.setAttribute("text-anchor","middle");third.setAttribute("font-family","InterX");third.setAttribute("font-weight","900");third.setAttribute("font-size","64");third.setAttribute("fill","#39ff14");third.setAttribute("style","filter:drop-shadow(0 0 8px #39ff14)");third.textContent="1/3";third.style.opacity=0;svA.appendChild(third);
+var z1=neon("M 330 "+(S1-120)+" L 640 "+(S2-60)+" L 215 "+(S3-70),"z1",true),z2=neon("M 540 "+(S1-60)+" L 650 "+(S2-100)+" L 528 "+(S3-26)+" L 615 "+(S3-50),"z2",true);
+/* main dessinée */
+function hand(id){var g=document.createElementNS(NS,"g");g.setAttribute("id",id);g.innerHTML='<path d="M -8 8 C -30 14 -46 4 -50 -12 L -52 -34 C -52 -42 -42 -42 -40 -34 L -38 -22 L -40 -58 C -40 -66 -29 -66 -29 -58 L -27 -26 L -26 -64 C -26 -72 -15 -72 -15 -64 L -14 -26 L -12 -58 C -12 -66 -2 -66 -2 -58 L -2 -22 L 4 -36 C 8 -44 18 -40 14 -30 L 4 0 L -8 8 Z M -50 -12 L -62 22 M -8 8 L -18 40" fill="#000" stroke="#fff" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>';svA.appendChild(g);gsap.set(g,{opacity:0,scale:1.7,rotation:180});return g}
+var H1=hand("hd1"),H2=hand("hd2");
+
+var tl=gsap.timeline({paused:true});
+tl.to({},{duration:35.4},0);
+function cam(cx,cy,s){return {x:540-cx*s,y:980-cy*s,scale:s}}
+function shot(t0,t1,a,b,el){el=el||"#e-camA";tl.fromTo(el,cam(a[0],a[1],a[2]),Object.assign(cam(b[0],b[1],b[2]),{duration:t1-t0,ease:"none",immediateRender:false}),t0)}
+function pop(id,t,out){tl.fromTo("#"+id,{opacity:0,y:24,scale:1.06},{opacity:1,y:0,scale:1,duration:.18,ease:"power3.out",immediateRender:false},t);if(out!=null)tl.to("#"+id,{opacity:0,duration:.12},out)}
+function sub(n,a,b){tl.set("#e-s"+n,{opacity:1},a);tl.set("#e-s"+n,{opacity:0},b)}
+function draw(p,t,d){tl.fromTo(p,{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:d||.35,ease:"power2.out",immediateRender:false},t)}
+function drop(g,t){tl.fromTo(g,{opacity:0,y:"-=260"},{opacity:1,y:"+=260",duration:.42,ease:"back.out(2)",immediateRender:false},t)}
+function out(g,t,dx){tl.to(g,{opacity:0,y:"-=320",x:"+="+(dx||0),rotation:dx?dx/10:0,duration:.3,ease:"power2.in"},t)}
+var GA={v:.2};function gauge(v,t,white){tl.to(GA,{v:v,duration:.35,ease:"back.out(2)",onUpdate:function(){$("e-fill").style.transform="scaleX("+GA.v.toFixed(4)+")";$("e-pct").textContent=Math.round(GA.v*100)+" %"}},t);
+ if(white){tl.to("#e-fill",{backgroundColor:"#ffffff",boxShadow:"0 0 16px #ffffff",duration:.3},t+.1)}}
+gsap.set("#e-fill",{scaleX:.2});
+function fills(ids,colors,t,d){ids.forEach(function(id,i){tl.to(A(id).querySelectorAll(".f"),{attr:{fill:colors[i%colors.length]},duration:d||.12},t)})}
+var ALL=OBJ.filter(function(o){return !{j1:1,j2:1,j3:1,j4:1,j5:1,b7:1,b8:1,b9:1,k2:1,bx:1,k3:1}[o[0]]}).map(function(o){return o[0]});
+
+/* 1. hook 0 à 1.60 : tout déborde et tremble, titre complet dès la première image */
+shot(0,1.6,[540,1060,1.0],[540,1040,1.06]);
+tl.fromTo(svA,{rotation:-.5},{rotation:.5,duration:.08,repeat:17,yoyo:true,ease:"none",transformOrigin:"540px 1060px",immediateRender:false},0.05);
+tl.set(svA,{rotation:0},1.5);
+tl.to("#e-h0",{opacity:0,duration:.1},1.5);
+/* 2. 1.60 : le compte des objets, barré */
+shot(1.6,2.93,[540,1080,1.14],[560,1070,1.2]);
+pop("e-cnt",1.62,2.85);var C={n:1};tl.fromTo(C,{n:1},{n:25,duration:.75,ease:"power1.in",immediateRender:false,onUpdate:function(){$("e-cntn").textContent=Math.round(C.n)}},1.65);
+tl.to("#e-cnt i",{scaleX:1,duration:.22,ease:"power2.out"},2.45);sub(2,1.6,2.93);
+/* 3. 2.93 : 4 erreurs */
+shot(2.93,4.16,[540,1060,.95],[540,1060,.99]);
+tl.fromTo("#e-big",{opacity:0,scale:2.2},{opacity:1,scale:1,duration:.2,ease:"expo.out",immediateRender:false},2.95);tl.to("#e-big",{opacity:0,duration:.1},4.08);
+X.forEach(function(p,i){draw(p,3.15+i*.18,.18)});tl.to(X,{opacity:0,duration:.1},4.08);sub(3,2.93,4.16);
+/* 4. 4.16 : erreur 1, tout à la même hauteur */
+shot(4.16,6.91,[540,800,1.3],[520,790,1.38]);
+pop("e-t1",4.2,11.7);draw(ln1,4.9,.5);sub(4,4.16,6.91);
+/* 5. 6.91 : mélange les hauteurs */
+shot(6.91,10.18,[470,780,1.42],[500,770,1.5]);
+tl.to(ln1,{opacity:0,duration:.15},6.95);
+["j1","j2","j3","j4","j5"].forEach(function(id,i){out(A(id),7.0+i*.08,(i-2)*40)});
+tl.set(H1,{x:330,y:S1-330,opacity:0},6.9);
+[["va",8.45,330],["ca",8.95,540],["bo",9.45,745]].forEach(function(r){drop(A(r[0]),r[1]);tl.to(H1,{x:r[2]+20,y:S1-(r[0]=="va"?300:r[0]=="ca"?215:120),opacity:1,duration:.2,ease:"power2.out"},r[1]-.05)});
+tl.to(H1,{y:"-=500",opacity:0,duration:.3,ease:"power2.in"},9.85);sub(5,6.91,10.18);
+/* 6. 10.18 : le triangle */
+shot(10.18,11.75,[540,800,1.15],[540,795,1.2]);
+draw(tri,10.4,.6);gauge(.4,10.95);sub(6,10.18,11.75);
+/* 7. 11.75 : erreur 2, livres debout */
+shot(11.75,14.1,[440,990,1.5],[460,985,1.58]);
+tl.to(tri,{opacity:0,duration:.1},11.75);var TOP=[document.querySelector("#ash0"),A("va"),A("ca"),A("bo")];tl.to(TOP,{opacity:.22,duration:.2},11.77);pop("e-t2",11.8,17.75);draw(wallL,12.3,.4);draw(wallR,12.3,.4);sub(7,11.75,14.1);
+/* 8. 14.10 : une pile + un petit objet */
+shot(14.1,16.61,[620,990,1.55],[600,985,1.62]);
+["b9","b8","b7"].forEach(function(id,i){out(A(id),14.2+i*.08,30)});
+tl.set(H2,{x:660,y:S2-200,opacity:0},14.1);
+[["l1",14.6],["l2",14.95],["l3",15.3],["st",15.75]].forEach(function(r,i){drop(A(r[0]),r[1]);tl.to(H2,{x:690,y:S2-(60+28*i),opacity:1,duration:.18,ease:"power2.out"},r[1]-.05)});
+tl.to(H2,{y:"-=500",opacity:0,duration:.3,ease:"power2.in"},16.2);sub(8,14.1,16.61);
+/* 9. 16.61 : ça casse la ligne */
+shot(16.61,17.8,[540,1000,1.2],[540,1000,1.26]);
+tl.to(wallR,{y:120,rotation:12,opacity:0,duration:.45,ease:"power2.in",transformOrigin:"410px 990px"},16.75);
+tl.to(wallL,{x:-30,rotation:-4,opacity:0,duration:.45,ease:"power2.in",transformOrigin:"410px 990px"},16.85);gauge(.6,17.25);sub(9,16.61,17.8);
+/* 10. 17.80 : erreur 3, la nuit sur l'étagère du bas pleine à craquer */
+shot(17.8,20.85,[540,1150,1.15],[540,1160,1.24]);tl.to(TOP,{opacity:1,duration:.01},17.79);
+tl.to(["#ash0","#ash1"].map(function(s){return document.querySelector(s)}).concat(["va","ca","bo","b1","b2","b3","b4","b5","b6","fr","l1","l2","l3","st"].map(A)),{opacity:.12,duration:.25},17.82);
+tl.fromTo("#e-big3",{opacity:0,scale:2.2},{opacity:1,scale:1,duration:.2,ease:"expo.out",immediateRender:false},17.85);tl.to("#e-big3",{opacity:0,duration:.15},18.9);
+pop("e-t3",19.0,25.3);sub(10,17.8,20.85);
+/* 11. 20.85 : laisse du vide, un tiers */
+shot(20.85,23.35,[640,1160,1.32],[660,1160,1.4]);
+tl.to(["#ash0","#ash1"].map(function(s){return document.querySelector(s)}).concat(["va","ca","bo","b1","b2","b3","b4","b5","b6","fr","l1","l2","l3","st"].map(A)),{opacity:.3,duration:.3},20.87);tl.to(["#ash0","#ash1"].map(function(s){return document.querySelector(s)}).concat(["va","ca","bo","b1","b2","b3","b4","b5","b6","fr","l1","l2","l3","st"].map(A)),{opacity:1,duration:.2},25.36);
+[["k2",21.25],["bx",21.6],["k3",21.95]].forEach(function(r){out(A(r[0]),r[1],60)});
+draw(brace,22.3,.4);tl.fromTo(third,{opacity:0},{opacity:1,duration:.15,immediateRender:false},22.55);sub(11,20.85,23.35);
+/* 12. 23.35 : le vide met le reste en valeur */
+shot(23.35,25.36,[480,1170,1.25],[470,1175,1.31]);
+tl.to([brace,third],{opacity:0,duration:.15},23.4);tl.to("#aglow",{opacity:1,duration:.5},23.5);gauge(.75,24.1);sub(12,23.35,25.36);
+/* 13. 25.36 : erreur 4, trop de couleurs */
+shot(25.36,26.99,[540,1060,1.05],[540,1055,1.1]);
+tl.to("#aglow",{opacity:0,duration:.2},25.36);pop("e-t4",25.4,30.15);
+[25.55,25.85,26.15,26.45].forEach(function(t,k){fills(ALL,GAR.slice(k).concat(GAR.slice(0,k)),t,.08)});sub(13,25.36,26.99);
+/* 14. 26.99 : deux ou trois teintes qui reviennent d'une étagère à l'autre */
+shot(26.99,30.23,[540,1060,.98],[540,1060,1.04]);
+fills(ALL,ALL.map(function(id){return TINT[OBJ.filter(function(o){return o[0]==id})[0][6]]}),27.25,.35);
+tl.to([z1,z2],{opacity:1,duration:.1},28.1);tl.fromTo(z1,{attr:{"stroke-dashoffset":0}},{attr:{"stroke-dashoffset":-.45},duration:2,ease:"none",immediateRender:false},28.1);
+tl.fromTo(z2,{attr:{"stroke-dashoffset":0}},{attr:{"stroke-dashoffset":-.45},duration:2,ease:"none",immediateRender:false},28.4);
+gauge(1,29.55,true);sub(14,26.99,30.23);
+/* 15. 30.23 : avant / après */
+tl.to([z1,z2],{opacity:0,duration:.1},30.2);
+tl.set("#e-camB",{opacity:1},30.23);
+shot(30.23,33.04,[540,1060,.47],[540,1060,.49],"#e-camB");
+tl.fromTo("#e-camB",{x:-25},{x:-15,duration:2.81,ease:"none",immediateRender:false},30.23);
+shot(30.23,33.04,[540,1060,.47],[540,1060,.49]);
+tl.fromTo("#e-camA",{x:520},{x:530,duration:2.81,ease:"none",immediateRender:false},30.23);
+pop("e-av",30.3,33.0);pop("e-ap",30.3,33.0);pop("e-rien",31.9,33.0);sub(15,30.23,33.04);
+/* 16. 33.04 : retour au plan large rangé, appel */
+tl.set("#e-camB",{opacity:0},33.04);
+shot(33.04,35.2,[540,1080,.8],[540,1070,.84]);
+pop("e-cta",33.1,35.15);tl.fromTo("#e-logo",{opacity:0},{opacity:1,duration:.25,immediateRender:false},33.4);tl.to("#e-logo",{opacity:0,duration:.05},35.15);sub(16,33.04,35.15);
+/* boucle : la dernière image redevient la première (étagères pleines, titre) */
+tl.set("#e-camB",{opacity:1,x:0,y:-80,scale:1},35.2);tl.set("#e-camA",{opacity:0},35.2);
+tl.set("#e-h0",{opacity:1},35.2);
+tl.to(GA,{v:.2,duration:.02,onUpdate:function(){$("e-fill").style.transform="scaleX("+GA.v.toFixed(4)+")";$("e-pct").textContent=Math.round(GA.v*100)+" %"}},35.2);
+tl.set("#e-fill",{backgroundColor:"#39ff14",boxShadow:"0 0 16px #39ff14"},35.2);
+
+window.__timelines=window.__timelines||{};window.__timelines["main"]=tl;tl.seek(0);
+})();
+</script>
+</body>
+</html>
